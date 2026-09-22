@@ -1,0 +1,5 @@
+/athar-data/
+/dist/
+*.exe
+*.exe.old
+/coverage.out
