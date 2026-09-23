@@ -4,3 +4,4 @@
 *.zst binary
 *.zstd binary
 *.pb binary
+**/testdata/** -text
