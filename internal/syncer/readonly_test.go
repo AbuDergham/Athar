@@ -31,6 +31,10 @@ func snapshot(t *testing.T, dir string) map[string]fileInfo {
 		if err != nil {
 			return err
 		}
+		if d.IsDir() { // directory mtimes change lazily on Windows; compare names only
+			out[p] = fileInfo{}
+			return nil
+		}
 		info, err := os.Stat(p)
 		if err != nil {
 			return err

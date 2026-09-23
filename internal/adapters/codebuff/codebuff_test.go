@@ -539,6 +539,10 @@ func snapshot(t *testing.T, root string) map[string]fileState {
 		if err != nil {
 			return err
 		}
+		if d.IsDir() { // directory mtimes change lazily on Windows; compare names only
+			out[p] = fileState{}
+			return nil
+		}
 		info, err := d.Info()
 		if err != nil {
 			return err

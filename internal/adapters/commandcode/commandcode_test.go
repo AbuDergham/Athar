@@ -499,6 +499,10 @@ func TestReadOnly(t *testing.T) {
 			if err != nil {
 				return err
 			}
+			if d.IsDir() { // directory mtimes change lazily on Windows; compare names only
+				m[p] = "dir"
+				return nil
+			}
 			info, err := d.Info()
 			if err != nil {
 				return err

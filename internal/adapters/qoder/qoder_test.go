@@ -351,6 +351,10 @@ func snapshot(t *testing.T, root string) map[string]string {
 		if err != nil {
 			return err
 		}
+		if info.IsDir() { // directory mtimes change lazily on Windows; compare names only
+			out[p] = "dir"
+			return nil
+		}
 		out[p] = fmt.Sprintf("%d|%v|%d", info.ModTime().UnixNano(), info.IsDir(), info.Size())
 		return nil
 	})

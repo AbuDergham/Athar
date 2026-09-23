@@ -423,6 +423,10 @@ func snapshot(t *testing.T, root string) string {
 		if err != nil {
 			return err
 		}
+		if d.IsDir() { // directory mtimes change lazily on Windows; compare names only
+			fmt.Fprintf(&b, "%s|dir\n", p)
+			return nil
+		}
 		info, err := d.Info()
 		if err != nil {
 			return err
