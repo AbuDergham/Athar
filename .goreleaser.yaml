@@ -39,9 +39,8 @@ signs:
     cmd: go
     args: ["run", "./tools/sign", "${artifact}", "${signature}"]
     signature: "${artifact}.minisig"
-    env:
-      # single-line base64 key (the second line of athar.key)
-      - MINISIGN_PRIVATE_KEY={{ .Env.MINISIGN_PRIVATE_KEY }}
+    # tools/sign reads MINISIGN_PRIVATE_KEY (single-line base64 key) from the
+    # environment inherited from the release job.
 
 changelog:
   sort: asc
