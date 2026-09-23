@@ -192,7 +192,7 @@ func (a adapter) Read(ctx context.Context, env adapters.Env, src adapters.Source
 		return adapters.ReadResult{}, err
 	}
 	if age := a.clock().Sub(mtime); age > -settle && age < settle {
-		return adapters.ReadResult{}, fmt.Errorf("lmstudio: %s changed less than 5 s ago; it will be read on the next sync", name)
+		return adapters.ReadResult{}, fmt.Errorf("lmstudio: %s changed less than 5 s ago: %w", name, adapters.ErrRetryLater)
 	}
 	data, err := fsread.ReadFile(src.Path)
 	if err != nil {

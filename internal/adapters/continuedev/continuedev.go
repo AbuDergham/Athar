@@ -58,7 +58,7 @@ const (
 )
 
 // errRecent marks a source skipped because it was modified within recentWindow.
-var errRecent = errors.New("modified less than 5 s ago; it is read on the next sync")
+var errRecent = fmt.Errorf("modified less than 5 s ago: %w", adapters.ErrRetryLater)
 
 type adapter struct {
 	now func() time.Time // nil = time.Now; tests move the clock

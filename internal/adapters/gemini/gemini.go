@@ -225,7 +225,7 @@ func checkSettled(path string) error {
 		return err
 	}
 	if age := now().Sub(mtime); age < freshWindow && age > -freshWindow {
-		return fmt.Errorf("%s changed less than %v ago; it is read on the next sync", filepath.Base(path), freshWindow)
+		return fmt.Errorf("%s changed less than %v ago: %w", filepath.Base(path), freshWindow, adapters.ErrRetryLater)
 	}
 	return nil
 }

@@ -6,11 +6,18 @@ package adapters
 
 import (
 	"context"
+	"errors"
 	"os"
 	"path/filepath"
 
 	"github.com/AbuDergham/Athar/internal/model"
 )
+
+// ErrRetryLater is returned (wrapped) by Read when a source is still being
+// written (e.g. a whole-file JSON source modified less than 5 s ago, spec §4.3).
+// The syncer then treats the source as seen but unread: it does not store the
+// fingerprint, shows no error, and reads it again on the next sync.
+var ErrRetryLater = errors.New("source is being written; read on the next sync")
 
 // Env tells adapters where to look. Tests point it at testdata trees.
 type Env struct {
