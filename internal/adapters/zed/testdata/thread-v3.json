@@ -1,0 +1,42 @@
+{
+  "title": "Fix the login flow",
+  "messages": [
+    {"User": {"id": "0f1e2d3c-0000-4000-8000-000000000001", "content": [
+      {"Text": "Please fix the login bug in"},
+      {"Mention": {"uri": {"File": {"abs_path": "C:\\work\\alpha\\login.go"}}, "content": "package main // attached file body, not a message"}},
+      {"Image": {"source": "iVBORw0KGgo=", "size": {"width": 1, "height": 1}}}
+    ]}},
+    {"Agent": {
+      "content": [
+        {"Thinking": {"text": "private reasoning that is never kept", "signature": "sig"}},
+        {"Text": "I will look at the file."},
+        {"ToolUse": {"id": "tool-1", "name": "read_file", "raw_input": "{\"path\":\"alpha/login.go\"}", "input": {"path": "alpha/login.go"}, "is_input_complete": true}},
+        {"ToolUse": {"id": "tool-2", "name": "terminal", "raw_input": "{\"command\":\"go test ./...\",\"cd\":\"alpha\"}", "input": {"command": "go test ./...", "cd": "alpha"}, "is_input_complete": true}}
+      ],
+      "tool_results": {
+        "tool-2": {"tool_use_id": "tool-2", "tool_name": "terminal", "is_error": false, "content": {"Text": "ok  \talpha\t0.1s"}, "output": null},
+        "tool-1": {"tool_use_id": "tool-1", "tool_name": "read_file", "is_error": false, "content": {"Text": "package main"}, "output": null},
+        "tool-9": {"tool_use_id": "tool-9", "tool_name": "fetch", "is_error": true, "content": "orphan result", "output": null}
+      },
+      "reasoning_details": null
+    }},
+    "Resume",
+    {"Agent": {"content": [{"RedactedThinking": "opaque"}, {"Text": "The login bug is fixed."}, {"FutureVariant": {"x": 1}}], "tool_results": {}}},
+    {"User": {"id": "0f1e2d3c-0000-4000-8000-000000000002", "content": [
+      {"Text": "Thanks! Now review "},
+      {"Mention": {"uri": {"Thread": {"id": "abc", "name": "older chat"}}, "content": ""}},
+      {"Text": " and the مشروع"}
+    ]}}
+  ],
+  "updated_at": "2026-08-11T15:21:12.123456789+00:00",
+  "detailed_summary": null,
+  "draft_prompt": null,
+  "initial_project_snapshot": {"worktree_snapshots": [{"worktree_path": "C:\\work\\snapshot", "git_state": null}], "timestamp": "2026-08-11T14:00:00.000000000+00:00"},
+  "cumulative_token_usage": {},
+  "request_token_usage": {},
+  "model": {"provider": "example", "model": "example-model"},
+  "profile": "write",
+  "subagent_context": null,
+  "thinking_enabled": false,
+  "version": "0.3.0"
+}

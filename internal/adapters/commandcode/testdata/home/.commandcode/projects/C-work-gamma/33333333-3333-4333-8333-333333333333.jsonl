@@ -1,0 +1,6 @@
+{"type":"session","version":3,"id":"33333333-3333-4333-8333-333333333333","timestamp":"2026-08-03T08:00:00.000Z","cwd":"C:\\work\\gamma"}
+{"type":"message","id":"c0000001","parentId":null,"timestamp":"2026-08-03T08:00:02.000Z","message":{"role":"user","content":[{"type":"text","text":"أريد   مساعدة\nفي سكربت النشر"},{"type":"image","source":{"type":"base64","media_type":"image/png","data":"AAAA"}},{"type":"text","text":"deployment script: it fails on the second step when the environment variable is missing and I do not know why"}],"meta":{"source":"user"}}}
+{"type":"message","id":"c0000002","parentId":"c0000001","timestamp":"2026-08-03T08:00:09.000Z","message":{"role":"assistant","content":[{"type":"text","text":"First part."},{"type":"text","text":"Second part."}]}}
+{"type":"message","id":"c0000003","parentId":"c0000002","timestamp":"2026-08-03T08:01:00.000Z","message":{"role":"user","content":[{"type":"text","text":"Interrupted by user"}],"meta":{"messageId":"cccccccc-0000-4000-8000-000000000003"}}}
+{"type":"message","id":"c0000004","parentId":"c0000003","timestamp":"2026-08-03T08:02:00.000Z","message":{"role":"user","content":"string content prompt"}}
+{"type":"message","id":"c0000005","parentId":"c0000004","timestamp":"2026-08-03T08:03:00.000Z","message":{"role":"assistant","content":[{"type":"text","text":"half written

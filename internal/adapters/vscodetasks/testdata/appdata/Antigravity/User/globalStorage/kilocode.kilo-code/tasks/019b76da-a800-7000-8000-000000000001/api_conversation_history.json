@@ -1,0 +1,20 @@
+[
+  {"role": "user", "ts": 1767225601000, "content": [
+    {"type": "text", "text": "<task>\nMake the page responsive\n</task>"},
+    {"type": "text", "text": "<environment_details>\n# Current Workspace Directory (c:/work/site) Files\nindex.html\n</environment_details>"}
+  ]},
+  {"role": "assistant", "ts": 1767225602000, "reasoning_details": [{"type": "reasoning.text", "text": "hidden reasoning must not be kept", "format": "x", "index": 0}], "content": [
+    {"type": "text", "text": "Let me check."},
+    {"type": "tool_use", "id": "call_1", "name": "edit_file", "input": {"file_path": "index.html", "old_string": "a", "new_string": "b", "expected_replacements": 1}}
+  ]},
+  {"role": "user", "ts": 1767225603000, "content": [
+    {"type": "tool_result", "tool_use_id": "call_1", "content": [{"type": "text", "text": "File edited"}]},
+    {"type": "text", "text": "<environment_details>\n# Current Workspace Directory (c:/work/site) Files\n</environment_details>"}
+  ]},
+  {"role": "assistant", "ts": 1767225604000, "content": [
+    {"type": "tool_use", "id": "call_2", "name": "attempt_completion", "input": {"result": "Done."}}
+  ]},
+  {"role": "user", "ts": 1767225605000, "content": [
+    {"type": "tool_result", "tool_use_id": "call_2", "content": [{"type": "text", "text": "<feedback>\nAlso the footer\n</feedback>"}]}
+  ]}
+]

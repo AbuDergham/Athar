@@ -1,0 +1,3 @@
+{"timestamp":"2026-01-18T10:05:00.000Z","type":"session_meta","payload":{"id":"0199b000-0000-7000-8000-000000000005","timestamp":"2026-01-18T10:05:00.000Z","cwd":"C:\\work\\ci","originator":"codex_exec","cli_version":"0.131.0","source":"exec","instructions":null}}
+{"timestamp":"2026-01-18T10:05:01.000Z","type":"event_msg","payload":{"type":"user_message","message":"Headless run from a script","kind":"plain"}}
+{"timestamp":"2026-01-18T10:05:02.000Z","type":"event_msg","payload":{"type":"agent_message","message":"Done headless."}}

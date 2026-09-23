@@ -1,0 +1,26 @@
+{
+  "memento/icube-ai-agent-storage": {
+    "currentSessionId": "6828b0000000000000000005",
+    "list": [
+      {
+        "sessionId": "6828b0000000000000000003",
+        "title": "Refactor the parser module",
+        "name": "Refactor the parser module",
+        "createdAt": 1747455000000,
+        "updatedAt": 1747455600000,
+        "hasMore": false,
+        "messages": []
+      },
+      42,
+      {"sessionId": "6828b0000000000000000004", "messages": "not a list"},
+      {
+        "sessionId": "6828b0000000000000000005",
+        "messages": [
+          {"role": "user", "content": "Hi there", "timestamp": "1747460000000"},
+          7,
+          {"role": "assistant", "content": "Hello! How can I help?", "timestamp": 1747460001000}
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+[
+  {
+    "sessionId": "99999999-9999-4999-8999-999999999999",
+    "messageId": 0,
+    "type": "user",
+    "message": "prompt from a folder that no longer exists",
+    "timestamp": "2025-08-26T08:00:00.000Z"
+  }
+]

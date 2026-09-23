@@ -1,0 +1,2 @@
+{"type":"session","version":3,"id":"stray","timestamp":"2026-08-01T11:00:00.000Z","cwd":"C:\\work\\stray"}
+{"type":"message","id":"s0000001","parentId":null,"timestamp":"2026-08-01T11:00:01.000Z","message":{"role":"user","content":[{"type":"text","text":"files directly under projects are not sessions"}],"meta":{"source":"user"}}}

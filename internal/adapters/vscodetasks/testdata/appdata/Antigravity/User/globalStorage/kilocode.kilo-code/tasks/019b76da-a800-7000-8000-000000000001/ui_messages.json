@@ -1,0 +1,4 @@
+[
+  {"ts": 1767225600900, "type": "say", "say": "text", "text": "Make the page responsive"},
+  {"ts": 1767225606000, "type": "say", "say": "user_feedback", "text": "Also the footer"}
+]

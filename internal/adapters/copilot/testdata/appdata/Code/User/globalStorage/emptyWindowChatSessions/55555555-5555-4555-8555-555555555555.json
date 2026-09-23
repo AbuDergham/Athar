@@ -1,0 +1,59 @@
+{
+  "version": 3,
+  "requesterUsername": "dev",
+  "responderUsername": "GitHub Copilot",
+  "initialLocation": "panel",
+  "isImported": false,
+  "sessionId": "55555555-5555-4555-8555-555555555555",
+  "creationDate": 1767484800000,
+  "lastMessageDate": 1767484860000,
+  "requests": [
+    {
+      "requestId": "request_d1",
+      "message": {
+        "text": "Write a small script that renames every photo in a folder by its date renames every photo in a folder by its date renames every photo in a folder by its date renames every photo in a folder by its date",
+        "parts": [
+          {
+            "range": {
+              "start": 0,
+              "endExclusive": 201
+            },
+            "editorRange": {
+              "startLineNumber": 1,
+              "startColumn": 1,
+              "endLineNumber": 1,
+              "endColumn": 202
+            },
+            "text": "Write a small script that renames every photo in a folder by its date renames every photo in a folder by its date renames every photo in a folder by its date renames every photo in a folder by its date",
+            "kind": "text"
+          }
+        ]
+      },
+      "variableData": {
+        "variables": []
+      },
+      "response": [
+        {
+          "value": "Here is a script.",
+          "supportThemeIcons": false,
+          "supportHtml": false
+        }
+      ],
+      "responseId": "response_request_d1",
+      "result": {
+        "timings": {
+          "totalElapsed": 1200
+        },
+        "metadata": {}
+      },
+      "followups": [],
+      "isCanceled": false,
+      "agent": {
+        "id": "github.copilot.editsAgent"
+      },
+      "contentReferences": [],
+      "codeCitations": [],
+      "timestamp": 1767484860000
+    }
+  ]
+}

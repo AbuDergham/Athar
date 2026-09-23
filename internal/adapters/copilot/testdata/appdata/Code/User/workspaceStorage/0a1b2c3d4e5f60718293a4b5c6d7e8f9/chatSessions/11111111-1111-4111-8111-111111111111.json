@@ -1,0 +1,317 @@
+{
+  "version": 3,
+  "requesterUsername": "dev",
+  "responderUsername": "GitHub Copilot",
+  "initialLocation": "panel",
+  "isImported": false,
+  "sessionId": "11111111-1111-4111-8111-111111111111",
+  "creationDate": 1767225600000,
+  "lastMessageDate": 1767225780000,
+  "customTitle": "Refactor the lexer",
+  "requests": [
+    {
+      "requestId": "request_1",
+      "message": {
+        "text": "Explain the tokenizer",
+        "parts": [
+          {
+            "range": {
+              "start": 0,
+              "endExclusive": 21
+            },
+            "editorRange": {
+              "startLineNumber": 1,
+              "startColumn": 1,
+              "endLineNumber": 1,
+              "endColumn": 22
+            },
+            "text": "Explain the tokenizer",
+            "kind": "text"
+          }
+        ]
+      },
+      "variableData": {
+        "variables": []
+      },
+      "response": [
+        {
+          "value": "The tokenizer in ",
+          "supportThemeIcons": false,
+          "supportHtml": false
+        },
+        {
+          "kind": "inlineReference",
+          "inlineReference": {
+            "$mid": 1,
+            "fsPath": "c:\\work\\demo\\lexer.go",
+            "_sep": 1,
+            "external": "file:///c%3A/work/demo/lexer.go",
+            "path": "/c:/work/demo/lexer.go",
+            "scheme": "file"
+          }
+        },
+        {
+          "value": " splits input into tokens.\n\nSee [](file:///c%3A/work/demo/token.go) too.",
+          "supportThemeIcons": false,
+          "supportHtml": false
+        },
+        {
+          "kind": "codeblockUri",
+          "uri": {
+            "$mid": 1,
+            "fsPath": "c:\\work\\demo\\lexer.go",
+            "_sep": 1,
+            "external": "file:///c%3A/work/demo/lexer.go",
+            "path": "/c:/work/demo/lexer.go",
+            "scheme": "file"
+          },
+          "isEdit": false
+        },
+        {
+          "kind": "undoStop",
+          "id": "stop-1"
+        }
+      ],
+      "responseId": "response_request_1",
+      "result": {
+        "timings": {
+          "totalElapsed": 1200
+        },
+        "metadata": {}
+      },
+      "followups": [],
+      "isCanceled": false,
+      "agent": {
+        "id": "github.copilot.editsAgent"
+      },
+      "contentReferences": [],
+      "codeCitations": [],
+      "timestamp": 1767225660000
+    },
+    {
+      "requestId": "request_2",
+      "message": {
+        "text": "Rename Scan to Next and run the tests",
+        "parts": [
+          {
+            "range": {
+              "start": 0,
+              "endExclusive": 37
+            },
+            "editorRange": {
+              "startLineNumber": 1,
+              "startColumn": 1,
+              "endLineNumber": 1,
+              "endColumn": 38
+            },
+            "text": "Rename Scan to Next and run the tests",
+            "kind": "text"
+          }
+        ]
+      },
+      "variableData": {
+        "variables": []
+      },
+      "response": [
+        {
+          "value": "I will read the file first.",
+          "supportThemeIcons": false,
+          "supportHtml": false
+        },
+        {
+          "kind": "prepareToolInvocation",
+          "toolName": "copilot_readFile"
+        },
+        {
+          "kind": "toolInvocationSerialized",
+          "toolId": "copilot_readFile",
+          "toolCallId": "tc-1",
+          "invocationMessage": {
+            "value": "Reading [](file:///c%3A/work/demo/lexer.go)",
+            "supportThemeIcons": false,
+            "supportHtml": false,
+            "uris": {}
+          },
+          "pastTenseMessage": {
+            "value": "Read [](file:///c%3A/work/demo/lexer.go#10-20), lines 1 to 40",
+            "supportThemeIcons": false,
+            "supportHtml": false,
+            "uris": {}
+          },
+          "isConfirmed": true,
+          "isComplete": true
+        },
+        {
+          "kind": "toolInvocationSerialized",
+          "toolId": "copilot_runInTerminal",
+          "toolCallId": "tc-2",
+          "invocationMessage": "Running command",
+          "toolSpecificData": {
+            "kind": "terminal",
+            "command": "go test ./...",
+            "language": "pwsh"
+          },
+          "isConfirmed": true,
+          "isComplete": true
+        },
+        {
+          "kind": "toolInvocationSerialized",
+          "toolId": "copilot_findTextInFiles",
+          "toolCallId": "tc-3",
+          "invocationMessage": "Searching text for `Scan` (`**/*.go`)",
+          "isConfirmed": true,
+          "isComplete": true
+        },
+        {
+          "kind": "toolInvocationSerialized",
+          "toolId": "copilot_insertEdit",
+          "toolCallId": "tc-4",
+          "invocationMessage": "Using \"Insert Edit\"",
+          "isConfirmed": true,
+          "isComplete": true,
+          "presentation": "hidden"
+        },
+        {
+          "kind": "textEditGroup",
+          "uri": {
+            "$mid": 1,
+            "fsPath": "c:\\work\\demo\\lexer.go",
+            "_sep": 1,
+            "external": "file:///c%3A/work/demo/lexer.go",
+            "path": "/c:/work/demo/lexer.go",
+            "scheme": "file"
+          },
+          "edits": [],
+          "done": true
+        },
+        42,
+        {
+          "kind": "thinking",
+          "value": "private reasoning that is never indexed"
+        },
+        {
+          "kind": "confirmation",
+          "title": "Continue?",
+          "message": "Copilot has been working for a while.",
+          "buttons": [
+            "Continue",
+            "Pause"
+          ],
+          "isUsed": true,
+          "data": {}
+        },
+        {
+          "value": "Done. ",
+          "supportThemeIcons": false,
+          "supportHtml": false
+        },
+        {
+          "value": "All tests pass.",
+          "supportThemeIcons": false,
+          "supportHtml": false
+        }
+      ],
+      "responseId": "response_request_2",
+      "result": {
+        "timings": {
+          "totalElapsed": 1200
+        },
+        "metadata": {}
+      },
+      "followups": [],
+      "isCanceled": false,
+      "agent": {
+        "id": "github.copilot.editsAgent"
+      },
+      "contentReferences": [],
+      "codeCitations": [],
+      "timestamp": 1767225720000
+    },
+    {
+      "requestId": "request_3",
+      "message": {
+        "text": "Add a doc comment",
+        "parts": [
+          {
+            "range": {
+              "start": 0,
+              "endExclusive": 17
+            },
+            "editorRange": {
+              "startLineNumber": 1,
+              "startColumn": 1,
+              "endLineNumber": 1,
+              "endColumn": 18
+            },
+            "text": "Add a doc comment",
+            "kind": "text"
+          }
+        ]
+      },
+      "variableData": {
+        "variables": []
+      },
+      "response": [
+        {
+          "value": "Added the comment.",
+          "supportThemeIcons": false,
+          "supportHtml": false
+        },
+        {
+          "kind": "textEditGroup",
+          "uri": {
+            "$mid": 1,
+            "fsPath": "c:\\work\\demo\\lexer.go",
+            "_sep": 1,
+            "external": "file:///c%3A/work/demo/lexer.go",
+            "path": "/c:/work/demo/lexer.go",
+            "scheme": "file"
+          },
+          "edits": [],
+          "done": true
+        },
+        {
+          "kind": "textEditGroup",
+          "uri": {
+            "$mid": 1,
+            "fsPath": "c:\\work\\demo\\lexer.go",
+            "_sep": 1,
+            "external": "file:///c%3A/work/demo/lexer.go",
+            "path": "/c:/work/demo/lexer.go",
+            "scheme": "file"
+          },
+          "edits": [],
+          "done": true
+        },
+        {
+          "kind": "textEditGroup",
+          "uri": {
+            "$mid": 1,
+            "fsPath": "c:\\work\\demo\\doc.go",
+            "_sep": 1,
+            "external": "file:///c%3A/work/demo/doc.go",
+            "path": "/c:/work/demo/doc.go",
+            "scheme": "file"
+          },
+          "edits": [],
+          "done": true
+        }
+      ],
+      "responseId": "response_request_3",
+      "result": {
+        "timings": {
+          "totalElapsed": 1200
+        },
+        "metadata": {}
+      },
+      "followups": [],
+      "isCanceled": false,
+      "agent": {
+        "id": "github.copilot.editsAgent"
+      },
+      "contentReferences": [],
+      "codeCitations": [],
+      "timestamp": 1767225780000
+    }
+  ]
+}

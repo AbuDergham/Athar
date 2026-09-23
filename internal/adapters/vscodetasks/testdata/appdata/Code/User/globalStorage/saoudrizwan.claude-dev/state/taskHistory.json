@@ -1,0 +1,4 @@
+[
+  {"id": "1767225600000", "ulid": "01JGZZZZZZZZZZZZZZZZZZZZZZ", "ts": 1767225800000, "task": "Build a tiny\n  todo CLI in Go", "tokensIn": 10, "tokensOut": 20, "totalCost": 0.01, "size": 1234, "cwdOnTaskInitialization": "C:\\work\\todo", "isFavorited": false, "modelId": "synthetic-model"},
+  {"id": "1767226000000", "ts": 1767226000500, "task": "Never started", "cwdOnTaskInitialization": "C:\\work\\empty"}
+]

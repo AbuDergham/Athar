@@ -1,0 +1,68 @@
+{
+  "version": 3,
+  "requesterUsername": "dev",
+  "responderUsername": "GitHub Copilot",
+  "initialLocation": "panel",
+  "isImported": false,
+  "sessionId": "66666666-6666-4666-8666-666666666666",
+  "creationDate": 1767571200000,
+  "lastMessageDate": 1767571260000,
+  "requests": [
+    {
+      "requestId": "request_e1",
+      "message": {
+        "text": "",
+        "parts": [
+          {
+            "kind": "text",
+            "text": "Hello "
+          },
+          {
+            "kind": "agent",
+            "agent": {
+              "id": "x"
+            }
+          },
+          {
+            "kind": "text",
+            "text": "from parts"
+          }
+        ]
+      },
+      "variableData": {
+        "variables": []
+      },
+      "response": [
+        {
+          "kind": "markdownContent",
+          "content": {
+            "value": "Hello back.",
+            "supportThemeIcons": false,
+            "supportHtml": false
+          }
+        },
+        {
+          "kind": "thinking",
+          "value": [
+            "step one"
+          ]
+        }
+      ],
+      "responseId": "response_request_e1",
+      "result": {
+        "timings": {
+          "totalElapsed": 1200
+        },
+        "metadata": {}
+      },
+      "followups": [],
+      "isCanceled": false,
+      "agent": {
+        "id": "github.copilot.editsAgent"
+      },
+      "contentReferences": [],
+      "codeCitations": [],
+      "timestamp": 1767571260000
+    }
+  ]
+}

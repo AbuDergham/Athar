@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "summary": "Legacy plan",
+  "updated_at": "2025-05-01T10:00:00Z",
+  "messages": [
+    {"id": 0, "role": "user", "segments": [{"type": "text", "text": "Write a deploy script"}], "tool_uses": [], "tool_results": [], "context": "attached file body, not a message", "creases": [], "is_hidden": false},
+    {"id": 1, "role": "assistant", "segments": [{"type": "thinking", "text": "hmm", "signature": null}, {"type": "text", "text": "Here is the script."}], "tool_uses": [{"id": "t1", "name": "edit_file", "input": {"path": "deploy.ps1", "display_description": "create"}}], "tool_results": [], "context": "", "creases": [], "is_hidden": false},
+    {"id": 2, "role": "user", "segments": [], "tool_uses": [], "tool_results": [{"tool_use_id": "t1", "is_error": false, "content": "Edited deploy.ps1", "output": null}], "context": "", "creases": [], "is_hidden": false},
+    {"id": 3, "role": "user", "segments": [{"type": "text", "text": "hidden follow-up"}], "is_hidden": true},
+    {"id": 4, "role": "system", "segments": [{"type": "text", "text": "system prompt"}]},
+    {"id": 5, "role": "assistant", "segments": [{"type": "redacted_thinking", "data": "opaque"}, {"type": "text", "text": "Done."}]}
+  ],
+  "initial_project_snapshot": {"worktree_snapshots": [{"worktree_path": "D:\\legacy\\proj", "git_state": null}], "unsaved_buffer_paths": [], "timestamp": "2025-05-01T09:00:00Z"},
+  "cumulative_token_usage": {},
+  "detailed_summary_state": "NotGenerated"
+}

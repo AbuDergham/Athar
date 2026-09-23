@@ -1,0 +1,13 @@
+{
+  "completion_tokens": 80,
+  "cost": 0.01,
+  "created_at": 1761127199990,
+  "id": "11111111-1111-4111-8111-111111111111",
+  "message_count": 0,
+  "parent_session_id": "",
+  "prompt_tokens": 120,
+  "summary_message_id": "",
+  "title": "Alpha Planning",
+  "updated_at": 1761127500000,
+  "working_dir": "C:\\work\\alpha"
+}

@@ -1,0 +1,27 @@
+[
+  {"role": "user", "content": "<task>\nFix the flaky test\n</task>\n<environment_details>\n# Current Working Directory (c:/work/cursor-proj) Files\na_test.go\n</environment_details>"},
+  {"role": "assistant", "content": [
+    {"type": "thinking", "thinking": "hidden reasoning must not be kept", "signature": "x"},
+    {"type": "text", "text": "Reading it."},
+    {"type": "tool_use", "id": "toolu_1", "name": "read_file", "input": {"files": [{"path": "a_test.go"}, {"path": "b_test.go"}]}}
+  ]},
+  {"role": "user", "content": [
+    {"type": "tool_result", "tool_use_id": "toolu_1", "content": [{"type": "text", "text": "package a"}]},
+    {"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": "AAAA"}}
+  ]},
+  {"role": "assistant", "content": [
+    {"type": "tool_use", "id": "toolu_2", "name": "ask_followup_question", "input": {"question": "How many retries?", "follow_up": [{"text": "three"}]}}
+  ]},
+  {"role": "user", "content": [
+    {"type": "tool_result", "tool_use_id": "toolu_2", "content": "<answer>\nthree\n</answer>"}
+  ]},
+  {"role": "assistant", "content": [
+    {"type": "tool_use", "id": "toolu_3", "name": "update_todo_list", "input": {"todos": "[x] fix"}}
+  ]},
+  {"role": "user", "content": [
+    {"type": "tool_result", "tool_use_id": "toolu_3", "content": "ok"}
+  ]},
+  {"role": "assistant", "content": [
+    {"type": "tool_use", "id": "toolu_4", "name": "attempt_completion", "input": {"result": "Fixed."}}
+  ]}
+]

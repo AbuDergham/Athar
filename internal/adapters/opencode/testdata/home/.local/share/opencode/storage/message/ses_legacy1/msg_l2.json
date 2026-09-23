@@ -1,0 +1,1 @@
+{"id":"msg_l2","sessionID":"ses_legacy1","role":"assistant","time":{"created":1770746401000,"completed":1770746500000},"parentID":"msg_l1","modelID":"m","providerID":"p","mode":"build","agent":"build","path":{"cwd":"C:\\work\\legacy","root":"C:\\work\\legacy"},"cost":0,"tokens":{"input":1,"output":1,"reasoning":0,"cache":{"read":0,"write":0}},"finish":"stop"}

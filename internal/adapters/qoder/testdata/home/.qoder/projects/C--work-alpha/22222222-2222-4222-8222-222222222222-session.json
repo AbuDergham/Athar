@@ -1,0 +1,13 @@
+{
+  "completion_tokens": 80,
+  "cost": 0.01,
+  "created_at": 1761130000000,
+  "id": "22222222-2222-4222-8222-222222222222",
+  "message_count": 0,
+  "parent_session_id": "",
+  "prompt_tokens": 120,
+  "summary_message_id": "b03",
+  "title": "New Session",
+  "updated_at": 1761130100000,
+  "working_dir": "D:\\projects\\beta dir"
+}

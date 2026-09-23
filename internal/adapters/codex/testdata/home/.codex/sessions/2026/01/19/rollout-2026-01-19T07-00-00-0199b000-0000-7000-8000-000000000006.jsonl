@@ -1,0 +1,7 @@
+{"timestamp":"2026-01-19T06:00:00.000Z","type":"session_meta","payload":{"id":"0199b000-0000-7000-8000-000000000006","timestamp":"2026-01-19T06:00:00.000Z","originator":"codex_cli_rs","cli_version":"0.20.0","instructions":null}}
+{"timestamp":"2026-01-19T06:00:00.500Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"<user_instructions>\n\nSynthetic project rules\n\n</user_instructions>"}]}}
+{"timestamp":"2026-01-19T06:00:00.500Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"<environment_context>\n  <cwd>C:\\work\\from-env-context</cwd>\n</environment_context>"}]}}
+{"timestamp":"2026-01-19T06:00:01.000Z","type":"turn_context","payload":{"cwd":"C:\\work\\gamma","approval_policy":"on-request","model":"gpt-5"}}
+{"timestamp":"2026-01-19T06:00:02.000Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"Rename the module"}]}}
+{"timestamp":"2026-01-19T06:00:03.000Z","type":"response_item","payload":{"type":"reasoning","summary":[],"content":null,"encrypted_content":"gAAAAB-synthetic"}}
+{"timestamp":"2026-01-19T06:00:04.000Z","type":"response_item","payload":{"type":"message","role":"assistant","content":[{"type":"output_text","text":"Done."}]}}

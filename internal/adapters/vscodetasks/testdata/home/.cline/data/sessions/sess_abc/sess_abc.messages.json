@@ -1,0 +1,5 @@
+{"version": 1, "messages": [
+  {"role": "user", "content": [{"type": "text", "text": "Summarize the repo"}], "ts": 1767348000000},
+  {"role": "assistant", "content": [{"type": "text", "text": "It is a Go CLI."}, {"type": "tool_use", "id": "t1", "name": "run_commands", "input": {"command": "go list ./..."}}], "ts": 1767348060000},
+  {"role": "user", "content": [{"type": "tool_result", "tool_use_id": "t1", "content": "example.com/app"}], "ts": 1767348070000}
+]}

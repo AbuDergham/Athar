@@ -1,0 +1,17 @@
+{
+  "storage.serviceMachineId": "synthetic",
+  "memento/icube-ai-agent-storage": {
+    "list": [
+      {
+        "sessionId": "6828d0000000000000000007",
+        "title": "Global question",
+        "createdAt": 1747480000000,
+        "updatedAt": 1747480100000,
+        "messages": [
+          {"role": "user", "content": "Global question", "timestamp": 1747480010000},
+          {"role": "assistant", "content": "Global answer", "timestamp": 1747480020000}
+        ]
+      }
+    ]
+  }
+}

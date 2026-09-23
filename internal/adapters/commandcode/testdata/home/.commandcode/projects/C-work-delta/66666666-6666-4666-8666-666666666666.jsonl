@@ -1,0 +1,4 @@
+{"role":"user","content":"Legacy prompt about the delta module","timestamp":"2026-06-01T07:00:00.000Z"}
+{"role":"assistant","content":[{"type":"text","text":"Looking at it."},{"type":"tool_use","id":"t1","name":"edit_file","input":{"file_path":"delta.go","old_string":"a","new_string":"b"}}],"timestamp":"2026-06-01T07:00:03.000Z"}
+{"role":"user","content":[{"type":"tool_result","tool_use_id":"t1","content":"edited","is_error":false}],"timestamp":"2026-06-01T07:00:04.000Z"}
+{"role":"assistant","content":"All done.","metadata":{"createdAt":1780297205000}}

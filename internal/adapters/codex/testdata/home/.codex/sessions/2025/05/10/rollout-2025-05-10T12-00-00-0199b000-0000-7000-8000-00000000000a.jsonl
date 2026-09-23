@@ -1,0 +1,8 @@
+{"id":"0199b000-0000-7000-8000-00000000000a","timestamp":"2025-05-10T10:00:00.000Z","instructions":null}
+{"record_type":"state"}
+{"type":"message","id":null,"role":"user","content":[{"type":"input_text","text":"<environment_context>\n  <cwd>C:\\legacy\\proj</cwd>\n</environment_context>"}]}
+{"type":"message","id":null,"role":"user","content":[{"type":"input_text","text":"Legacy question"}]}
+{"record_type":"state"}
+{"type":"function_call","id":null,"name":"shell","arguments":"{\"command\":[\"bash\",\"-lc\",\"ls\"]}","call_id":"call_l1"}
+{"type":"function_call_output","call_id":"call_l1","output":"{\"output\":\"a.txt\\n\",\"metadata\":{\"exit_code\":0}}"}
+{"type":"message","id":null,"role":"assistant","content":[{"type":"output_text","text":"Legacy answer"}]}

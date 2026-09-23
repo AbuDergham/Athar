@@ -1,0 +1,13 @@
+{"type":"session","version":3,"id":"22222222-2222-4222-8222-222222222222","timestamp":"2026-08-02T09:00:00.000Z","cwd":"D:\\code\\beta project"}
+{"type":"message","id":"b0000001","parentId":null,"timestamp":"2026-08-02T09:00:01.000Z","message":{"role":"user","content":[{"type":"text","text":"Fix the failing build"}],"meta":{"source":"user","createdAt":1785661201000}}}
+{"type":"message","id":"b0000002","parentId":"b0000001","timestamp":"2026-08-02T09:00:30.000Z","message":{"role":"assistant","content":[{"type":"text","text":"First attempt at a fix."}]}}
+{"type":"message","id":"b0000003","parentId":"b0000001","timestamp":"2026-08-02T09:00:40.000Z","message":{"role":"assistant","content":[{"type":"text","text":"Second attempt on another branch."}]}}
+{"type":"session_info","id":"b0000004","parentId":"b0000003","timestamp":"2026-08-02T09:00:45.000Z","name":"Temporary name"}
+{"type":"message","id":"b0000005","parentId":"b0000004","timestamp":"2026-08-02T09:00:50.000Z","message":{"role":"user","content":[{"type":"text","text":"Stop hook: run the tests too"}],"meta":{"source":"stop_hook","createdAt":1785661250000,"isAutomated":true}}}
+{"type":"message","id":"b0000006","parentId":"b0000005","timestamp":"2026-08-02T09:01:00.000Z","message":{"role":"assistant","content":[{"type":"text","text":"Tests pass."}]},"model":"example/model-two"}
+{"type":"message","id":"b0000007","parentId":"b0000006","timestamp":"2026-08-02T09:01:10.000Z","message":{"role":"user","content":[{"type":"text","text":"also update the changelog"}],"meta":{"source":"followup"}}}
+{"type":"message","id":"b0000008","parentId":"b0000007","timestamp":"2026-08-02T09:01:15.000Z","message":{"role":"user","content":[{"type":"text","text":"and keep it short"}],"meta":{"source":"steering"}}}
+{"type":"message","id":"b0000009","parentId":"b0000008","timestamp":"2026-08-02T09:01:20.000Z","message":{"role":"user","content":[{"type":"text","text":"Reviewer mod note"}],"meta":{"source":"mod:reviewer"}}}
+{"type":"message","id":"b0000010","parentId":"b0000009","timestamp":"2026-08-02T09:01:25.000Z","message":{"role":"user","content":[{"type":"text","text":"Summary of the earlier part"}],"meta":{"isSummary":true}}}
+{"type":"message","id":"b0000011","parentId":"b0000010","timestamp":"2026-08-02T09:01:30.000Z","message":{"role":"user","content":[{"type":"text","text":"Insufficient credits"}],"meta":{"messageId":"bbbbbbbb-0000-4000-8000-000000000011"}}}
+{"type":"session_info","id":"b0000012","parentId":"b0000011","timestamp":"2026-08-02T09:02:00.000Z"}

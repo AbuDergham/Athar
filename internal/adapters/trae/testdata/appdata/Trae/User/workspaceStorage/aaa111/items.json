@@ -1,0 +1,173 @@
+{
+  "workbench.panel.icube.aiChatSidebar": {"collapsed": false},
+  "icube-ai-agent-storage-input-history": [{"inputText": "input history is not read", "multiMedia": [], "parsedQuery": ["input history is not read"]}],
+  "ChatStore": {"state": {"turnsHeight": {}, "turnsIsExpand": {}}, "version": 1},
+  "memento/icube-ai-agent-storage": {
+    "currentSessionId": "6828a0000000000000000001",
+    "list": [
+      {
+        "sessionId": "6828a0000000000000000000",
+        "createdAt": 1747430000000,
+        "updatedAt": 1747430000500,
+        "isCurrent": false,
+        "nextPageToken": "",
+        "hasMore": false,
+        "messages": []
+      },
+      {
+        "sessionId": "6828a0000000000000000001",
+        "title": "Add a login page to the demo app\n  with validation",
+        "name": "Add a login page to the demo app\n  with validation",
+        "type": "builder",
+        "createdAt": 1747440000000,
+        "updatedAt": 1747443600000,
+        "isCurrent": true,
+        "nextPageToken": "21",
+        "hasMore": true,
+        "messages": [
+          {
+            "role": "user",
+            "content": "Add a login page to the demo app\n  with validation",
+            "timestamp": 1747440060000,
+            "turnIndex": 0,
+            "turnId": "6828a00000000000000000a1",
+            "agentMessageType": "general",
+            "parsedQuery": ["Add a login page to the demo app\n  with validation"],
+            "multiMedia": [],
+            "isHistory": true
+          },
+          {
+            "role": "assistant",
+            "content": "",
+            "status": "completed",
+            "timestamp": 1747440120000,
+            "turnIndex": 0,
+            "turnId": "6828a00000000000000000a1",
+            "agentMessageType": "task",
+            "agentTaskContent": {
+              "proposal": "",
+              "proposalReasoningContent": "SYNTHETIC-HIDDEN-REASONING-1",
+              "guideline": {
+                "thought": "",
+                "planItems": [
+                  {
+                    "id": "p1", "planItemId": "p1", "toolCallId": "c1", "status": "success",
+                    "toolName": "view_files",
+                    "thought": "Let me look at the existing routes first.",
+                    "reasoningContent": "SYNTHETIC-HIDDEN-REASONING-2",
+                    "params": {"files": [{"file_path": "d:\\work\\alpha\\src\\routes.ts", "start_line": 1, "end_line": 40}]},
+                    "result": {"data": {"contents": [{"content": "export const routes = [];", "file_path": "d:\\work\\alpha\\src\\routes.ts", "start_line": 1, "end_line": 1}], "failures": []}, "error_message": "", "status": "success"}
+                  },
+                  {
+                    "id": "p2", "toolName": "run_command", "thought": "",
+                    "params": {"command": "npm", "args": ["run", "test"], "blocking": true, "command_type": "short_running_process"},
+                    "result": {"data": {"command_id": "x", "exit_code": 0, "status": "exited", "stdout": "3 tests passed", "terminal_id": 1}, "error_message": "", "status": "success"}
+                  },
+                  {
+                    "id": "p3", "toolName": "", "thought": "Tests pass; now wiring the form.", "params": {}, "result": null
+                  },
+                  {
+                    "id": "p4", "toolName": "create_file", "thought": "",
+                    "params": {"content": "export function login() {}", "filePath": "d:\\work\\alpha\\src\\login.ts", "file_path": "d:\\work\\alpha\\src\\login.ts"},
+                    "result": {"data": {"changes": [{"file_action": "create", "file_path": "d:\\work\\alpha\\src\\login.ts", "new_content": "export function login() {}"}]}, "error_message": "", "status": "success"}
+                  },
+                  {
+                    "id": "p5", "toolName": "finish",
+                    "thought": "Added the login page with form validation.",
+                    "params": {"summary": "Added the login page with form validation."},
+                    "result": {"data": {"summary": "Added the login page with form validation."}, "error_message": "", "status": "success"}
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "role": "user",
+            "content": "أضف التحقق من البريد الإلكتروني",
+            "timestamp": 1747443000000,
+            "turnIndex": 1,
+            "agentMessageType": "general",
+            "parsedQuery": ["أضف التحقق من البريد الإلكتروني"]
+          },
+          {
+            "role": "assistant",
+            "content": "Email validation added.",
+            "status": "warning",
+            "exception": {"code": 4001, "message": "synthetic service warning"},
+            "timestamp": 1747443700000,
+            "turnIndex": 1,
+            "agentMessageType": "task",
+            "agentTaskContent": {
+              "proposal": "Plan: validate the email field.",
+              "proposalReasoningContent": "",
+              "guideline": {
+                "thought": "",
+                "planItems": [
+                  {
+                    "id": "p6", "toolName": "edit_file_update", "thought": "",
+                    "reasoningContent": "SYNTHETIC-HIDDEN-REASONING-3",
+                    "params": {"filePath": "d:\\work\\alpha\\src\\login.ts", "file_path": "d:\\work\\alpha\\src\\login.ts", "replace_blocks": [{"old_str": "a", "new_str": "b"}]},
+                    "result": {"data": null, "error_message": "file locked", "status": "failed"}
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "sessionId": "2f1e6b3c-0000-4000-8000-000000000002",
+        "title": "Explain closures in JS",
+        "name": "Explain closures in JS",
+        "type": "builder",
+        "createdAt": 1747450000000,
+        "updatedAt": 1747450100000
+      }
+    ]
+  },
+  "memento/icube-ai-agent-storage-9001": {
+    "currentSessionId": "6828a0000000000000000001",
+    "list": [
+      {
+        "sessionId": "6828a0000000000000000001",
+        "createdAt": 1747440000000,
+        "updatedAt": 1747443600000,
+        "hasMore": false,
+        "nextPageToken": "",
+        "messages": [
+          {"role": "user", "content": "Add a login page to the demo app\n  with validation", "timestamp": 1747440060000, "status": "success"}
+        ]
+      }
+    ]
+  },
+  "memento/icube-ai-ng-chat-storage-": {"list": []},
+  "memento/icube-ai-ng-chat-storage-9001": {
+    "currentSessionId": "2f1e6b3c-0000-4000-8000-000000000002",
+    "list": [
+      {
+        "sessionId": "2f1e6b3c-0000-4000-8000-000000000002",
+        "createdAt": 1747450000000,
+        "updatedAt": 1747450200000,
+        "dataVersion": "v2",
+        "isCurrent": true,
+        "messages": [
+          {"role": "user", "content": "Explain closures in JS", "timestamp": 1747450010000, "status": "success", "turnIndex": 0},
+          {"role": "assistant", "content": "A closure captures variables from its enclosing scope.", "timestamp": 1747450020000, "status": "success", "turnIndex": 0}
+        ]
+      }
+    ]
+  },
+  "chatHistoryNeedToBeMigrated-9001": [
+    {
+      "sessionId": "2f1e6b3c-0000-4000-8000-000000000002",
+      "title": "Explain closures in JS",
+      "hasMigrated": true,
+      "createdAt": 1747450000000,
+      "updatedAt": 1747450200000,
+      "messages": [
+        {"role": "user", "content": "Explain closures in JS", "timestamp": 1747450010000},
+        {"role": "assistant", "content": "A closure captures variables from its enclosing scope.", "timestamp": 1747450020000}
+      ]
+    }
+  ]
+}

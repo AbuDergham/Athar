@@ -1,0 +1,1 @@
+{"version": 1, "session_id": "sess_abc", "source": "cli", "started_at": "2026-01-02T10:00:00Z", "ended_at": "2026-01-02T10:05:00Z", "status": "completed", "provider": "synthetic", "model": "synthetic-model", "cwd": "C:\\work\\sdk", "workspace_root": "C:\\work", "prompt": "Summarize the repo", "messages_path": "sess_abc.messages.json"}

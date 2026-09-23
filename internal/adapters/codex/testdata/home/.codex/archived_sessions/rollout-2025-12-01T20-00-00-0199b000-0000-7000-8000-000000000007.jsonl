@@ -1,0 +1,5 @@
+{"timestamp":"2025-12-01T19:00:00.000Z","type":"session_meta","payload":{"id":"0199b000-0000-7000-8000-000000000007","timestamp":"2025-12-01T19:00:00.000Z","cwd":"C:\\work\\delta","originator":"codex_cli_rs","cli_version":"0.131.0","source":"cli","instructions":null}}
+{"timestamp":"2025-12-01T19:00:01.000Z","type":"event_msg","payload":{"type":"user_message","message":"Old archived question","kind":"plain"}}
+{"timestamp":"2025-12-01T19:00:02.000Z","type":"event_msg","payload":{"type":"agent_message","message":"Old answer"}}
+{"timestamp":"2025-12-01T19:00:03.000Z","type":"event_msg","payload":{"type":"thread_name_updated","thread_id":"0199b000-0000-7000-8000-000000000007","thread_name":"First name"}}
+{"timestamp":"2025-12-01T19:00:04.000Z","type":"event_msg","payload":{"type":"thread_name_updated","thread_id":"0199b000-0000-7000-8000-000000000007","thread_name":"Release checklist"}}

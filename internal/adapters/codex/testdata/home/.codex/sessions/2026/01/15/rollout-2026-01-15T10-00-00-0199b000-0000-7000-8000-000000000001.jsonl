@@ -1,0 +1,24 @@
+{"timestamp":"2026-01-15T08:00:00.000Z","type":"session_meta","payload":{"id":"0199b000-0000-7000-8000-000000000001","timestamp":"2026-01-15T08:00:00.000Z","cwd":"C:\\work\\alpha","originator":"codex_cli_rs","cli_version":"0.39.0","instructions":null,"git":{}}}
+{"timestamp":"2026-01-15T08:00:00.100Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"<environment_context>\n  <cwd>C:\\work\\alpha</cwd>\n</environment_context>"}]}}
+{"timestamp":"2026-01-15T08:00:00.100Z","type":"event_msg","payload":{"type":"user_message","message":"<environment_context>\n  <cwd>C:\\work\\alpha</cwd>\n</environment_context>","kind":"environment_context"}}
+{"timestamp":"2026-01-15T08:00:05.000Z","type":"turn_context","payload":{"cwd":"C:\\work\\alpha","approval_policy":"on-request","sandbox_policy":{"mode":"workspace-write"},"model":"gpt-5-codex","effort":"medium","summary":"auto"}}
+{"timestamp":"2026-01-15T08:00:05.000Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"Fix   the flaky\n test in parser_test.go please"}]}}
+{"timestamp":"2026-01-15T08:00:05.000Z","type":"event_msg","payload":{"type":"user_message","message":"Fix   the flaky\n test in parser_test.go please","kind":"plain","images":[]}}
+{"timestamp":"2026-01-15T08:00:07.000Z","type":"event_msg","payload":{"type":"agent_reasoning","text":"Thinking about the parser"}}
+{"timestamp":"2026-01-15T08:00:07.000Z","type":"response_item","payload":{"type":"reasoning","summary":[{"type":"summary_text","text":"Thinking about the parser"}],"content":null,"encrypted_content":"gAAAAB-synthetic-not-real"}}
+{"timestamp":"2026-01-15T08:00:08.000Z","type":"response_item","payload":{"type":"function_call","name":"shell","arguments":"{\"command\":[\"powershell.exe\",\"-Command\",\"go test ./parser/...\"],\"workdir\":\"C:\\\\work\\\\alpha\"}","call_id":"call_1"}}
+{"timestamp":"2026-01-15T08:00:10.000Z","type":"response_item","payload":{"type":"function_call_output","call_id":"call_1","output":"{\"output\":\"--- FAIL: TestParse (0.00s)\\nFAIL\\n\",\"metadata\":{\"exit_code\":1,\"duration_seconds\":1.2}}"}}
+{"timestamp":"2026-01-15T08:00:12.000Z","type":"response_item","payload":{"type":"custom_tool_call","status":"completed","call_id":"call_2","name":"apply_patch","input":"*** Begin Patch\n*** Update File: parser/parser.go\n@@\n-old\n+new\n*** Add File: parser/helper.go\n+package parser\n*** End Patch\n"}}
+{"timestamp":"2026-01-15T08:00:13.000Z","type":"response_item","payload":{"type":"custom_tool_call_output","call_id":"call_2","output":"{\"output\":\"Success. Updated the following files:\\nM parser/parser.go\\nA parser/helper.go\\n\",\"metadata\":{\"exit_code\":0,\"duration_seconds\":0.1}}"}}
+{"timestamp":"2026-01-15T08:00:14.000Z","type":"event_msg","payload":{"type":"token_count","info":null}}
+{"timestamp":"2026-01-15T08:00:15.000Z","type":"response_item","payload":{"type":"message","role":"assistant","content":[{"type":"output_text","text":"The test was flaky because of map ordering; fixed."}]}}
+{"timestamp":"2026-01-15T08:00:15.000Z","type":"event_msg","payload":{"type":"agent_message","message":"The test was flaky because of map ordering; fixed."}}
+this line is not json
+{"timestamp":"2026-01-15T08:05:00.000Z","type":"event_msg","payload":{"type":"user_message","message":"اشرح التغيير بالعربية","kind":"plain"}}
+{"timestamp":"2026-01-15T08:05:00.000Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"اشرح التغيير بالعربية"}]}}
+{"timestamp":"2026-01-15T08:05:03.000Z","type":"response_item","payload":{"type":"function_call","name":"shell","arguments":"{\"command\":\"git diff --stat\"}","call_id":"call_3"}}
+{"timestamp":"2026-01-15T08:05:04.000Z","type":"response_item","payload":{"type":"function_call_output","call_id":"call_3","output":"parser/parser.go | 2 +-"}}
+{"timestamp":"2026-01-15T08:05:06.000Z","type":"event_msg","payload":{"type":"agent_message","message":"رتّبت المفاتيح قبل المقارنة."}}
+{"timestamp":"2026-01-15T08:06:00.000Z","type":"compacted","payload":{"message":"synthetic summary of the conversation so far"}}
+{"timestamp":"2026-01-15T08:06:30.000Z","type":"event_msg","payload":{"type":"turn_aborted","reason":"interrupted"}}
+{"timestamp":"2026-01-15T09:00:00.000Z","type":"event_msg","payload":{"type":"agent_message","message":"half written line without a newline

@@ -1,0 +1,13 @@
+{
+  "completion_tokens": 80,
+  "cost": 0.01,
+  "created_at": 1761300000000,
+  "id": "66666666-6666-4666-8666-666666666666",
+  "message_count": 0,
+  "parent_session_id": "",
+  "prompt_tokens": 120,
+  "summary_message_id": "",
+  "title": "Orphan",
+  "updated_at": 1761300001000,
+  "working_dir": "D:\\projects\\beta dir"
+}

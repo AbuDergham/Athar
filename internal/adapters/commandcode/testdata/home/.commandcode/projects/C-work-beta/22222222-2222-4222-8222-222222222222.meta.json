@@ -1,0 +1,9 @@
+{
+  "entrypoint": "cli",
+  "title": "Generated beta title",
+  "model": "example/model-two",
+  "traceIds": [
+    "00000000000000000000000000000002",
+    "00000000000000000000000000000003"
+  ]
+}

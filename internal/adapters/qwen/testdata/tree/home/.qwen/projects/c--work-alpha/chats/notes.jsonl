@@ -1,0 +1,1 @@
+{"uuid":"n1","sessionId":"not-a-session","timestamp":"2026-09-01T00:00:00.000Z","type":"user","cwd":"C:\\work\\alpha","message":{"role":"user","parts":[{"text":"must be ignored: name is not a session id"}]}}

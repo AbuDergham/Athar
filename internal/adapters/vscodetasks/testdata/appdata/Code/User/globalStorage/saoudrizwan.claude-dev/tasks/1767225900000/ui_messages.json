@@ -1,0 +1,9 @@
+[
+  {"ts": 1767225900100, "type": "say", "say": "task", "text": "Explain the build error"},
+  {"ts": 1767225900200, "type": "say", "say": "text", "text": "The build fails because a package is missing.", "partial": false},
+  {"ts": 1767225900300, "type": "ask", "ask": "followup", "text": "{\"question\":\"Shall I fix it?\",\"options\":[\"Yes\",\"No\"]}"},
+  {"ts": 1767225900400, "type": "say", "say": "user_feedback", "text": "Yes"},
+  {"ts": 1767225900500, "type": "ask", "ask": "command", "text": "go build ./..."},
+  {"ts": 1767225900600, "type": "say", "say": "api_req_started", "text": "{}"},
+  "not an object"
+]

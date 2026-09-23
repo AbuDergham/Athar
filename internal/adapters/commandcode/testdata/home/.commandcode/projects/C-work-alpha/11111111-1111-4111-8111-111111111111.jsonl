@@ -1,0 +1,17 @@
+{"type":"session","version":3,"id":"11111111-1111-4111-8111-111111111111","timestamp":"2026-08-01T10:00:00.000Z","cwd":"C:\\work\\alpha"}
+{"type":"message","id":"a0000001","parentId":null,"timestamp":"2026-08-01T10:00:05.000Z","message":{"role":"user","content":[{"type":"text","text":"Please list the files in the alpha project"}],"meta":{"source":"user","createdAt":1785578405000,"messageId":"aaaaaaaa-0000-4000-8000-000000000001"}}}
+{"type":"message","id":"a0000002","parentId":"a0000001","timestamp":"2026-08-01T10:00:06.000Z","message":{"role":"user","content":[{"type":"text","text":"hidden context for the model only"}],"meta":{"isMeta":true,"messageId":"aaaaaaaa-0000-4000-8000-000000000002"}}}
+{"type":"model_change","id":"a0000003","parentId":"a0000002","timestamp":"2026-08-01T10:00:07.000Z","model":"example/model-one"}
+{"type":"message","id":"a0000004","parentId":"a0000003","timestamp":"2026-08-01T10:00:10.000Z","message":{"role":"assistant","content":[{"type":"thinking","thinking":"private reasoning that must be dropped","signature":""},{"type":"text","text":"I will list them."},{"type":"tool_use","id":"toolu_1","name":"shell_command","input":{"command":"dir /b","timeout":1000}}]},"usage":{"inputTokens":10,"outputTokens":5},"model":"example/model-one"}
+{"type":"message","id":"a0000005","parentId":"a0000004","timestamp":"2026-08-01T10:00:11.000Z","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_1","content":[{"type":"text","text":"main.go\nREADME.md"}]}],"meta":{"source":"tool","messageId":"aaaaaaaa-0000-4000-8000-000000000005"}}}
+{"type":"message","id":"a0000006","parentId":"a0000005","timestamp":"2026-08-01T10:00:12.000Z","message":{"role":"assistant","content":[{"type":"tool_use","id":"toolu_2","name":"read_file","input":{"path":"C:\\work\\alpha\\main.go"}}]}}
+{"type":"message","id":"a0000007","parentId":"a0000006","timestamp":"2026-08-01T10:00:13.000Z","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_2","content":"package main"}],"meta":{"source":"tool"}}}
+{"type":"message","id":"a0000008","parentId":"a0000007","timestamp":"2026-08-01T10:00:20.000Z","message":{"role":"assistant","content":[{"type":"text","text":"There are two files: main.go and README.md."}]}}
+this line is not JSON and must be counted as skipped
+{"type":"compaction","id":"a0000009","parentId":"a0000008","timestamp":"2026-08-01T10:05:00.000Z","summary":"Summary of the earlier conversation","firstKeptEntryId":"a0000008","tokensBefore":12000}
+{"type":"custom_message","id":"a0000010","parentId":"a0000009","timestamp":"2026-08-01T10:05:01.000Z","customType":"goal","content":"Goal reminder injected by a mod","display":false}
+{"type":"session_info","id":"a0000011","parentId":"a0000010","timestamp":"2026-08-01T10:06:00.000Z","name":"Alpha file listing"}
+{"type":"message","id":"a0000012","parentId":"a0000011","timestamp":"2026-08-01T10:07:00.000Z","message":{"role":"user","content":[{"type":"text","text":"Now summarise README.md"}],"meta":{"source":"user","createdAt":1785578820000}}}
+{"type":"message","id":"a0000013","parentId":"a0000012","timestamp":"2026-08-01T10:07:01.000Z","message":{"role":"user","content":[{"type":"text","text":"Error: Model request failed (synthetic)"}],"meta":{"messageId":"aaaaaaaa-0000-4000-8000-000000000013"}}}
+{"type":"label","id":"a0000014","parentId":"a0000013","timestamp":"2026-08-01T10:08:00.000Z","targetId":"a0000012","label":"checkpoint"}
+{"type":"some_future_entry","id":"a0000015","parentId":"a0000014","timestamp":"2026-08-01T10:09:00.000Z"}

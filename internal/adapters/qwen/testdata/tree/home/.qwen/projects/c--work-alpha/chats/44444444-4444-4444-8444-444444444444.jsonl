@@ -1,0 +1,2 @@
+{"uuid":"d1","parentUuid":null,"sessionId":"44444444-4444-4444-8444-444444444444","timestamp":"2026-09-04T09:00:00.000Z","type":"system","subtype":"session_source","cwd":"C:\\work\\alpha","version":"0.24.0","systemPayload":{"sourceType":"cli"}}
+{"uuid":"d2","parentUuid":"d1","sessionId":"44444444-4444-4444-8444-444444444444","timestamp":"2026-09-04T09:00:01.000Z","type":"system","subtype":"ui_telemetry","cwd":"C:\\work\\alpha","version":"0.24.0","systemPayload":{"uiEvent":{"event.name":"startup"}}}

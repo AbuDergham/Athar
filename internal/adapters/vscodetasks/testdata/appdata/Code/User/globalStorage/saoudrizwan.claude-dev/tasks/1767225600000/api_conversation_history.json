@@ -1,0 +1,56 @@
+[
+  {"role": "user", "ts": 1767225601000, "content": [
+    {"type": "text", "text": "<task>\nBuild a tiny todo CLI in Go\n</task>"},
+    {"type": "text", "text": "\n# task_progress RECOMMENDED\n\nWhen starting a new task, it is recommended to include a todo list."},
+    {"type": "text", "text": "<environment_details>\n# VSCode Visible Files\n(No visible files)\n\n# Current Working Directory (c:/work/todo) Files\nmain.go\n</environment_details>"}
+  ]},
+  {"role": "assistant", "ts": 1767225602000, "modelInfo": {"modelId": "synthetic-model", "providerId": "synthetic", "mode": "act"}, "content": [
+    {"type": "text", "call_id": "", "text": "<thinking>\nhidden reasoning must not be kept\n</thinking>\nI will look at the folder first.\n\n<list_files>\n<path>.</path>\n<recursive>false</recursive>\n<task_progress>\n- [ ] look around\n</task_progress>\n</list_files>"}
+  ]},
+  {"role": "user", "ts": 1767225603000, "content": [
+    {"type": "text", "text": "[list_files for '.'] Result:"},
+    {"type": "text", "text": "main.go\ngo.mod"},
+    {"type": "text", "text": "<environment_details>\n# Current Working Directory (c:/elsewhere) Files\n</environment_details>"}
+  ]},
+  {"role": "assistant", "ts": 1767225604000, "content": [
+    {"type": "text", "text": "<execute_command>\n<command>go test ./...</command>\n<requires_approval>false</requires_approval>\n</execute_command>"}
+  ]},
+  {"role": "user", "ts": 1767225605000, "content": [
+    {"type": "text", "text": "[execute_command for 'go test ./...'] Result:"},
+    {"type": "text", "text": "The user denied this operation and provided the following feedback:\n<feedback>\nRun it with -race please\n</feedback>"},
+    {"type": "text", "text": "<environment_details>\n# Current Working Directory (c:/work/todo) Files\n</environment_details>"}
+  ]},
+  {"role": "assistant", "ts": 1767225606000, "content": [
+    {"type": "text", "text": "<ask_followup_question>\n<question>Which Go version should I target?</question>\n<options>[\"1.22\", \"1.23\"]</options>\n</ask_followup_question>"}
+  ]},
+  {"role": "user", "ts": 1767225607000, "content": [
+    {"type": "text", "text": "[ask_followup_question for 'Which Go version should I target?'] Result:"},
+    {"type": "text", "text": "<answer>\n1.23\n</answer>"}
+  ]},
+  {"role": "assistant", "ts": 1767225608000, "content": [
+    {"type": "text", "text": "Writing the file now.\n\n<write_to_file>\n<path>main.go</path>\n<content>\npackage main\n\n// a comment that mentions </content> inside\n</content>\n</write_to_file>"}
+  ]},
+  {"role": "user", "ts": 1767225609000, "content": [
+    {"type": "text", "text": "[write_to_file for 'main.go'] Result:"},
+    {"type": "text", "text": "The content was successfully saved to main.go."}
+  ]},
+  {"role": "assistant", "ts": 1767225610000, "content": [
+    {"type": "text", "text": "<attempt_completion>\n<result>\nThe todo CLI is ready.\n</result>\n</attempt_completion>"}
+  ]},
+  {"role": "user", "ts": 1767225611000, "content": [
+    {"type": "text", "text": "[attempt_completion] Result:"},
+    {"type": "text", "text": "The user has provided feedback on the results. Consider their input to continue the task, and then attempt completion again.\n<feedback>\nAdd a README that links 'docs/notes.md' (see below for file content)\n</feedback>\n\n<file_content path=\"docs/notes.md\">\nattached file text is not a prompt\n</file_content>"}
+  ]},
+  {"role": "assistant", "content": [
+    {"type": "text", "text": "Sure."}
+  ]},
+  {"role": "user", "ts": 1767225612000, "content": [
+    {"type": "text", "text": "[ERROR] You did not use a tool in your previous response! Please retry with a tool use."}
+  ]},
+  42,
+  {"role": "assistant", "ts": 1767225613000, "content": {"unexpected": "object"}},
+  {"role": "user", "ts": 1767225700000, "content": [
+    {"type": "text", "text": "[TASK RESUMPTION] This task was interrupted 1 minute ago.\n\nNew instructions for task continuation:\n<user_message>\nAlso add a Makefile\n</user_message>"},
+    {"type": "text", "text": "<environment_details>\n# Current Working Directory (c:/work/todo) Files\n</environment_details>"}
+  ]}
+]

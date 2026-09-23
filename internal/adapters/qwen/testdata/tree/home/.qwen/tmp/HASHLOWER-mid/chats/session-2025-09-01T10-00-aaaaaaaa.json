@@ -1,0 +1,66 @@
+{
+  "sessionId": "aaaaaaaa-0000-4000-8000-000000000001",
+  "projectHash": "ignored-the-folder-name-is-used",
+  "startTime": "2025-09-01T10:00:00.000Z",
+  "lastUpdated": "2025-09-01T10:05:00.000Z",
+  "messages": [
+    {
+      "id": "m1",
+      "timestamp": "2025-09-01T10:00:01.000Z",
+      "type": "user",
+      "content": "Write a haiku about rain"
+    },
+    {
+      "id": "m2",
+      "timestamp": "2025-09-01T10:00:05.000Z",
+      "type": "qwen",
+      "content": "Soft rain on the roof",
+      "thoughts": [
+        {
+          "subject": "Planning",
+          "description": "private reasoning that is never archived",
+          "timestamp": "2025-09-01T10:00:03.000Z"
+        }
+      ],
+      "toolCalls": [
+        {
+          "id": "t1",
+          "name": "write_file",
+          "args": { "file_path": "C:\\work\\mid\\haiku.txt", "content": "Soft rain on the roof" },
+          "result": [
+            { "functionResponse": { "id": "t1", "name": "write_file", "response": { "output": "Wrote 1 file" } } }
+          ],
+          "status": "success",
+          "timestamp": "2025-09-01T10:00:06.000Z"
+        },
+        {
+          "id": "t2",
+          "name": "run_shell_command",
+          "args": { "command": "type haiku.txt" },
+          "result": null,
+          "status": "error",
+          "timestamp": "2025-09-01T10:00:07.000Z",
+          "resultDisplay": "access denied"
+        }
+      ]
+    },
+    {
+      "id": "m3",
+      "timestamp": "2025-09-01T10:01:00.000Z",
+      "type": "user",
+      "content": [{ "text": "Now in Arabic" }]
+    },
+    {
+      "id": "m4",
+      "timestamp": "2025-09-01T10:01:05.000Z",
+      "type": "gemini",
+      "content": [{ "text": "مطر ناعم" }, { "text": " على السطح" }]
+    },
+    {
+      "id": "m5",
+      "timestamp": "2025-09-01T10:01:06.000Z",
+      "type": "info",
+      "content": "informational line that is skipped"
+    }
+  ]
+}

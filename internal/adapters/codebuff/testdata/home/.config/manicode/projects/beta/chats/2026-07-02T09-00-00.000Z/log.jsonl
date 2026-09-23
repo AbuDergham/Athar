@@ -1,0 +1,2 @@
+{"level":"DEBUG","msg":"Analytics client initialized","data":{"envName":"prod"},"timestamp":"2026-07-02T09:00:01.000Z","pid":7}
+{"level":"WARN","msg":"Failed to get token","data":{"error":"offline"},"timestamp":"2026-07-02T09:00:05.000Z","pid":7}

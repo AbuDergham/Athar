@@ -1,0 +1,16 @@
+{
+  "memento/icube-ai-agent-storage": "{not json",
+  "memento/icube-ai-agent-storage-77": {
+    "list": [
+      {
+        "sessionId": "6828c0000000000000000006",
+        "title": "Remote question",
+        "createdAt": 1747470000000,
+        "updatedAt": 1747470060000,
+        "messages": [
+          {"role": "user", "content": "Remote question", "timestamp": 1747470030000}
+        ]
+      }
+    ]
+  }
+}

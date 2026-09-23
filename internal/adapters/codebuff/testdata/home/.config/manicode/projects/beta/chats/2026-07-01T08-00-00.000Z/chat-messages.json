@@ -1,0 +1,74 @@
+[
+  {
+    "id": "user-1782892830000",
+    "variant": "user",
+    "content": "Plan a REST API for books",
+    "timestamp": "11:00 AM"
+  },
+  {
+    "id": "ai-response-1",
+    "variant": "ai",
+    "content": "",
+    "timestamp": "11:02 AM",
+    "credits": 3,
+    "blocks": [
+      { "type": "text", "textType": "reasoning", "content": "THINKING SHOULD NOT APPEAR" },
+      { "type": "text", "content": "Here is the plan." },
+      { "type": "text", "content": "First, the routes." },
+      {
+        "type": "tool",
+        "toolName": "write_file",
+        "toolCallId": "t1",
+        "input": { "path": "api/routes.ts", "content": "export const routes = []" },
+        "output": "Wrote api/routes.ts"
+      },
+      {
+        "type": "agent",
+        "agentType": "file-picker",
+        "agentName": "Fletcher",
+        "agentId": "a1",
+        "initialPrompt": "find config files",
+        "content": "config.json, tsconfig.json",
+        "status": "complete",
+        "blocks": [ { "type": "text", "content": "SUBAGENT INNER TEXT SHOULD NOT APPEAR" } ]
+      },
+      { "type": "mode-divider", "mode": "max" },
+      { "type": "plan", "content": "1. routes\n2. models" },
+      { "type": "ask-user", "questions": [ { "question": "Which database?" }, { "question": "Auth needed?" } ] },
+      { "type": "image", "filename": "diagram.png" },
+      { "type": "text", "content": "Done." }
+    ]
+  },
+  {
+    "id": "ai-response-2",
+    "variant": "ai",
+    "timestamp": "11:58 PM",
+    "blocks": [ { "type": "text", "content": "Late reply" } ]
+  },
+  {
+    "id": "u-no-epoch",
+    "variant": "user",
+    "content": "Thanks! شكرا جزيلا",
+    "timestamp": "12:01 AM"
+  },
+  {
+    "id": "error-1782939900000",
+    "variant": "error",
+    "content": "Service unavailable",
+    "timestamp": "12:05 AM"
+  },
+  {
+    "id": "sys-1782939910000",
+    "variant": "ai",
+    "content": "Switched to max mode",
+    "timestamp": "12:05 AM"
+  },
+  { "id": "broken", "variant": 5 },
+  {
+    "id": "user-1782939920000",
+    "variant": "user",
+    "content": "",
+    "blocks": [ { "type": "image", "filename": "shot.png" } ],
+    "timestamp": "12:05 AM"
+  }
+]

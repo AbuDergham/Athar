@@ -1,0 +1,9 @@
+{
+  "summary": "Very old thread",
+  "updated_at": "2025-02-01T08:30:00Z",
+  "messages": [
+    {"id": 0, "role": "user", "text": "Explain the build", "tool_uses": [], "tool_results": []},
+    {"id": 1, "role": "assistant", "text": "It uses make.", "tool_uses": [{"id": "x1", "name": "grep", "input": {"regex": "TODO", "include_pattern": "*.go"}}], "tool_results": [{"tool_use_id": "x1", "is_error": false, "content": {"Text": "main.go:3: TODO"}}]}
+  ],
+  "initial_project_snapshot": {"worktree_snapshots": [{"worktree_path": "/home/example/old", "git_state": null}], "unsaved_buffer_paths": [], "timestamp": "2025-02-01T08:00:00Z"}
+}

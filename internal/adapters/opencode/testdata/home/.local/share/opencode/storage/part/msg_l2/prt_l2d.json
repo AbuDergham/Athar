@@ -1,0 +1,1 @@
+{"id":"prt_l2d","sessionID":"ses_legacy1","messageID":"msg_l2","type":"tool","callID":"call_9","tool":"read","state":{"status":"completed","input":{"filePath":"C:\\work\\legacy\\main.go"},"output":"package main","title":"main.go","metadata":{"preview":"package main"},"time":{"start":1770746403000,"end":1770746404000}}}

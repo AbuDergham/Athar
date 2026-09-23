@@ -1,0 +1,2 @@
+{"uuid":"e1","parentUuid":null,"sessionId":"55555555-5555-4555-8555-555555555555","timestamp":"2026-08-20T07:00:00.000Z","type":"user","cwd":"C:\\work\\alpha","version":"0.24.0","message":{"role":"user","parts":[{"text":"Archived question about مشروع التطبيق"}]}}
+{"uuid":"e2","parentUuid":"e1","sessionId":"55555555-5555-4555-8555-555555555555","timestamp":"2026-08-20T07:00:09.000Z","type":"assistant","cwd":"C:\\work\\alpha","version":"0.24.0","model":"qwen3-coder","message":{"role":"model","parts":[{"text":"Archived answer."}]}}

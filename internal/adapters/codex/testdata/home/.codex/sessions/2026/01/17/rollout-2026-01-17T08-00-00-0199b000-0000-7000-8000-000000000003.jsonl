@@ -1,0 +1,4 @@
+{"timestamp":"2026-01-17T07:00:00.000Z","type":"session_meta","payload":{"id":"0199b000-0000-7000-8000-000000000003","timestamp":"2026-01-17T07:00:00.000Z","cwd":"C:\\work\\empty","originator":"codex_cli_rs","cli_version":"0.39.0","instructions":null}}
+{"timestamp":"2026-01-17T07:00:00.100Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"<user_instructions>\n\nSynthetic AGENTS.md rules\n\n</user_instructions>"}]}}
+{"timestamp":"2026-01-17T07:00:00.100Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"<environment_context>\n  <cwd>C:\\work\\empty</cwd>\n</environment_context>"}]}}
+{"timestamp":"2026-01-17T07:00:00.100Z","type":"event_msg","payload":{"type":"user_message","message":"<environment_context>\n  <cwd>C:\\work\\empty</cwd>\n</environment_context>","kind":"environment_context"}}

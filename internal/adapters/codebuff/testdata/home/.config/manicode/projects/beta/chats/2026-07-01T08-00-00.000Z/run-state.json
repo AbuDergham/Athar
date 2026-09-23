@@ -1,0 +1,14 @@
+{
+  "sessionState": {
+    "fileContext": {
+      "cwd": "C:\\work\\beta",
+      "projectRoot": "C:\\work\\beta",
+      "systemInfo": { "homedir": "C:\\Users\\tester" }
+    },
+    "mainAgentState": {
+      "agentType": "base2",
+      "creditsUsed": 3,
+      "messageHistory": [ { "role": "user", "content": "RUN STATE HISTORY SHOULD NOT BE READ" } ]
+    }
+  }
+}

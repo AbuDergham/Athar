@@ -1,0 +1,3 @@
+{"timestamp":"2026-01-18T10:00:00.000Z","type":"session_meta","payload":{"id":"0199b000-0000-7000-8000-000000000004","timestamp":"2026-01-18T10:00:00.000Z","cwd":"C:\\work\\alpha","originator":"codex_cli_rs","cli_version":"0.131.0","source":{"subagent":{"thread_spawn":{"parent_thread_id":"0199b000-0000-7000-8000-000000000001","depth":1}}},"instructions":null}}
+{"timestamp":"2026-01-18T10:00:01.000Z","type":"event_msg","payload":{"type":"user_message","message":"Sub-task: list the files","kind":"plain"}}
+{"timestamp":"2026-01-18T10:00:02.000Z","type":"event_msg","payload":{"type":"agent_message","message":"Listed."}}

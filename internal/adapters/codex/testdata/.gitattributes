@@ -1,0 +1,2 @@
+# Keep fixture bytes exact (LF endings, the unterminated last line of a rollout).
+* -text

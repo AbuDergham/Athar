@@ -1,0 +1,13 @@
+{
+  "completion_tokens": 80,
+  "cost": 0.01,
+  "created_at": 1761200001000,
+  "id": "44444444-4444-4444-8444-444444444444",
+  "message_count": 0,
+  "parent_session_id": "33333333-3333-4333-8333-333333333333",
+  "prompt_tokens": 120,
+  "summary_message_id": "",
+  "title": "Child Task",
+  "updated_at": 1761200002000,
+  "working_dir": "D:\\projects\\beta dir"
+}
