@@ -29,7 +29,7 @@ const Repo = "AbuDergham/Athar"
 // Set at release time (see docs); empty disables installing (checking still works).
 // It holds the base64 key line printed by tools/keygen (a whole minisign .pub
 // file is accepted too).
-var PublicKey = ""
+var PublicKey = "RWQI2g/Fu9wN/Ky7mgr1PEzy6p12TcGutfsz27qWI/kiXUe8TJ0oDLKS"
 
 // Errors returned by Install; the TUI can match them with errors.Is.
 var (
