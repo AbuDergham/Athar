@@ -1,0 +1,4 @@
+{"type":"permission-mode","permissionMode":"default","sessionId":"77777777-7777-4777-8777-777777777777"}
+{"type":"mode","mode":"normal","sessionId":"77777777-7777-4777-8777-777777777777"}
+{"type":"file-history-snapshot","messageId":"e7000000-0000-4000-8000-000000000001","snapshot":{"messageId":"e7000000-0000-4000-8000-000000000001","trackedFileBackups":{},"timestamp":"2026-09-05T09:00:00.000Z"},"isSnapshotUpdate":false}
+{"type":"user","message":{"role":"user","content":"<command-name>/exit</command-name>"},"cwd":"D:\\work\\beta","entrypoint":"cli","isSidechain":false,"sessionId":"77777777-7777-4777-8777-777777777777","timestamp":"2026-09-05T09:00:00.000Z","uuid":"e7000000-0000-4000-8000-000000000002"}

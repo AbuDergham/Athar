@@ -205,7 +205,7 @@ type Message struct {
 
 ### 3.5 Dependencies
 
-`charm.land/bubbletea/v2`, `charm.land/bubbles/v2`, `charm.land/lipgloss/v2` (TUI; Go ≥ 1.25) · `modernc.org/sqlite` pinned at v1.59.0 or later (SQLite 3.53.4: FTS5 + trigram, pure Go, windows/amd64+arm64) · `github.com/klauspost/compress/zstd` · `google.golang.org/protobuf/encoding/protowire` · `aead.dev/minisign` · `golang.org/x/text` (NFKC, bidi) · `golang.org/x/sys/windows` · `github.com/BurntSushi/toml` · optionally `github.com/AbdullahDiaa/garabic` (Apache-2.0) if the spike needs shaping tables. Nothing else without a documented reason.
+`charm.land/bubbletea/v2`, `charm.land/bubbles/v2`, `charm.land/lipgloss/v2` (TUI; Go ≥ 1.26 because of transitive requirements) · `modernc.org/sqlite` pinned at v1.59.0 or later (SQLite 3.53.4: FTS5 + trigram, pure Go, windows/amd64+arm64) · `github.com/klauspost/compress/zstd` · `google.golang.org/protobuf/encoding/protowire` · `aead.dev/minisign` · `golang.org/x/text` (NFKC, bidi) · `golang.org/x/sys/windows` · `github.com/BurntSushi/toml` · optionally `github.com/AbdullahDiaa/garabic` (Apache-2.0) if the spike needs shaping tables. Nothing else without a documented reason.
 
 ## 4. Archive
 
@@ -309,7 +309,7 @@ Keystroke to results < 150 ms on the owner's archive; first full sync ≤ 3 minu
 - **Windows Terminal (`wt.exe` found):** argv `-w 0 new-tab --title <T> --suppressApplicationTitle --inheritEnvironment -d <Cwd> cmd.exe /d /s /k <C>`, where `<C>` is the whole command as **one** argv element (WT wraps it in quotes; `/s` makes cmd strip exactly that pair). Every `;` in `<T>`, `<Cwd>`, `<C>` is written `\;`. `-w 0` targets the most recently used WT window, or creates one; Athar does not try to detect its host (`WT_SESSION` is unset under default-terminal handoff).
 - **Otherwise:** start `cmd.exe` directly with `CREATE_NEW_CONSOLE`, `Dir=<Cwd>`, the prepared environment block, and `SysProcAttr.CmdLine = cmd.exe /d /s /k "title <safe-title> && <C>"`. No `cmd /c start` wrapper.
 - **Safety:** `<safe-title>` keeps only letters, digits, spaces and `.-_·`, max 60 chars. Values from agent data are embedded in `<C>` only if they pass a whitelist (ids: `^[A-Za-z0-9._:-]+$`; paths: no `"`, `%`, `!`, `^`, newline). Anything else is passed via the environment block or the working directory, never as command text. If `<Cwd>` fails the whitelist, it is used only as the process working directory.
-- **Environment:** Athar sets the child's environment and also embeds the variable that selects the agent's data root, clearing it for the default root: `set "CLAUDE_CONFIG_DIR=C:\Users\X\.claude-local" && claude --resume <id>` or `set "CLAUDE_CONFIG_DIR=" && claude --resume <id>`. Same for `CODEX_HOME`, `GEMINI_CLI_HOME`, `HERMES_SESSIONS_DIR`, `CONTINUE_GLOBAL_DIR` where relevant.
+- **Environment:** Athar sets the child's environment and also embeds the variable that selects the agent's data root, clearing it for the default root: `set "CLAUDE_CONFIG_DIR=%USERPROFILE%\.claude-local" && claude --resume <id>` or `set "CLAUDE_CONFIG_DIR=" && claude --resume <id>`. Same for `CODEX_HOME`, `GEMINI_CLI_HOME`, `HERMES_SESSIONS_DIR`, `CONTINUE_GLOBAL_DIR` where relevant.
 - Commands run through `cmd /k` so npm `.cmd` shims resolve via PATHEXT and the tab stays open after the agent exits.
 - After launching, Athar stays open and shows *"Opened in new tab"*; the next sync picks up changes.
 
@@ -439,7 +439,7 @@ Athar always adds the agent's environment and wraps overrides for cmd (launch) o
 | M5 | Antigravity IDE, AgentsView/PSM imports, Sources screen details, HTML reader polish |
 | M6 | Updater + signing + README (English + Arabic section) → **v1.0.0** public release |
 
-Prerequisite on the owner's PC: Go (portable install at `C:\Users\X\sdk\go`, 1.27.1).
+Prerequisite on the owner's PC: Go (portable install at `%USERPROFILE%\sdk\go`, 1.27.1).
 
 ## 13. Risks and open questions
 

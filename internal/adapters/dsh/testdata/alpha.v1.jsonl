@@ -1,0 +1,5 @@
+{"type":"session","version":1,"id":"session-11111111-1111-4111-8111-111111111111","createdAt":1788700000000,"cwd":"C:\\work\\alpha","delegationDepth":0,"agentPreset":"default"}
+{"type":"permission/preset","seq":0,"time":1788700000010,"data":{"preset":"workspace-write"}}
+{"type":"user/message","seq":1,"time":1788700001004,"data":{"content":[{"type":"text","text":"Download every telegram video"}],"source":{"kind":"user"},"role":"user","id":"u-1"},"surfaceOp":"append"}
+{"type":"reasoning-chunks","seq0":2,"time0":1788700002000,"data":{"turn":1,"step":1,"index":0,"dt":[1],"texts":["V1 THINKING","CHUNK"]}}
+{"type":"assistant/message","seq":3,"time":1788700003000,"data":{"turn":1,"step":1,"message":{"role":"assistant","content":[{"type":"text","text":"V1 ONLY ANSWER"}],"id":"a-1"}}}

@@ -1,0 +1,5 @@
+{"type":"user","message":{"role":"user","content":"Summarize gamma notes"},"cwd":"C:\\work\\gamma","entrypoint":"cli","isSidechain":false,"sessionId":"55555555-5555-4555-8555-555555555555","timestamp":"2026-08-20T12:00:00.000Z","uuid":"g5000000-0000-4000-8000-000000000001"}
+{"type":"assistant","message":{"id":"msg_g1","type":"message","content":[{"type":"text","text":"Summary ready."}]},"cwd":"C:\\work\\gamma","entrypoint":"cli","isSidechain":false,"sessionId":"55555555-5555-4555-8555-555555555555","timestamp":"2026-08-20T12:00:30.000Z","uuid":"g5000000-0000-4000-8000-000000000002"}
+{"type":"summary","summary":"Gamma notes summary","leafUuid":"g5000000-0000-4000-8000-000000000002"}
+{"type":"agent-name","agentName":"gamma-helper","sessionId":"55555555-5555-4555-8555-555555555555"}
+{"type":"ai-title","aiTitle":"Gamma summary","sessionId":"55555555-5555-4555-8555-555555555555"}

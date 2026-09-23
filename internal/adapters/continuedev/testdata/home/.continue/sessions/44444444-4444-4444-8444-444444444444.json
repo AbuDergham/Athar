@@ -1,0 +1,33 @@
+{
+  "sessionId": "44444444-4444-4444-8444-444444444444",
+  "title": "Plain path session",
+  "workspaceDirectory": "D:\\plain\\path",
+  "history": [
+    {
+      "message": "not an object"
+    },
+    {
+      "message": {
+        "role": "user",
+        "content": "hello plain"
+      },
+      "contextItems": []
+    },
+    {
+      "message": {
+        "role": "assistant",
+        "content": {
+          "unexpected": "object"
+        }
+      },
+      "contextItems": []
+    },
+    {
+      "message": {
+        "role": "assistant",
+        "content": "hi there"
+      },
+      "contextItems": []
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+{"sessionId":"aaaaaaaa-aaaa-4aaa-8aaa-00000000000a","projectHash":"000000000000000000000000000000000000000000000000000000000000000a","startTime":"2026-06-19T07:00:00.000Z","lastUpdated":"2026-06-19T07:00:09.000Z","kind":"main"}
+{"id":"a1","timestamp":"2026-06-19T07:00:01.000Z","type":"user","content":"hello from the second root"}
+{"id":"a2","timestamp":"2026-06-19T07:00:02.000Z","type":"gemini","content":[{"text":"Hi."}]}

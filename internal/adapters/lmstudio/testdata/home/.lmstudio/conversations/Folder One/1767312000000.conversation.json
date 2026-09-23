@@ -1,0 +1,26 @@
+{
+  "name": null,
+  "pinned": true,
+  "createdAt": 1767312000000,
+  "userLastMessagedAt": 1767312060000,
+  "systemPrompt": "",
+  "messages": [
+    {
+      "versions": [
+        {"type": "singleStep", "role": "user", "content": [
+          {"type": "text", "text": "  Plan a   three-day\n trip to the mountains  "},
+          {"type": "file", "fileIdentifier": "1767312000500 - packing-list.txt", "fileType": "text/other", "sizeBytes": 120},
+          {"type": "file", "fileIdentifier": "1767312000600 - map.png", "fileType": "image", "sizeBytes": 2048}
+        ]}
+      ],
+      "currentlySelected": 0
+    },
+    {
+      "versions": [
+        {"type": "singleStep", "role": "assistant", "content": [{"type": "text", "text": "Day one: hike to the lake."}]}
+      ],
+      "currentlySelected": 0
+    }
+  ],
+  "clientInput": "an unsent draft that must not be read"
+}

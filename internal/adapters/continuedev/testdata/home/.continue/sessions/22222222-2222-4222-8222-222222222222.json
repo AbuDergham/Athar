@@ -1,0 +1,24 @@
+{
+  "sessionId": "22222222-2222-4222-8222-222222222222",
+  "title": "New Session",
+  "workspaceDirectory": "",
+  "mode": "chat",
+  "history": [
+    {
+      "message": {
+        "role": "user",
+        "content": "  كيف   أرتب\n الملفات حسب التاريخ؟  ",
+        "id": "u1"
+      },
+      "contextItems": []
+    },
+    {
+      "message": {
+        "role": "assistant",
+        "content": "Sort the files by their modified time.",
+        "id": "a1"
+      },
+      "contextItems": []
+    }
+  ]
+}

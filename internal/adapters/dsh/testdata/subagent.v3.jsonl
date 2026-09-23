@@ -1,0 +1,2 @@
+{"type":"session","version":3,"id":"session-33333333-3333-4333-8333-333333333333","createdAt":1788700100000,"cwd":"C:\\work\\alpha","isSeeded":true,"delegationDepth":1,"origin":"subagent","parentSession":"session-11111111-1111-4111-8111-111111111111"}
+{"type":"user/message","seq":0,"time":1788700101000,"data":{"content":[{"type":"text","text":"SUBAGENT TASK SHOULD NOT APPEAR"}],"source":{"kind":"user"},"role":"user","id":"u-1"}}

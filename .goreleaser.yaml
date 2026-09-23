@@ -1,0 +1,59 @@
+# GoReleaser v2 configuration for Athar.
+version: 2
+
+project_name: athar
+
+before:
+  hooks:
+    - go mod download
+
+builds:
+  - id: athar
+    main: ./cmd/athar
+    binary: athar
+    env:
+      - CGO_ENABLED=0
+    goos: [windows, linux, darwin]
+    goarch: [amd64, arm64]
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{ .Tag }}
+
+archives:
+  - id: athar
+    # Windows users get the bare athar.exe (the archive lives next to it).
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [binary]
+    name_template: "athar_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+signs:
+  - id: minisign
+    artifacts: checksum
+    cmd: go
+    args: ["run", "./tools/sign", "${artifact}", "${signature}"]
+    signature: "${artifact}.minisig"
+    env:
+      # single-line base64 key (the second line of athar.key)
+      - MINISIGN_PRIVATE_KEY={{ .Env.MINISIGN_PRIVATE_KEY }}
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+
+release:
+  github:
+    owner: AbuDergham
+    name: Athar
+  draft: false
+  prerelease: auto

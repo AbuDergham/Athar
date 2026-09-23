@@ -1,0 +1,14 @@
+{
+  "name": "Untitled",
+  "createdAt": 1767484800000,
+  "userLastMessagedAt": 1767484860000,
+  "messages": [
+    {
+      "versions": [
+        {"type": "singleStep", "role": "user", "content": [{"type": "text", "text": "first draft of the question"}]},
+        {"type": "singleStep", "role": "user", "edited": true, "content": [{"type": "text", "text": "كيف أزرع الطماطم في الشرفة؟ كيف أزرع الطماطم في الشرفة؟ كيف أزرع الطماطم في الشرفة؟ كيف أزرع الطماطم في الشرفة؟ كيف أزرع الطماطم في الشرفة؟"}]}
+      ],
+      "currentlySelected": 1
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{"type":"telemetry","event":"start","n":1}
+{"parentUuid":null,"uuid":"00000000-0000-4000-8000-000000000021","role":"user","content":"  مرحبا   بالعالم\n\tBuild a CLI abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij","type":"message","timestamp":"2025-10-09T08:00:00.000Z","sessionId":"e5f6a7b8"}
+{"type":"message","role":
+{"parentUuid":"00000000-0000-4000-8000-000000000021","uuid":"00000000-0000-4000-8000-000000000022","role":"user","content":"hidden instruction","hidden":true,"type":"message","timestamp":"2025-10-09T08:00:10.000Z","sessionId":"e5f6a7b8"}
+{"parentUuid":"00000000-0000-4000-8000-000000000022","uuid":"00000000-0000-4000-8000-000000000023","role":"system","content":"System note for the model","type":"message","timestamp":"2025-10-09T08:00:20.000Z","sessionId":"e5f6a7b8"}
+{"parentUuid":"00000000-0000-4000-8000-000000000023","uuid":"00000000-0000-4000-8000-000000000024","role":"assistant","content":"","text":"Fallback text answer","model":"example/model-x","type":"message","timestamp":"2025-10-09T08:00:30.000Z","sessionId":"e5f6a7b8"}
+{"parentUuid":"00000000-0000-4000-8000-000000000024","uuid":"00000000-0000-4000-8000-000000000025","role":"assistant","content":"half-written line that must not appear","type":"message","timestamp":"2025-10-09T08:09:00.000Z","sessionId":"e5f6a7b8"}

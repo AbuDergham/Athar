@@ -1,0 +1,2 @@
+{"type":"session","version":3,"id":"session-44444444-4444-4444-8444-444444444444","createdAt":1788300000000,"cwd":"E:\\custom","isSeeded":false,"delegationDepth":0}
+{"type":"user/message","seq":0,"time":1788300001000,"data":{"content":[{"type":"text","text":"custom root prompt"}],"source":{"kind":"user"},"role":"user","id":"u-1"}}

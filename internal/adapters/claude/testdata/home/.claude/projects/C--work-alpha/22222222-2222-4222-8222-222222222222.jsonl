@@ -1,0 +1,7 @@
+{"type":"user","message":{"role":"user","content":"Fix the flaky test in parser"},"cwd":"C:\\work\\alpha","entrypoint":"cli","isSidechain":false,"sessionId":"22222222-2222-4222-8222-222222222222","timestamp":"2026-09-02T08:00:00.000Z","uuid":"b2000000-0000-4000-8000-000000000001"}
+{"type":"user", "broken
+{"type":"assistant","message":{"id":"msg_b1","role":"assistant","content":[{"type":"text","text":"Fixed."}]},"cwd":"C:\\work\\alpha","entrypoint":"cli","isSidechain":false,"sessionId":"22222222-2222-4222-8222-222222222222","timestamp":"2026-09-02T08:05:00.000Z","uuid":"b2000000-0000-4000-8000-000000000002"}
+{"type":"queue-operation","operation":"enqueue","timestamp":1788300000,"sessionId":"22222222-2222-4222-8222-222222222222"}
+{"type":"ai-title","aiTitle":"Parser test fix","sessionId":"22222222-2222-4222-8222-222222222222"}
+{"type":"ai-title","aiTitle":"Parser test fix v2","sessionId":"22222222-2222-4222-8222-222222222222"}
+{"type":"assistant","message":{"id":"msg_b2","role":"assistant","content":[{"type":"text","text":"SYNTHETIC_PARTIAL_LINE

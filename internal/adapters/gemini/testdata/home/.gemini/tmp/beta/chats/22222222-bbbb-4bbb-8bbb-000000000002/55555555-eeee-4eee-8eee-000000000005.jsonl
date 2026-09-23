@@ -1,0 +1,2 @@
+{"sessionId":"55555555-eeee-4eee-8eee-000000000005","projectHash":"0000000000000000000000000000000000000000000000000000000000000002","startTime":"2026-06-18T08:00:03.000Z","lastUpdated":"2026-06-18T08:00:03.000Z","kind":"subagent","directories":["z:\\athar-fixture\\beta"]}
+{"id":"e1","timestamp":"2026-06-18T08:00:03.000Z","type":"user","content":"subagent task that must never be read"}

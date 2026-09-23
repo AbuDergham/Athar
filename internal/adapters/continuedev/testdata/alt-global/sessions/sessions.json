@@ -1,0 +1,9 @@
+[
+  {
+    "sessionId": "66666666-6666-4666-8666-666666666666",
+    "title": "Session in a custom global dir",
+    "dateCreated": "1775000000000",
+    "workspaceDirectory": "file://fileserver/share/beta",
+    "messageCount": 2
+  }
+]

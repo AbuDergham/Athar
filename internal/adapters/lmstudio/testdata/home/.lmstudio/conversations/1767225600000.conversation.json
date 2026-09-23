@@ -1,0 +1,83 @@
+{
+  "name": "Sourdough starter schedule",
+  "pinned": false,
+  "createdAt": 1767225600000,
+  "preset": "",
+  "tokenCount": 321,
+  "userLastMessagedAt": 1767225720000,
+  "assistantLastMessagedAt": 1767225780000,
+  "systemPrompt": "",
+  "messages": [
+    {
+      "versions": [
+        {"type": "singleStep", "role": "user", "content": [{"type": "text", "text": "How often should I feed a sourdough starter?"}]}
+      ],
+      "currentlySelected": 0
+    },
+    {
+      "versions": [
+        {
+          "type": "multiStep",
+          "role": "assistant",
+          "senderInfo": {"senderName": "synthetic/model-7b"},
+          "steps": [
+            {
+              "type": "contentBlock",
+              "stepIdentifier": "1767225605000-0.1234",
+              "content": [{"type": "text", "text": "Thinking about feeding ratios.", "tokensCount": 5, "fromDraftModel": false, "isStructural": false}],
+              "style": {"type": "thinking", "ended": true, "title": "Thought for 1 second", "forceRenderAsPlainText": true},
+              "prefix": "<think>",
+              "suffix": "</think>",
+              "defaultShouldIncludeInContext": false,
+              "shouldIncludeInContext": false
+            },
+            {
+              "type": "contentBlock",
+              "stepIdentifier": "1767225606000-0.5678",
+              "content": [
+                {"type": "text", "text": "<|start|>assistant<|channel|>final<|message|>", "tokensCount": 6, "fromDraftModel": false, "isStructural": true},
+                {"type": "text", "text": "Feed it once a day ", "tokensCount": 5, "fromDraftModel": false, "isStructural": false},
+                {"type": "text", "text": "at room temperature.", "tokensCount": 4, "fromDraftModel": true, "isStructural": false}
+              ],
+              "defaultShouldIncludeInContext": true,
+              "shouldIncludeInContext": true
+            },
+            {
+              "type": "debugInfoBlock",
+              "stepIdentifier": "1767225607000-0.9",
+              "debugInfo": "synthetic debug info"
+            }
+          ]
+        }
+      ],
+      "currentlySelected": 0
+    },
+    {
+      "versions": [
+        {"type": "singleStep", "role": "user", "content": [{"type": "text", "text": "And in the fridge?"}]}
+      ],
+      "currentlySelected": 0
+    },
+    {
+      "versions": [
+        {"type": "multiStep", "role": "assistant", "steps": [
+          {"type": "contentBlock", "stepIdentifier": "1767225700000-0.1", "content": [{"type": "text", "text": "Old answer that was regenerated.", "isStructural": false}]}
+        ]},
+        {"type": "multiStep", "role": "assistant", "steps": [
+          {"type": "contentBlock", "stepIdentifier": "1767225780000-0.2", "content": [{"type": "text", "text": "Once a week is enough in the fridge.", "isStructural": false}]}
+        ]}
+      ],
+      "currentlySelected": 1,
+      "generationIdentifiers": ["gen-a", "gen-b"]
+    }
+  ],
+  "clientInput": "",
+  "clientInputFiles": [],
+  "userFilesSizeBytes": 0,
+  "lastUsedModel": {"identifier": "synthetic/model-7b", "indexedModelIdentifier": "synthetic/model-7b/model.gguf"},
+  "notes": [],
+  "plugins": [],
+  "pluginConfigs": {},
+  "disabledPluginTools": [],
+  "looseFiles": []
+}

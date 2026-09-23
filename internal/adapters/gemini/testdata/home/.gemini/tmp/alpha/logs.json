@@ -1,0 +1,29 @@
+[
+  {
+    "sessionId": "11111111-aaaa-4aaa-8aaa-000000000001",
+    "messageId": 0,
+    "type": "user",
+    "message": "Plan the telegram downloader @notes.md",
+    "timestamp": "2026-06-17T10:30:04.000Z"
+  },
+  {
+    "sessionId": "77777777-7777-4777-8777-000000000007",
+    "messageId": 0,
+    "type": "user",
+    "message": "/quit",
+    "timestamp": "2026-06-16T10:00:00.000Z"
+  },
+  {
+    "sessionId": "77777777-7777-4777-8777-000000000007",
+    "messageId": 1,
+    "type": "user",
+    "message": "find   the video\nbug",
+    "timestamp": "2026-06-16T10:01:00.000Z"
+  },
+  {
+    "messageId": 2,
+    "type": "user",
+    "message": "an entry without a session id",
+    "timestamp": "2026-06-16T10:02:00.000Z"
+  }
+]

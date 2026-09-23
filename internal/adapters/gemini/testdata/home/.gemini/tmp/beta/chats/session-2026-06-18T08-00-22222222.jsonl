@@ -1,0 +1,8 @@
+{"sessionId":"22222222-bbbb-4bbb-8bbb-000000000002","projectHash":"0000000000000000000000000000000000000000000000000000000000000002","startTime":"2026-06-18T08:00:00.000Z","lastUpdated":"2026-06-18T08:00:00.000Z"}
+{"id":"b1","timestamp":"2026-06-18T08:00:01.000Z","type":"user","content":"/help"}
+{"id":"b2","timestamp":"2026-06-18T08:00:02.000Z","type":"user","content":"<session_context>synthetic context</session_context>"}
+{"id":"b3","timestamp":"2026-06-18T08:00:03.000Z","type":"user","content":"text replaced by the checkpoint below"}
+{"id":"broken",
+{"$set":{"messages":[{"id":"b1","timestamp":"2026-06-18T08:00:01.000Z","type":"user","content":"/help"},{"id":"b2","timestamp":"2026-06-18T08:00:02.000Z","type":"user","content":[{"text":"<session_context>synthetic context</session_context>"}]},{"id":"b4","timestamp":"2026-06-18T08:00:04.000Z","type":"user","content":[{"text":"  Why does   the\nbuild fail?  "}]},{"id":"b5","timestamp":"2026-06-18T08:00:05.000Z","type":"gemini","content":[{"text":"Because of a missing import."}]}],"lastUpdated":"2026-06-18T08:00:05.000Z"}}
+{"id":"b6","timestamp":"2026-06-18T08:00:06.000Z","type":"gemini","content":{"text":"Anything else?"}}
+{"id":"b7","timestamp":"2026-06-18T08:00:07.000Z","type":"user","content":"half written line"}

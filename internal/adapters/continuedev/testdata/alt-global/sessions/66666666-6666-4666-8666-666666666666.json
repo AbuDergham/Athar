@@ -1,0 +1,26 @@
+{
+  "sessionId": "66666666-6666-4666-8666-666666666666",
+  "title": "Session in a custom global dir",
+  "workspaceDirectory": "file://fileserver/share/beta",
+  "history": [
+    {
+      "message": {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Where is the build script?"
+          }
+        ]
+      },
+      "contextItems": []
+    },
+    {
+      "message": {
+        "role": "assistant",
+        "content": "It is in tools/build.ps1."
+      },
+      "contextItems": []
+    }
+  ]
+}

@@ -1,9 +1,10 @@
 module github.com/AbuDergham/Athar
 
-go 1.25.0
+go 1.26.0
+
+require aead.dev/minisign v0.3.0
 
 require (
-	aead.dev/minisign v0.3.0 // indirect
 	charm.land/bubbles/v2 v2.2.1 // indirect
 	charm.land/bubbletea/v2 v2.0.9 // indirect
 	charm.land/lipgloss/v2 v2.0.6 // indirect

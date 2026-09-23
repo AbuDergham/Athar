@@ -1,0 +1,31 @@
+{
+  "sessionId": "33333333-cccc-4ccc-8ccc-000000000003",
+  "projectHash": "0000000000000000000000000000000000000000000000000000000000000002",
+  "startTime": "2025-08-20T09:00:00.000Z",
+  "lastUpdated": "2025-08-20T09:05:00.000Z",
+  "summary": "Legacy chat about arabic search",
+  "messages": [
+    {
+      "id": "c1",
+      "timestamp": "2025-08-20T09:00:01.000Z",
+      "type": "user",
+      "content": "ابحث عن المشروع"
+    },
+    {
+      "id": "c2",
+      "timestamp": "2025-08-20T09:00:02.000Z",
+      "type": "gemini",
+      "content": "Found it.",
+      "toolCalls": [
+        {
+          "id": "t1",
+          "name": "glob",
+          "args": { "pattern": "**/*.go" },
+          "status": "success",
+          "timestamp": "2025-08-20T09:00:02.500Z",
+          "resultDisplay": "Found 3 files"
+        }
+      ]
+    }
+  ]
+}

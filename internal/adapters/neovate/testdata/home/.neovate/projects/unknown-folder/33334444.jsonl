@@ -1,0 +1,2 @@
+{"parentUuid":null,"uuid":"00000000-0000-4000-8000-000000000061","role":"user","content":"prompt in an unknown project","type":"message","timestamp":"2025-10-12T09:00:00.000Z","sessionId":"33334444"}
+{"parentUuid":"00000000-0000-4000-8000-000000000061","uuid":"00000000-0000-4000-8000-000000000062","role":"assistant","content":[{"type":"text","text":"answer one"},{"type":"text","text":"answer two"}],"type":"message","timestamp":"2025-10-12T09:00:07.000Z","sessionId":"33334444"}

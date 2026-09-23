@@ -1,0 +1,16 @@
+[
+  {
+    "sessionId": "99999999-9999-4999-8999-000000000009",
+    "messageId": 0,
+    "type": "user",
+    "message": "prompt from an unknown project",
+    "timestamp": "2025-08-10T12:00:00.000Z"
+  },
+  {
+    "sessionId": "99999999-9999-4999-8999-000000000009",
+    "messageId": 1,
+    "type": "user",
+    "message": "second prompt",
+    "timestamp": "2025-08-10T12:05:00.000Z"
+  }
+]
