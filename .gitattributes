@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.exe binary
+*.db binary
+*.zst binary
+*.zstd binary
+*.pb binary
