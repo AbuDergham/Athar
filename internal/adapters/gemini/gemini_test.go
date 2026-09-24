@@ -455,6 +455,11 @@ func TestProjectRootTrueCase(t *testing.T) {
 		t.Skip("Gemini lowercases project paths only on Windows")
 	}
 	root := t.TempDir()
+	// CI temp dirs may contain 8.3 short names (RUNNER~1); true casing
+	// resolves long names, so compare against the long form.
+	if long, err := filepath.EvalSymlinks(root); err == nil {
+		root = long
+	}
 	env := adapterstest.FixtureEnv(t, root, nil)
 	proj := filepath.Join(root, "Work Dir", "MyProject")
 	if err := os.MkdirAll(proj, 0o755); err != nil {
