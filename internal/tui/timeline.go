@@ -41,11 +41,15 @@ func dayStart(now, t time.Time) time.Time {
 // "Today", "Yesterday", else e.g. "Mon 21 Sep 2026". now carries the location.
 func dayLabel(now, t time.Time) string {
 	d := dayStart(now, t)
-	today := dayStart(now, now)
+	y, m, dd := t.In(now.Location()).Date()
+	ty, tm, td := now.Date()
+	// yesterday's calendar date, taken at noon: a midnight that a DST
+	// change skips cannot shift it
+	yy, ym, yd := time.Date(ty, tm, td-1, 12, 0, 0, 0, now.Location()).Date()
 	switch {
-	case d.Equal(today):
+	case y == ty && m == tm && dd == td:
 		return "Today"
-	case d.Equal(today.AddDate(0, 0, -1)):
+	case y == yy && m == ym && dd == yd:
 		return "Yesterday"
 	default:
 		return d.Format("Mon 2 Jan 2006")

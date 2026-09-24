@@ -22,8 +22,25 @@ import (
 
 	"github.com/AbuDergham/Athar/internal/model"
 
-	_ "modernc.org/sqlite" // registers the "sqlite" database/sql driver
+	"modernc.org/sqlite" // registers the "sqlite" database/sql driver
+	sqlite3 "modernc.org/sqlite/lib"
 )
+
+// corrupt reports whether an error of the open-time check means the file
+// itself is damaged (a quick_check finding, SQLITE_CORRUPT, SQLITE_NOTADB,
+// an I/O error) rather than that it could not be opened right now
+// (SQLITE_CANTOPEN, SQLITE_BUSY, SQLITE_LOCKED, SQLITE_PERM, SQLITE_AUTH).
+func corrupt(err error) bool {
+	var se *sqlite.Error
+	if !errors.As(err, &se) {
+		return true // quick_check reported problems
+	}
+	switch se.Code() & 0xff {
+	case sqlite3.SQLITE_CANTOPEN, sqlite3.SQLITE_BUSY, sqlite3.SQLITE_LOCKED, sqlite3.SQLITE_PERM, sqlite3.SQLITE_AUTH:
+		return false
+	}
+	return true
+}
 
 // DB is an open archive. It is safe for concurrent use.
 type DB struct {
@@ -89,6 +106,9 @@ func Open(path string) (*DB, error) {
 	d := &DB{db: sdb, path: path, home: home, proj: newProjects()}
 	damaged := func(err error) error {
 		sdb.Close()
+		if !corrupt(err) { // locked by another program, no permission: not damaged
+			return fmt.Errorf("cannot open the archive %s (is another program using it?): %w", path, err)
+		}
 		return &ErrDamaged{Path: path, Err: err, Backups: listBackups(backupDir(path))}
 	}
 	if exists && info.Size() > 0 {
@@ -111,10 +131,9 @@ func Open(path string) (*DB, error) {
 				return nil, damaged(err)
 			}
 		}
-		if err := d.SetMeta("last_check_at", time.Now().UTC().Format(time.RFC3339)); err != nil {
-			sdb.Close()
-			return nil, err
-		}
+		// Best effort: another Athar may be applying a big source right now
+		// (SQLITE_BUSY after the busy timeout); the check then runs again next time.
+		_ = d.SetMeta("last_check_at", time.Now().UTC().Format(time.RFC3339))
 	}
 	return d, nil
 }
@@ -239,12 +258,15 @@ type SourceRecord struct {
 // read successfully. A later failed read keeps the last good fingerprint.
 func (d *DB) SourceState(machine, path string) (fingerprint string, adapterVersion int, ok bool, err error) {
 	var lastOK sql.NullInt64
-	err = d.db.QueryRow(`SELECT fingerprint, adapter_version, last_ok_at FROM sources WHERE machine = ? AND path = ?`,
-		machine, path).Scan(&fingerprint, &adapterVersion, &lastOK)
+	var lastErr string
+	err = d.db.QueryRow(`SELECT fingerprint, adapter_version, last_ok_at, last_error FROM sources WHERE machine = ? AND path = ?`,
+		machine, path).Scan(&fingerprint, &adapterVersion, &lastOK, &lastErr)
 	if errors.Is(err, sql.ErrNoRows) {
 		return "", 0, false, nil
 	}
-	if err != nil || !lastOK.Valid {
+	// A source whose last read failed is read again even when unchanged
+	// since the last good read (a transient failure during --rescan).
+	if err != nil || !lastOK.Valid || lastErr != "" {
 		return "", 0, false, err
 	}
 	return fingerprint, adapterVersion, true, nil

@@ -156,6 +156,16 @@ func (d *DB) FinishSync(machine string, seenPaths map[string]bool, at time.Time)
 				return err
 			}
 		}
+		// A source that came back (Recycle Bin restore, drive plugged in again,
+		// a listing that failed silently) is usually unchanged and not re-read:
+		// its sessions are present again.
+		if _, err := tx.Exec(`UPDATE sessions SET source_missing_at = NULL
+			WHERE machine = ? AND source_missing_at IS NOT NULL AND EXISTS (
+				SELECT 1 FROM session_sources l JOIN sources s ON s.id = l.source_id
+				WHERE l.session_id = sessions.id AND s.machine = ? AND s.missing_at IS NULL
+				  AND `+rankSQL("l.origin")+` >= `+rankSQL("sessions.origin")+`)`, machine, machine); err != nil {
+			return err
+		}
 		res, err := tx.Exec(`UPDATE sessions SET source_missing_at = ?
 			WHERE machine = ? AND source_missing_at IS NULL AND NOT EXISTS (
 				SELECT 1 FROM session_sources l JOIN sources s ON s.id = l.source_id
@@ -292,7 +302,7 @@ func indexBody(kind model.Kind, text string) string {
 		}
 		text = text[:cut]
 	}
-	return search.Normalize(text)
+	return search.IndexText(text)
 }
 
 // titleBody is the text indexed in fts_title and sessions.norm_title:
@@ -303,11 +313,11 @@ func titleBody(title, projectName string) string {
 	}
 	switch {
 	case title == "":
-		return search.Normalize(projectName)
+		return search.IndexText(projectName)
 	case projectName == "":
-		return search.Normalize(title)
+		return search.IndexText(title)
 	}
-	return search.Normalize(title + " " + projectName)
+	return search.IndexText(title + " " + projectName)
 }
 
 // applier holds the prepared statements of one ApplySource transaction.
@@ -435,11 +445,22 @@ func (a *applier) apply(s *model.Session) (applyResult, error) {
 	// Messages.
 	count := st.count
 	if takeOver {
-		n, shrunk, err := a.mergeMessages(res.id, s.Messages, ri > rs)
+		// An import is a snapshot: one older than the archived copy (indexed
+		// before the last prompts of a prompt log) may not replace it.
+		replace := ri > rs && (s.Origin == model.OriginLive || toNanos(s.UpdatedAt) >= st.updated)
+		n, shrunk, err := a.mergeMessages(res.id, s.Messages, ri > rs, replace)
 		if err != nil {
 			return res, err
 		}
 		count, res.shrunk = n, shrunk
+	} else if ri < rs && len(s.Messages) > st.count {
+		// §4.5: a lower-origin copy (an import) fills a session that has
+		// fewer messages when the archived ones are its prefix.
+		n, err := a.extend(res.id, s.Messages)
+		if err != nil {
+			return res, err
+		}
+		count = n
 	}
 
 	// Session fields.
@@ -535,7 +556,7 @@ func (a *applier) setTitleIndex(id int64, body string, replace bool) error {
 // (see ApplySource) and returns the new message count and whether the
 // archived copy was kept because the source no longer extends it.
 // upgrade reports a copy from a better origin than the archived one.
-func (a *applier) mergeMessages(sessionID int64, in []model.Message, upgrade bool) (int, bool, error) {
+func (a *applier) mergeMessages(sessionID int64, in []model.Message, upgrade, replace bool) (int, bool, error) {
 	stored, err := a.hashes(sessionID)
 	if err != nil {
 		return 0, false, err
@@ -547,7 +568,7 @@ func (a *applier) mergeMessages(sessionID int64, in []model.Message, upgrade boo
 	if isPrefix(stored, hashes) {
 		return min(len(in), maxSeq+1), false, a.insertMessages(sessionID, len(stored), in[len(stored):])
 	}
-	if upgrade && len(in) >= len(stored) {
+	if replace && len(in) >= len(stored) {
 		// A transcript replacing the prompts of a prompt log, or an import:
 		// the better copy holds (at least as much of) the same conversation.
 		lo, hi := msgRange(sessionID)
@@ -574,6 +595,24 @@ func (a *applier) mergeMessages(sessionID int64, in []model.Message, upgrade boo
 		add = append(add, in[i])
 	}
 	return min(len(stored)+len(add), maxSeq+1), !upgrade, a.insertMessages(sessionID, len(stored), add)
+}
+
+// extend appends the messages of in beyond the archived ones when the
+// archived ones are a prefix of in; otherwise it changes nothing. It returns
+// the message count.
+func (a *applier) extend(sessionID int64, in []model.Message) (int, error) {
+	stored, err := a.hashes(sessionID)
+	if err != nil {
+		return 0, err
+	}
+	hashes := make([]msgHash, len(in))
+	for i, m := range in {
+		hashes[i] = messageHash(m)
+	}
+	if !isPrefix(stored, hashes) {
+		return len(stored), nil
+	}
+	return min(len(in), maxSeq+1), a.insertMessages(sessionID, len(stored), in[len(stored):])
 }
 
 // hashes returns the archived message hashes of a session in seq order.

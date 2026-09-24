@@ -99,7 +99,8 @@ func openAndRunUI(opts options, exe, dataDir string, sys *system) error {
 		Config:   cfg,
 		Version:  version,
 		FirstRun: lastSync == "",
-		NoUpdate: opts.noUpdateCheck,
+		// a broken athar.toml may hold "[update] check = false": no network then
+		NoUpdate: opts.noUpdateCheck || cfgErr != nil,
 	})
 	if berr := backup.wait(sys.stderr, backupNotice); berr != nil {
 		fmt.Fprintln(sys.stderr, "Athar: the weekly backup failed:", berr)

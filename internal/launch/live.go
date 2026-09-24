@@ -17,6 +17,8 @@ import (
 type liveRecord struct {
 	PID       int64           `json:"pid"`
 	SessionID string          `json:"sessionId"`
+	Cwd       string          `json:"cwd"`
+	Status    string          `json:"status"`
 	Kind      string          `json:"kind"`
 	ProcStart json.RawMessage `json:"procStart"`
 	StartedAt int64           `json:"startedAt"` // Unix ms
@@ -53,7 +55,7 @@ func LiveClaudeSessions(roots []string) map[string]LiveInfo {
 				continue
 			}
 			var r liveRecord
-			if json.Unmarshal(data, &r) != nil || r.SessionID == "" || r.PID <= 0 || r.PID > 0xFFFFFFFF {
+			if json.Unmarshal(data, &r) != nil || r.SessionID == "" || r.Kind == "" || r.Cwd == "" || r.Status == "" || r.PID <= 0 || r.PID > 0xFFFFFFFF {
 				continue
 			}
 			want, ok := parseFiletime(r.ProcStart)

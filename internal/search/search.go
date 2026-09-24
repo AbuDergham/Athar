@@ -3,6 +3,7 @@
 package search
 
 import (
+	"regexp"
 	"strings"
 	"unicode"
 	"unicode/utf8"
@@ -24,6 +25,18 @@ import (
 func Normalize(s string) string {
 	out, _, _ := normalize(s)
 	return out
+}
+
+// IndexText is Normalize with every run of white space and control
+// characters turned into one space: the text the full-text index holds, so
+// that a quoted phrase (whose words Parse joins with one space) also matches
+// across a line break, a CRLF or a double space.
+func IndexText(s string) string {
+	n := Normalize(s)
+	if !strings.ContainsFunc(n, func(r rune) bool { return isSeparator(r) && r != ' ' }) && !strings.Contains(n, "  ") {
+		return n
+	}
+	return strings.Join(strings.FieldsFunc(n, isSeparator), " ")
 }
 
 // normalize implements Normalize. It also reports how many extra
@@ -401,11 +414,29 @@ func firstMatch(n string, terms []Term, short bool) int {
 		if t.Short != short || t.Text == "" {
 			continue
 		}
-		if i := strings.Index(n, t.Text); i >= 0 && (best < 0 || i < best) {
+		i := strings.Index(n, t.Text)
+		if t.Phrase && strings.Contains(t.Text, " ") {
+			i = phraseIndex(n, t.Text) // the index matches the words across any white space
+		}
+		if i >= 0 && (best < 0 || i < best) {
 			best = i
 		}
 	}
 	return best
+}
+
+// phraseIndex returns the offset in n of the words of phrase separated by
+// any run of separators, or -1.
+func phraseIndex(n, phrase string) int {
+	words := strings.Split(phrase, " ")
+	for i := range words {
+		words[i] = regexp.QuoteMeta(words[i])
+	}
+	loc := regexp.MustCompile(strings.Join(words, `[\p{Z}\p{Cc}]+`)).FindStringIndex(n)
+	if loc == nil {
+		return -1
+	}
+	return loc[0]
 }
 
 // forward walks from byte i over at most budget units (a character with its

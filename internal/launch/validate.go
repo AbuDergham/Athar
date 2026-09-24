@@ -20,7 +20,8 @@ var ErrUnsupported = errors.New("not supported")
 const maxTitle = 60
 
 var (
-	idPattern      = regexp.MustCompile(`^[A-Za-z0-9._:-]+$`)
+	// the first character is alphanumeric, so an id is never read as an option
+	idPattern      = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9._:-]*$`)
 	envNamePattern = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_]*$`)
 	// varNamePattern also allows the parentheses of %ProgramFiles(x86)%.
 	varNamePattern = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_()]*$`)

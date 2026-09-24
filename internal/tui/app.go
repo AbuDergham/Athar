@@ -196,7 +196,7 @@ func (u *ui) loadStartupMeta() {
 	if !u.updateDue {
 		if v, err := u.st.Meta(metaUpdateRelease); err == nil && v != "" {
 			var r update.Release
-			if json.Unmarshal([]byte(v), &r) == nil && r.Version != "" && r.Version != u.app.Version {
+			if json.Unmarshal([]byte(v), &r) == nil && update.Newer(r.Version, u.app.Version) {
 				u.release = &r
 			}
 		}
@@ -851,9 +851,26 @@ func (u *ui) liveInfo(r *archive.Row) (launch.LiveInfo, bool) {
 	return li, ok
 }
 
-// local reports whether this machine has a live source for the session (§4.6).
+// local reports whether this machine has a live source for the session (§4.6):
+// the agent's own copy, not only a prompt log or an imported index row
+// (those are kept precisely because the agent no longer has the session).
 func (u *ui) local(r *archive.Row) bool {
-	return !r.Missing && (r.Machine == "" || r.Machine == u.app.Machine)
+	return !r.Missing && (r.Origin == "" || r.Origin == model.OriginLive) &&
+		(r.Machine == "" || r.Machine == u.app.Machine) && u.knownRoot(r)
+}
+
+// knownRoot reports whether a Claude session's data root is one this PC's
+// Claude adapter discovers; any other root is never passed to CLAUDE_CONFIG_DIR.
+func (u *ui) knownRoot(r *archive.Row) bool {
+	if r.Root == "" || r.Agent != "claude" {
+		return true
+	}
+	for _, k := range u.roots {
+		if strings.EqualFold(filepath.Clean(k), filepath.Clean(r.Root)) {
+			return true
+		}
+	}
+	return false
 }
 
 func itoa(n int) string { return strconv.Itoa(n) }

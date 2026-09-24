@@ -241,13 +241,14 @@ func TestSourceStateAndErrors(t *testing.T) {
 		t.Errorf("LastOK = %v", st.LastOK)
 	}
 
-	// A later failure keeps the last good fingerprint (the changed file is retried).
+	// After a failure the source is read again, even if unchanged.
 	if err := d.RecordSourceError("M1", "claude", "a.jsonl", errors.New("boom")); err != nil {
 		t.Fatal(err)
 	}
-	if fp2, _, ok, _ := d.SourceState("M1", "a.jsonl"); !ok || fp2 != fp {
-		t.Errorf("fingerprint after error = %q ok=%v", fp2, ok)
+	if _, _, ok, _ := d.SourceState("M1", "a.jsonl"); ok {
+		t.Errorf("SourceState after error: ok=true, want a re-read")
 	}
+	_ = fp
 	if st := sourceStatus(t, d, "M1", "a.jsonl"); st.LastError != "boom" || st.Sessions != 2 {
 		t.Errorf("status after second error = %+v", st)
 	}

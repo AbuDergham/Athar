@@ -107,7 +107,7 @@ func rowLines(r archive.Row, v rowView, width int) (string, string) {
 	if room := width - cellWidth(head) - cellWidth(markers); room >= 4 {
 		line1 = head + displayLine(project, room, v.mode) + markers
 	} else {
-		line1 = ansi.Truncate(head+project+markers, width, "…")
+		line1 = ansi.Truncate(head+cleanLine(project)+markers, width, "…")
 	}
 
 	title := r.Title

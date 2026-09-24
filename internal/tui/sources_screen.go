@@ -360,10 +360,15 @@ func (u *ui) keyNotes(msg tea.KeyPressMsg) tea.Cmd {
 	case "pgdown":
 		u.notesTop += max(1, u.height-3)
 	default:
-		if isLetterKey(msg.Text, 'i') && u.release != nil && !u.installing {
+		if isLetterKey(msg.Text, 'i') && u.release != nil && !u.installing &&
+			update.Newer(u.release.Version, u.app.Version) { // never install an older release
 			u.installing = true
-			install, ctx, rel := u.svc.install, u.ctx, u.release
-			return func() tea.Msg { return installMsg{err: install(ctx, rel)} } // Install bounds its own downloads
+			install, ctx, rel, bg := u.svc.install, u.ctx, u.release, u.bg
+			bg.Add(1) // Run waits for it: never exit between Install's renames
+			return func() tea.Msg {
+				defer bg.Done()
+				return installMsg{err: install(ctx, rel)} // Install bounds its own downloads
+			}
 		}
 	}
 	return nil

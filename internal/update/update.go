@@ -354,6 +354,14 @@ func parseVersion(s string) (version, bool) {
 	return v, true
 }
 
+// Newer reports whether release version v is newer than current (both
+// vMAJOR.MINOR.PATCH; false when either is not a release version).
+func Newer(v, current string) bool {
+	a, ok := parseVersion(v)
+	b, ok2 := parseVersion(current)
+	return ok && ok2 && a.newerThan(b)
+}
+
 // newerThan compares MAJOR.MINOR.PATCH only; pre-release suffixes are ignored.
 func (v version) newerThan(o version) bool {
 	if v.major != o.major {

@@ -38,7 +38,9 @@ func (p *projects) of(cwd, home string) (path, name string) {
 }
 
 func (p *projects) gitRoot(dir string) string {
-	if !filepath.IsAbs(dir) || strings.HasPrefix(dir, `\\`) {
+	// only drive-letter paths are probed: UNC, \\?\, \??\ and device paths are not
+	vol := filepath.VolumeName(dir)
+	if !filepath.IsAbs(dir) || len(vol) != 2 || vol[1] != ':' || strings.HasPrefix(dir, `\\`) {
 		return ""
 	}
 	p.mu.Lock()
