@@ -290,7 +290,7 @@ func sourcesLines(v sourcesView, width int) []string {
 	add("")
 	add(styleBold.Render(" Keys & search"))
 	for _, help := range []string{
-		"↑↓ PgUp PgDn Home End move · Ctrl+↑/↓ jump between days · Enter actions · Tab agent · Ctrl+T time · F2 sources & help · Esc clears the search, or quits when it is empty · Ctrl+C quits",
+		"↑↓ PgUp PgDn Home End move · Ctrl+↑/↓ jump between days · Enter actions · Shift+Enter resume without permission prompts (no confirmation) · Tab agent · Ctrl+T time · F2 sources & help · Esc clears the search, or quits when it is empty · Ctrl+C quits",
 		`"exact phrase" · words may be in different messages · words under 3 letters match titles and projects only · Arabic works with or without ال, hamza forms and diacritics`,
 		// two spaces after 🗄: its glyph spills into the next cell (§2.6 spike)
 		"Markers: " + markLive + " open in another window · " + markMissing + "  archive only (the agent deleted its copy) · (titles) (prompts) … how much of the conversation Athar could read",

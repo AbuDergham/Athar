@@ -26,6 +26,7 @@ Windows SmartScreen may warn the first time because the exe is not code-signed. 
 | `↑` `↓` `PgUp` `PgDn` `Home` `End` | move |
 | `Ctrl+↑` / `Ctrl+↓` | previous / next day in the timeline |
 | `Enter` | actions for the selected session |
+| `Shift+Enter` | resume the selected session **without permission prompts** right away (no menu, no confirmation; e.g. `--dangerously-skip-permissions`) |
 | `Tab` | filter by agent |
 | `Ctrl+T` | filter by time (today, 7 days, 30 days, 12 months) |
 | `F2` | sources, archive, updates and help |
@@ -37,7 +38,7 @@ Actions (`Enter`), which also work with the Arabic keyboard layout:
 |---|---|
 | `R` (ق) | resume the session in a new Windows Terminal tab (or open the project in the agent's app) |
 | `F` (ب) | fork: resume as a new session (offered when the session is open in another window) |
-| `!` | resume without permission prompts (asks for confirmation) |
+| `!` | resume without permission prompts (asks for confirmation; `Shift+Enter` on the list does the same without asking) |
 | `O` (خ) | read the whole conversation in your browser (Arabic displayed right-to-left) |
 | `C` (ؤ) | copy the resume command |
 | `D` (ي) | open the project folder |
@@ -111,4 +112,4 @@ MIT © AbuDergham
 
 **التشغيل:** نزّل `athar.exe` من [Releases](https://github.com/AbuDergham/Athar/releases/latest)، حطّه بمجلد إلك (مثلاً `D:\Tools\Athar`)، ودبل كليك. أول مرة بياخد دقيقة أو ثنتين ليقرأ السجل، وبعدها بيفتح فوراً.
 
-**الأزرار:** اكتب لتبحث · `Enter` للخيارات: `R`/ق كمّل الجلسة بتاب جديد · `O`/خ اقرأها بالمتصفح (العربي مرتب) · `C`/ؤ انسخ الأمر · `D`/ي افتح المجلد · `Tab` اختار الوكيل · `Ctrl+T` الفترة · `F2` المصادر والمساعدة.
+**الأزرار:** اكتب لتبحث · `Shift+Enter` بيكمّل الجلسة فوراً بدون أسئلة إذن (dangerously) · `Enter` للخيارات: `R`/ق كمّل الجلسة بتاب جديد · `O`/خ اقرأها بالمتصفح (العربي مرتب) · `C`/ؤ انسخ الأمر · `D`/ي افتح المجلد · `Tab` اختار الوكيل · `Ctrl+T` الفترة · `F2` المصادر والمساعدة.

@@ -402,6 +402,8 @@ func (u *ui) keyMain(msg tea.KeyPressMsg) tea.Cmd {
 	case "enter":
 		u.openMenu()
 		return nil
+	case "shift+enter":
+		return u.quickSkip()
 	case "tab":
 		u.cycleAgent(1)
 		return u.load(false)

@@ -335,5 +335,5 @@ func (u *ui) keysLine(w int) string {
 	if u.input.Value() != "" {
 		esc = "clear"
 	}
-	return fit(" "+keyHelp("↑↓", "move", "Enter", "actions", "Tab", "agent", "Ctrl+T", "time", "F2", "sources & help", "Esc", esc), w)
+	return fit(" "+keyHelp("↑↓", "move", "Enter", "actions", "⇧Enter", "resume, no prompts", "Tab", "agent", "Ctrl+T", "time", "F2", "sources & help", "Esc", esc), w)
 }

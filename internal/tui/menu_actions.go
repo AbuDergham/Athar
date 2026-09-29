@@ -102,6 +102,44 @@ func (u *ui) openMenu() {
 	u.menu = m
 }
 
+// quickSkip (Shift+Enter on the list) resumes the selected session without
+// permission prompts right away: the same command as the menu's "!" item
+// (a fork when the session is open in another window), without the menu and
+// without the confirmation. When "!" does not apply, the menu opens and says why.
+func (u *ui) quickSkip() tea.Cmd {
+	if u.selected() == nil {
+		return nil
+	}
+	u.openMenu()
+	m := u.menu
+	if m == nil {
+		return nil
+	}
+	for _, e := range m.entries {
+		if e.id == itemSkip {
+			return u.runLaunch(skipAction(m.in), true)
+		}
+	}
+	m.err = "Shift+Enter: " + skipUnavailable(m.in) + " Pick an action below."
+	return nil
+}
+
+// skipUnavailable explains why a session cannot be resumed without permission prompts.
+func skipUnavailable(in menuInput) string {
+	switch {
+	case !in.local:
+		return "this session has no live copy on this PC, so it cannot be resumed."
+	case !in.cliResume && in.app != "":
+		return "this agent opens in its app, not in a terminal."
+	case !in.cliResume:
+		return "this agent cannot resume a session from a terminal."
+	case !in.canSkip:
+		return "this agent has no mode without permission prompts."
+	default:
+		return "this session cannot be resumed without permission prompts right now."
+	}
+}
+
 func (u *ui) keyMenu(msg tea.KeyPressMsg) tea.Cmd {
 	m := u.menu
 	if m.busy != "" {

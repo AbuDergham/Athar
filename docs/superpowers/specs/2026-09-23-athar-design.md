@@ -76,6 +76,8 @@ Enter never launches anything by itself. It opens a small menu. The first applic
 | `C` | `ؤ` | **Copy** the resume/open command (PowerShell syntax, §6.4) | a command exists |
 | `D` | `ي` | **Open the project folder** in Explorer | the folder exists |
 
+**Shift+Enter on the list** runs the `!` action directly: it resumes (or, for a live session, forks) the selected session with the agent's skip-permissions flag in a new tab, with no menu and no confirmation (added in v1.1 at the owner's request). When `!` does not apply, the menu opens with the reason.
+
 When a session is live and interactive, `R` shows a warning line: *"Open in another window: resuming here means two processes write one transcript."*
 
 ### 2.4 Reading page (`O`)
@@ -115,7 +117,7 @@ Windows terminals render Arabic poorly (no bidi reordering, sometimes no shaping
 
 ### 2.7 Keys
 
-Main screen: `↑↓` `PgUp` `PgDn` `Home` `End` move · `Ctrl+↑/↓` jump between day headers · `Enter` action menu · `Tab` agent filter · `Ctrl+T` time filter · `F2` sources & help · `Esc` clears the search, or quits when the search is empty · `Ctrl+C` quits.
+Main screen: `↑↓` `PgUp` `PgDn` `Home` `End` move · `Ctrl+↑/↓` jump between day headers · `Enter` action menu · `Shift+Enter` resume without permission prompts (no confirmation) · `Tab` agent filter · `Ctrl+T` time filter · `F2` sources & help · `Esc` clears the search, or quits when the search is empty · `Ctrl+C` quits.
 
 ### 2.8 Empty and failed states
 

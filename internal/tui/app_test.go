@@ -319,6 +319,8 @@ func (h *harness) key(s string) {
 	switch s {
 	case "enter":
 		k.Code = tea.KeyEnter
+	case "shift+enter":
+		k.Code, k.Mod = tea.KeyEnter, tea.ModShift
 	case "esc":
 		k.Code = tea.KeyEscape
 	case "tab":
@@ -940,5 +942,43 @@ func TestSourcesScreenWrapsLongLines(t *testing.T) {
 		if w := cellWidth(l); w > 80 {
 			t.Errorf("line wider than 80 (%d): %q", w, ansi.Strip(l))
 		}
+	}
+}
+
+func TestShiftEnterResumesWithoutPrompts(t *testing.T) {
+	rows, msgs := fixture()
+	h := newHarness(t, rows, msgs)
+	h.key("shift+enter")
+	if len(h.c.started) != 1 || h.c.built[len(h.c.built)-1].NativeID != "aaaa-1" {
+		t.Fatalf("started = %+v built = %+v", h.c.started, h.c.built)
+	}
+	if h.c.actions[len(h.c.actions)-1] != launch.ActionResume || !h.c.skip[len(h.c.skip)-1] {
+		t.Errorf("want resume with skip, got %v %v", h.c.actions, h.c.skip)
+	}
+	if h.u.menu != nil {
+		t.Errorf("menu left open: %+v", h.u.menu)
+	}
+	if !strings.Contains(h.view(), "Opened in new tab") {
+		t.Errorf("status missing:\n%s", h.view())
+	}
+}
+
+func TestShiftEnterExplainsWhenUnavailable(t *testing.T) {
+	rows, msgs := fixture()
+	h := newHarness(t, rows, msgs)
+	h.key("down") // codex: resumable, but this harness gives it no skip-permissions flag
+	h.key("shift+enter")
+	if len(h.c.started) != 0 {
+		t.Fatalf("must not launch: %+v", h.c.started)
+	}
+	if h.u.menu == nil || !strings.Contains(h.u.menu.err, "no mode without permission prompts") {
+		t.Fatalf("menu error = %+v", h.u.menu)
+	}
+}
+
+func TestShiftEnterKeyName(t *testing.T) {
+	k := tea.KeyPressMsg{Code: tea.KeyEnter, Mod: tea.ModShift}
+	if k.String() != "shift+enter" {
+		t.Fatalf("Shift+Enter is reported as %q", k.String())
 	}
 }
