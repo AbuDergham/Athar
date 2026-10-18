@@ -427,7 +427,7 @@ func snapshot(t *testing.T, root string) string {
 			fmt.Fprintf(&b, "%s|dir\n", p)
 			return nil
 		}
-		info, err := d.Info()
+		info, err := os.Stat(p) // Stat, not DirEntry.Info: the listing can be stale on Windows
 		if err != nil {
 			return err
 		}

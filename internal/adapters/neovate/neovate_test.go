@@ -386,7 +386,10 @@ func TestReadOnly(t *testing.T) {
 			if err != nil {
 				return err
 			}
-			fi, err := d.Info()
+			if d.IsDir() { // folder mtimes change lazily on Windows; compare files only
+				return nil
+			}
+			fi, err := os.Stat(p) // Stat, not DirEntry.Info: the listing can be stale on Windows
 			if err != nil {
 				return err
 			}

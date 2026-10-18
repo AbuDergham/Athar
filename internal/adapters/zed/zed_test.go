@@ -543,7 +543,7 @@ func snapshot(t *testing.T, dir string) map[string]string {
 		if err != nil {
 			return err
 		}
-		info, err := d.Info()
+		info, err := os.Stat(p) // Stat, not DirEntry.Info: the listing can be stale on Windows
 		if err != nil {
 			return err
 		}

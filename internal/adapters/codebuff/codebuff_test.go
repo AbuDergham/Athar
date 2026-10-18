@@ -543,7 +543,7 @@ func snapshot(t *testing.T, root string) map[string]fileState {
 			out[p] = fileState{}
 			return nil
 		}
-		info, err := d.Info()
+		info, err := os.Stat(p) // Stat, not DirEntry.Info: the listing can be stale on Windows
 		if err != nil {
 			return err
 		}

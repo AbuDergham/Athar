@@ -410,7 +410,7 @@ func snapshot(t *testing.T, dir string) string {
 		if err != nil || d.IsDir() {
 			return err
 		}
-		fi, _ := d.Info()
+		fi, _ := os.Stat(p) // Stat, not DirEntry.Info: the listing can be stale on Windows
 		sb.WriteString(p + " " + strconv.FormatInt(fi.Size(), 10) + " " + fi.ModTime().String() + "\n")
 		return nil
 	})
