@@ -175,15 +175,33 @@ func TestSearchNoProjectIsNotIndexed(t *testing.T) {
 	}
 }
 
-func TestSearchTitleMatchRanksFirst(t *testing.T) {
+// Results are ordered newest first (owner's choice, v1.2): a title match does
+// not outrank a newer session that matches in a message.
+func TestSearchNewestFirst(t *testing.T) {
 	d := openTemp(t)
 	a := live("msgonly", "Something else", "we discussed the scraper yesterday", "ok")
 	b := live("titled", "Scraper plan", "we discussed it yesterday", "ok")
-	a.UpdatedAt = b.UpdatedAt.Add(time.Hour) // recency would put a first
+	a.UpdatedAt = b.UpdatedAt.Add(time.Hour)
 	mustApply(t, d, src("a"), a, b)
 	rows := mustSearch(t, d, Filter{Query: "scraper"})
-	if got := ids(rows); len(got) != 2 || got[0] != "titled" {
-		t.Errorf("order %v, want the title match first", got)
+	if got := ids(rows); len(got) != 2 || got[0] != "msgonly" {
+		t.Errorf("order %v, want the newest session first", got)
+	}
+}
+
+// Sessions matching every word stay above partial matches, even older ones;
+// each group is newest first.
+func TestSearchFullMatchesBeforePartialNewestFirst(t *testing.T) {
+	d := openTemp(t)
+	oldFull := live("oldfull", "", "telegram video download", "ok")
+	newFull := live("newfull", "", "telegram video bot", "ok")
+	newPartial := live("newpartial", "", "telegram only", "ok")
+	oldFull.UpdatedAt = t0
+	newFull.UpdatedAt = t0.Add(time.Hour)
+	newPartial.UpdatedAt = t0.Add(2 * time.Hour)
+	mustApply(t, d, src("a"), oldFull, newFull, newPartial)
+	if got := strings.Join(ids(mustSearch(t, d, Filter{Query: "telegram video"})), ","); got != "newfull,oldfull,newpartial" {
+		t.Errorf("order %s, want newfull,oldfull,newpartial", got)
 	}
 }
 

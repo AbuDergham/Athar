@@ -22,11 +22,11 @@ Windows SmartScreen may warn the first time because the exe is not code-signed. 
 
 | Key | Action |
 |---|---|
-| type | search (words may be in different messages; `"exact phrase"`; words under 3 letters match titles and projects) |
+| type | search (newest results first; words may be in different messages; `"exact phrase"`; words under 3 letters match titles and projects) |
 | `↑` `↓` `PgUp` `PgDn` `Home` `End` | move |
 | `Ctrl+↑` / `Ctrl+↓` | previous / next day in the timeline |
 | `Enter` | actions for the selected session |
-| `Shift+Enter` | resume the selected session **without permission prompts** right away (no menu, no confirmation; e.g. `--dangerously-skip-permissions`) |
+| `Shift+Enter` | resume the selected session **without permission prompts** right away, without opening the menu (e.g. `--dangerously-skip-permissions`) |
 | `Tab` | filter by agent |
 | `Ctrl+T` | filter by time (today, 7 days, 30 days, 12 months) |
 | `F2` | sources, archive, updates and help |
@@ -38,7 +38,7 @@ Actions (`Enter`), which also work with the Arabic keyboard layout:
 |---|---|
 | `R` (ق) | resume the session in a new Windows Terminal tab (or open the project in the agent's app) |
 | `F` (ب) | fork: resume as a new session (offered when the session is open in another window) |
-| `!` | resume without permission prompts (asks for confirmation; `Shift+Enter` on the list does the same without asking) |
+| `!` | resume without permission prompts, at once (`Shift+Enter` on the list does the same without opening the menu) |
 | `O` (خ) | read the whole conversation in your browser (Arabic displayed right-to-left) |
 | `C` (ؤ) | copy the resume command |
 | `D` (ي) | open the project folder |
@@ -105,7 +105,7 @@ MIT © AbuDergham
 
 بتتذكر إنك حكيت مع وكيل ما عن شي ما، بمشروع ما، من كم أسبوع؟ اكتب اللي بتتذكره، وأثر بيدوّر بسجل كل الوكلاء مرة وحدة: Claude Code و Codex و Gemini و Antigravity و Cursor و Copilot و Cline و OpenCode وغيرهم.
 
-- **شاشة وحدة:** اكتب، والنتايج بتطلع وإنت عم تكتب. وإذا البحث فاضي بيطلعلك تسلسل شغلك يوم بيوم.
+- **شاشة وحدة:** اكتب، والنتايج بتطلع وإنت عم تكتب، الأحدث فوق والأقدم تحت. وإذا البحث فاضي بيطلعلك تسلسل شغلك يوم بيوم.
 - **ما بيضيع شي:** Claude Code و Gemini بيمحوا الجلسات بعد 30 يوم. أثر بيحتفظ بنسخة دائمة جنب البرنامج، وبيقدر يرجّع الجلسات اللي كانت محفوظة عند AgentsView أو Pi Session Manager.
 - **بحث عربي ذكي:** "مشروع" بتلاقي "المشروع" و"بمشروعي"، و"احمد" بتلاقي "أحمد"، والتشكيل والهمزات ما بيأثروا.
 - **خاص:** كل شي بيضل على جهازك. أثر بيقرأ ملفات الوكلاء بس وما بيعدّل عليها، والاتصال الوحيد بالنت هو فحص التحديثات مرة باليوم، وفيك تطفيه.

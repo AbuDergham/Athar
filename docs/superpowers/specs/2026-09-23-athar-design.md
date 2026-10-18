@@ -71,12 +71,12 @@ Enter never launches anything by itself. It opens a small menu. The first applic
 |---|---|---|---|
 | `R` | `ق` | **Resume.** CLI agents: resume in a new tab. GUI agents (Cursor, VS Code, Antigravity, Trae, LM Studio): open the project in the app and show *"Opened <project> in <App>. Pick «<title>» from its chat history."* | the agent has a resume or app command, the session has a live source on this machine (§4.6), and it is not a live background session (§6.5) |
 | `F` | `ب` | **Fork:** resume as a new session id | the session is live (`●`) and the agent supports forking (Claude, Command Code); listed first when live |
-| `!` | `!` | **Resume without permission prompts** — asks `Really skip all permission prompts? y/N` (`y`/`غ` confirms) and then runs R or F (whichever applies) with the agent's flag added | R or F is shown and the agent has such a flag (§6.3) |
+| `!` | `!` | **Resume without permission prompts** — runs R or F (whichever applies) with the agent's flag added, at once (the y/N confirmation was removed in v1.2 at the owner's request) | R or F is shown and the agent has such a flag (§6.3) |
 | `O` | `خ` | **Read** the full conversation in the browser (§2.4) | always |
 | `C` | `ؤ` | **Copy** the resume/open command (PowerShell syntax, §6.4) | a command exists |
 | `D` | `ي` | **Open the project folder** in Explorer | the folder exists |
 
-**Shift+Enter on the list** runs the `!` action directly: it resumes (or, for a live session, forks) the selected session with the agent's skip-permissions flag in a new tab, with no menu and no confirmation (added in v1.1 at the owner's request). When `!` does not apply, the menu opens with the reason.
+**Shift+Enter on the list** runs the `!` action directly: it resumes (or, for a live session, forks) the selected session with the agent's skip-permissions flag in a new tab, without opening the menu (added in v1.1 at the owner's request). When `!` does not apply, the menu opens with the reason.
 
 When a session is live and interactive, `R` shows a warning line: *"Open in another window: resuming here means two processes write one transcript."*
 
@@ -117,7 +117,7 @@ Windows terminals render Arabic poorly (no bidi reordering, sometimes no shaping
 
 ### 2.7 Keys
 
-Main screen: `↑↓` `PgUp` `PgDn` `Home` `End` move · `Ctrl+↑/↓` jump between day headers · `Enter` action menu · `Shift+Enter` resume without permission prompts (no confirmation) · `Tab` agent filter · `Ctrl+T` time filter · `F2` sources & help · `Esc` clears the search, or quits when the search is empty · `Ctrl+C` quits.
+Main screen: `↑↓` `PgUp` `PgDn` `Home` `End` move · `Ctrl+↑/↓` jump between day headers · `Enter` action menu · `Shift+Enter` resume without permission prompts · `Tab` agent filter · `Ctrl+T` time filter · `F2` sources & help · `Esc` clears the search, or quits when the search is empty · `Ctrl+C` quits.
 
 ### 2.8 Empty and failed states
 
@@ -297,7 +297,7 @@ Tests assert: مشروع finds المشروع and بمشروعي; احمد finds
 - **Per-session AND:** each whitespace-separated term must match somewhere in the same session (any message, the title or the project); terms may sit in different messages. Implementation: one FTS query per term → set of session ids → intersect. A quoted `"exact phrase"` must match inside one message.
 - Terms shorter than 3 characters match titles and project names only.
 - If no session matches every term, show the sessions that match the most terms under `Partial matches (k of n words)`.
-- The preview shows the message that matches the most terms (ties by bm25). Ranking: sessions matching all terms first, then bm25 with title/project boosted; recency is only a tiebreaker.
+- The preview shows the message that matches the most terms (ties by bm25). Ranking (v1.2, owner's choice): sessions matching all terms first, then partial matches (fewest missing words first); within each group the newest session (last activity) is on top.
 - Results are paged lazily.
 
 ### 5.4 Performance targets

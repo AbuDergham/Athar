@@ -21,7 +21,6 @@ type menuState struct {
 	entries  []menuEntry
 	warning  string
 	sel      int
-	confirm  bool   // "Really skip all permission prompts? y/N"
 	err      string // last error (pre-flight, build, …)
 	busy     string // action in progress
 	caps     adapters.Caps
@@ -105,7 +104,7 @@ func (u *ui) openMenu() {
 // quickSkip (Shift+Enter on the list) resumes the selected session without
 // permission prompts right away: the same command as the menu's "!" item
 // (a fork when the session is open in another window), without the menu and
-// without the confirmation. When "!" does not apply, the menu opens and says why.
+// without opening the menu. When "!" does not apply, the menu opens and says why.
 func (u *ui) quickSkip() tea.Cmd {
 	if u.selected() == nil {
 		return nil
@@ -148,13 +147,6 @@ func (u *ui) keyMenu(msg tea.KeyPressMsg) tea.Cmd {
 		}
 		return nil
 	}
-	if m.confirm {
-		m.confirm = false
-		if isYes(msg.Text) {
-			return u.runLaunch(skipAction(m.in), true)
-		}
-		return nil
-	}
 	switch msg.String() {
 	case "esc":
 		u.menu = nil
@@ -188,8 +180,7 @@ func (u *ui) runItem(id menuItemID) tea.Cmd {
 	case itemFork:
 		return u.runLaunch(itemFork, false)
 	case itemSkip:
-		m.confirm = true
-		return nil
+		return u.runLaunch(skipAction(m.in), true) // no y/N (owner's choice, v1.2)
 	case itemRead:
 		return u.runRead()
 	case itemCopy:

@@ -54,11 +54,10 @@ type Row struct {
 // the normalized text) over the messages and one over the titles and project
 // names; terms under 3 characters only match titles and project names
 // (a substring test on sessions.norm_title).
-// Sessions are ranked by the number of terms they match, then by the number
-// matched in the title or project name, then by the sum over terms of the
-// best bm25 of a matching message (see bm25MaxShare), then by recency. The
-// hit message is the one that matches the most terms (ties: best bm25, then
-// first); the snippet is cut around it by search.Snippet from the original
+// Sessions that match every term come first, then sessions that match fewer
+// terms (the TUI's "Partial matches" groups); within each group the newest
+// session (last activity) is on top. The hit message is the one that matches
+// the most terms (ties: best bm25, see bm25MaxShare, then first); the snippet is cut around it by search.Snippet from the original
 // text. The ranking of the last query is cached, so the next pages of a
 // query cost only the rows of the page; any write to the archive
 // invalidates it. A limit below 1 means no limit.
@@ -291,15 +290,9 @@ func (d *DB) rank(f Filter, terms []search.Term) ([]sessionHit, error) {
 	sort.Slice(hits, func(i, j int) bool {
 		a, b := &hits[i], &hits[j]
 		if x, y := bits.OnesCount64(a.mask), bits.OnesCount64(b.mask); x != y {
-			return x > y
+			return x > y // all words first, then partial matches
 		}
-		if x, y := bits.OnesCount64(a.titleMask), bits.OnesCount64(b.titleMask); x != y {
-			return x > y
-		}
-		if a.score != b.score {
-			return a.score < b.score
-		}
-		if a.updated != b.updated {
+		if a.updated != b.updated { // newest on top (owner's choice, v1.2)
 			return a.updated > b.updated
 		}
 		return a.id > b.id

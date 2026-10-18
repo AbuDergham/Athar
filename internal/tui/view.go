@@ -289,8 +289,6 @@ func (u *ui) menuLines(width int) []string {
 	switch {
 	case m.busy != "":
 		add(m.busy, styleDim.Render)
-	case m.confirm:
-		add("Really skip all permission prompts? y/N", styleWarn.Render)
 	default:
 		add("↑↓ Enter, or press a key · Esc closes", styleDim.Render)
 	}

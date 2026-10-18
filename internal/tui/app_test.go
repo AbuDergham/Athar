@@ -518,21 +518,16 @@ func TestResumeFromMenu(t *testing.T) {
 	}
 }
 
-func TestSkipPermissionsConfirm(t *testing.T) {
+// "!" launches at once, without a y/N question (owner's choice, v1.2).
+func TestSkipPermissionsNoConfirm(t *testing.T) {
 	rows, msgs := fixture()
 	h := newHarness(t, rows, msgs)
 	h.key("enter")
 	h.key("!")
-	if !h.u.menu.confirm || !strings.Contains(h.view(), "Really skip all permission prompts? y/N") {
-		t.Fatalf("no confirmation:\n%s", h.view())
+	if strings.Contains(h.view(), "y/N") {
+		t.Fatalf("still asks for confirmation:\n%s", h.view())
 	}
-	h.key("n")
-	if len(h.c.started) != 0 || h.u.menu == nil || h.u.menu.confirm {
-		t.Fatal("n must cancel without launching")
-	}
-	h.key("!")
-	h.key("غ") // Arabic-layout y
-	if len(h.c.started) != 1 || !h.c.skip[len(h.c.skip)-1] {
+	if h.u.menu != nil || len(h.c.started) != 1 || !h.c.skip[len(h.c.skip)-1] {
 		t.Fatalf("skip launch: started %d skip %v", len(h.c.started), h.c.skip)
 	}
 }
