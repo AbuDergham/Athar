@@ -13,6 +13,9 @@
 // to start from a temporary or read-only folder unless --data-dir is given.
 package main
 
+// The icon of athar.exe (rsrc_windows_*.syso) comes from winres/athar.ico.
+//go:generate go run ../../tools/winres -ico winres/athar.ico -out .
+
 import (
 	"errors"
 	"flag"

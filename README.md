@@ -91,6 +91,8 @@ go build -o athar.exe ./cmd/athar
 go test ./...
 ```
 
+The icon comes from `cmd/athar/winres/athar.ico` (drawn from the SVGs next to it); after changing it, run `go generate ./cmd/athar`.
+
 Requires Go 1.26+. Design notes: [docs/superpowers/specs](docs/superpowers/specs).
 
 ## License
