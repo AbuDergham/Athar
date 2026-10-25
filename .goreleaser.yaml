@@ -13,7 +13,8 @@ builds:
     binary: athar
     env:
       - CGO_ENABLED=0
-    goos: [windows, linux, darwin]
+    # Athar is a Windows tool (spec §1).
+    goos: [windows]
     goarch: [amd64, arm64]
     flags:
       - -trimpath
@@ -22,11 +23,8 @@ builds:
 
 archives:
   - id: athar
-    # Windows users get the bare athar.exe (the archive lives next to it).
-    formats: [tar.gz]
-    format_overrides:
-      - goos: windows
-        formats: [binary]
+    # The bare athar.exe (the archive lives next to it).
+    formats: [binary]
     name_template: "athar_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
 
 checksum:

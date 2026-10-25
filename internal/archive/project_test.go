@@ -26,19 +26,23 @@ func TestProjectOf(t *testing.T) {
 
 	cases := []struct {
 		name, cwd, wantPath, wantName string
+		windowsOnly                   bool // git roots are probed for drive-letter paths only
 	}{
-		{"git root itself", repo, repo, "TelegramVideos"},
-		{"inside a repo", sub, repo, "TelegramVideos"},
-		{"worktree .git file", worktree, worktree, "wt"},
-		{"no repo", plain, plain, "notes"},
-		{"folder no longer exists", filepath.Join(base, "gone", "Proj"), filepath.Join(base, "gone", "Proj"), "Proj"},
-		{"home", home, home, "~"},
-		{"empty cwd", "", "", NoProject},
-		{"blank cwd", "   ", "", NoProject},
-		{"trailing separator", plain + string(filepath.Separator), plain, "notes"},
+		{"git root itself", repo, repo, "TelegramVideos", false},
+		{"inside a repo", sub, repo, "TelegramVideos", true},
+		{"worktree .git file", worktree, worktree, "wt", false},
+		{"no repo", plain, plain, "notes", false},
+		{"folder no longer exists", filepath.Join(base, "gone", "Proj"), filepath.Join(base, "gone", "Proj"), "Proj", false},
+		{"home", home, home, "~", false},
+		{"empty cwd", "", "", NoProject, false},
+		{"blank cwd", "   ", "", NoProject, false},
+		{"trailing separator", plain + string(filepath.Separator), plain, "notes", false},
 	}
 	p := newProjects()
 	for _, c := range cases {
+		if c.windowsOnly && runtime.GOOS != "windows" {
+			continue
+		}
 		gotPath, gotName := p.of(c.cwd, home)
 		if gotPath != c.wantPath || gotName != c.wantName {
 			t.Errorf("%s: projectOf(%q) = (%q, %q), want (%q, %q)", c.name, c.cwd, gotPath, gotName, c.wantPath, c.wantName)

@@ -161,3 +161,7 @@ func TestPromptTitleAndTrunc(t *testing.T) {
 		}
 	}
 }
+
+// winPath is p with Windows separators: imported Claude roots are always
+// stored that way (mapAgent), whatever OS the test runs on.
+func winPath(p string) string { return strings.ReplaceAll(p, "/", `\`) }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
@@ -848,8 +849,9 @@ func TestWaitBackground(t *testing.T) {
 }
 
 func TestWithDefaults(t *testing.T) {
-	got := withDefaults(App{Env: adapters.Env{Home: `C:\Users\u`}}, `D:\Tools\Athar\athar-data\archive.db`)
-	if got.DataDir != `D:\Tools\Athar\athar-data` {
+	dataDir := filepath.Join("Tools", "Athar", "athar-data")
+	got := withDefaults(App{Env: adapters.Env{Home: `C:\Users\u`}}, filepath.Join(dataDir, "archive.db"))
+	if got.DataDir != dataDir {
 		t.Errorf("DataDir = %q", got.DataDir)
 	}
 	if got.Env.Home != `C:\Users\u` || got.Env.TempDir == "" || got.Env.Getenv == nil {

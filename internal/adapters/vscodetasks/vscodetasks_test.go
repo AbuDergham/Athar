@@ -19,14 +19,18 @@ import (
 )
 
 const (
-	idFull    = "1767225600000"                        // Cline, XML tools, in taskHistory.json
-	idUIOnly  = "1767225900000"                        // Cline, no API history
-	idEmpty   = "1767226000000"                        // Cline, empty files
-	idNative  = "1767312000000"                        // Cline in Cursor, native tools, no index
-	idKilo    = "019b76da-a800-7000-8000-000000000001" // Kilo legacy in Antigravity
-	idSDK     = "sess_abc"
-	codeTasks = `Code\User\globalStorage\saoudrizwan.claude-dev\tasks`
-	kiloTasks = `Antigravity\User\globalStorage\kilocode.kilo-code\tasks`
+	idFull   = "1767225600000"                        // Cline, XML tools, in taskHistory.json
+	idUIOnly = "1767225900000"                        // Cline, no API history
+	idEmpty  = "1767226000000"                        // Cline, empty files
+	idNative = "1767312000000"                        // Cline in Cursor, native tools, no index
+	idKilo   = "019b76da-a800-7000-8000-000000000001" // Kilo legacy in Antigravity
+	idSDK    = "sess_abc"
+)
+
+// fixture folders, with the separator of the OS the tests run on
+var (
+	codeTasks = filepath.FromSlash("Code/User/globalStorage/saoudrizwan.claude-dev/tasks")
+	kiloTasks = filepath.FromSlash("Antigravity/User/globalStorage/kilocode.kilo-code/tasks")
 )
 
 // later returns an adapter whose clock runs an hour ahead, so freshly
@@ -253,7 +257,7 @@ func TestReadCline(t *testing.T) {
 		if s.Title != "Fix the flaky test" {
 			t.Errorf("title = %q", s.Title)
 		}
-		api := filepath.Join(env.AppData, `Cursor\User\globalStorage\saoudrizwan.claude-dev\tasks`, idNative, apiFile)
+		api := filepath.Join(env.AppData, filepath.FromSlash("Cursor/User/globalStorage/saoudrizwan.claude-dev/tasks"), idNative, apiFile)
 		fi, err := os.Stat(api)
 		if err != nil {
 			t.Fatal(err)
@@ -368,7 +372,7 @@ func TestReadKiloLegacy(t *testing.T) {
 	t.Run("host state.vscdb index", func(t *testing.T) {
 		root := copyTree(t, "testdata")
 		env := adapterstest.FixtureEnv(t, root, nil)
-		gs := filepath.Join(env.AppData, `Antigravity\User\globalStorage`)
+		gs := filepath.Join(env.AppData, filepath.FromSlash("Antigravity/User/globalStorage"))
 		db := filepath.Join(gs, "state.vscdb")
 		writeStateDB(t, db, kiloExt, map[string]any{
 			"mode": "code",
@@ -426,7 +430,7 @@ func TestReadRetryLater(t *testing.T) {
 	if _, err := a.Read(context.Background(), env, src); !errors.Is(err, adapters.ErrRetryLater) {
 		t.Fatalf("Read of a just-written task = %v, want ErrRetryLater", err)
 	}
-	sdk := filepath.Join(env.Home, `.cline\data\sessions`, idSDK)
+	sdk := filepath.Join(env.Home, filepath.FromSlash(".cline/data/sessions"), idSDK)
 	src = adapters.Source{Adapter: "cline", Path: sdk, Extra: map[string]string{extraKind: kindSDK}}
 	if _, err := a.Read(context.Background(), env, src); !errors.Is(err, adapters.ErrRetryLater) {
 		t.Fatalf("Read of a just-written SDK session = %v, want ErrRetryLater", err)

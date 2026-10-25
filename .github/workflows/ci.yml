@@ -19,11 +19,28 @@ jobs:
       - run: go vet ./...
       - run: go test ./...
 
-  build-linux:
+  # Athar ships for Windows only; this job runs the portable tests with the
+  # race detector and the static checks for both targets.
+  test-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-      - run: go build ./...
+      - name: gofmt
+        run: |
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then
+            echo "Run gofmt -w on:"
+            echo "$unformatted"
+            exit 1
+          fi
+      - run: go vet ./...
+      - run: GOOS=windows go vet ./...
+      - name: staticcheck
+        run: |
+          go install honnef.co/go/tools/cmd/staticcheck@v0.8.2
+          staticcheck ./...
+          GOOS=windows staticcheck ./...
+      - run: go test -race ./...
