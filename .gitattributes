@@ -4,4 +4,6 @@
 *.zst binary
 *.zstd binary
 *.pb binary
+*.ico binary
+*.syso binary
 **/testdata/** -text
