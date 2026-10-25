@@ -22,8 +22,11 @@ Thanks for helping! The most valuable contribution is **support for another agen
 
 ```sh
 go vet ./...
+GOOS=windows go vet ./...
 go test ./...
 go build -o athar.exe ./cmd/athar
 ```
+
+CI runs the tests on Windows and, with `-race`, `gofmt` and `staticcheck`, on Linux. A test that depends on Windows paths (drive letters, `\` separators, `%VARS%`) skips itself elsewhere with `if runtime.GOOS != "windows"`.
 
 Design: `docs/superpowers/specs/2026-09-23-athar-design.md`.

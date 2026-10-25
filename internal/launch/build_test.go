@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -109,6 +110,7 @@ func TestBuildTerminal(t *testing.T) {
 		skip     bool
 		override []string
 		want     Command
+		winOnly  bool // the agent's install path candidates use Windows separators
 	}{
 		{
 			name:   "claude default root clears the variable",
@@ -145,6 +147,7 @@ func TestBuildTerminal(t *testing.T) {
 				CmdLine:    noCwd + `set "CODEX_HOME=" && ` + codexCmd + ` resume rollout-abc --dangerously-bypass-approvals-and-sandbox`,
 				PowerShell: `Set-Location -LiteralPath 'D:\Work\Bot'; $env:CODEX_HOME=''; & '` + codexCmd + `' resume rollout-abc --dangerously-bypass-approvals-and-sandbox`,
 			},
+			winOnly: true,
 		},
 		{
 			name:   "gemini in a folder with spaces",
@@ -168,6 +171,7 @@ func TestBuildTerminal(t *testing.T) {
 				CmdLine:    noCwd + `"` + opencodeExe + `" --session ses_3a1b2c`,
 				PowerShell: `Set-Location -LiteralPath 'D:\Work\Scraper'; & '` + opencodeExe + `' --session ses_3a1b2c`,
 			},
+			winOnly: true,
 		},
 		{
 			name:     "override with cwd placeholder",
@@ -210,6 +214,9 @@ func TestBuildTerminal(t *testing.T) {
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
+			if c.winOnly && runtime.GOOS != "windows" {
+				t.Skip("install path candidates are Windows paths")
+			}
 			got, err := Build(c.target, c.caps, c.action, c.skip, c.override)
 			if err != nil {
 				t.Fatalf("Build: %v", err)

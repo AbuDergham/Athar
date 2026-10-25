@@ -472,7 +472,8 @@ func forward(s string, i, budget int) (int, int) {
 // and returns the new start offset.
 func backward(s string, i, budget int) int {
 	for used := 0; i > 0 && used < budget; used++ {
-		r, size := utf8.DecodeLastRuneInString(s[:i])
+		var size int
+		r, _ := utf8.DecodeLastRuneInString(s[:i])
 		if isSeparator(r) {
 			for i > 0 {
 				r, size = utf8.DecodeLastRuneInString(s[:i])

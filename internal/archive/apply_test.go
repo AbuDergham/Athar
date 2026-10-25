@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -29,9 +30,13 @@ func TestApplyInsertStoresEverything(t *testing.T) {
 		t.Errorf("report = %+v", rep)
 	}
 	r := session(t, d, "s1")
+	wantName, wantPath := "TelegramVideos", repo
+	if runtime.GOOS != "windows" { // git roots are probed for drive-letter paths only
+		wantName, wantPath = "cmd", s.Cwd
+	}
 	want := Row{
 		SessionID: r.SessionID, Agent: "claude", NativeID: "s1", Title: "Download videos",
-		ProjectName: "TelegramVideos", ProjectPath: repo, Cwd: s.Cwd, Root: s.Root, Machine: "M1",
+		ProjectName: wantName, ProjectPath: wantPath, Cwd: s.Cwd, Root: s.Root, Machine: "M1",
 		Coverage: model.CoverageFull, Origin: model.OriginLive,
 		StartedAt: s.StartedAt, UpdatedAt: s.UpdatedAt, MessageCount: 4, HitSeq: -1,
 	}
@@ -294,13 +299,15 @@ func TestPromptLogOnlySession(t *testing.T) {
 
 func TestCwdNeverOverwritten(t *testing.T) {
 	d := openTemp(t)
+	base := t.TempDir()
+	first, second, later := filepath.Join(base, "first"), filepath.Join(base, "second"), filepath.Join(base, "later", "proj")
 	a := live("s1", "t", "m")
-	a.Cwd = `C:\first`
+	a.Cwd = first
 	mustApply(t, d, src("a"), a)
 	b := live("s1", "t", "m", "n")
-	b.Cwd = `C:\second`
+	b.Cwd = second
 	mustApply(t, d, src("a"), b)
-	if r := session(t, d, "s1"); r.Cwd != `C:\first` || r.ProjectName != "first" {
+	if r := session(t, d, "s1"); r.Cwd != first || r.ProjectName != "first" {
 		t.Errorf("cwd = %q project %q", r.Cwd, r.ProjectName)
 	}
 
@@ -311,15 +318,15 @@ func TestCwdNeverOverwritten(t *testing.T) {
 	if r := session(t, d, "s2"); r.Cwd != "" || r.ProjectName != NoProject || r.ProjectPath != "" {
 		t.Errorf("empty cwd row = %+v", r)
 	}
-	e.Cwd = `C:\later\proj`
+	e.Cwd = later
 	mustApply(t, d, src("b"), e)
-	if r := session(t, d, "s2"); r.Cwd != `C:\later\proj` || r.ProjectName != "proj" {
+	if r := session(t, d, "s2"); r.Cwd != later || r.ProjectName != "proj" {
 		t.Errorf("filled cwd row = %+v", r)
 	}
 	// ...and never emptied again.
 	e.Cwd = ""
 	mustApply(t, d, src("b"), e)
-	if r := session(t, d, "s2"); r.Cwd != `C:\later\proj` {
+	if r := session(t, d, "s2"); r.Cwd != later {
 		t.Errorf("cwd emptied: %+v", r)
 	}
 }
