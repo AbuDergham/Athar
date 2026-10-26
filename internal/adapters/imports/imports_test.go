@@ -219,7 +219,7 @@ func TestAgentsViewRead(t *testing.T) {
 	}
 
 	g := got["claude/"+idGamma]
-	if g.Root != winPath(filepath.Join(env.Home, ".claude-local")) || g.Title != "Renamed by user" || g.TitleSource != model.TitleUser {
+	if g.Root != filepath.Join(env.Home, ".claude-local") || g.Title != "Renamed by user" || g.TitleSource != model.TitleUser {
 		t.Errorf("gamma: root %q title %q (%s)", g.Root, g.Title, g.TitleSource)
 	}
 
@@ -303,7 +303,7 @@ func TestPSMRead(t *testing.T) {
 	})
 
 	g := got["claude/"+idGamma]
-	if g.Root != winPath(filepath.Join(env.Home, ".claude-local")) || g.Title != "Gamma work title" || g.TitleSource != model.TitleAgent {
+	if g.Root != filepath.Join(env.Home, ".claude-local") || g.Title != "Gamma work title" || g.TitleSource != model.TitleAgent {
 		t.Errorf("gamma: root %q title %q (%s)", g.Root, g.Title, g.TitleSource)
 	}
 	c := got["codex/"+idCodex]

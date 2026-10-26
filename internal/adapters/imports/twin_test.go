@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
-	"runtime"
 	"testing"
 
 	"github.com/AbuDergham/Athar/internal/adapters"
@@ -18,9 +17,6 @@ import (
 // the same transcript share the archive key (agent, native id) and the root,
 // so the archive collapses them into one session (spec §4.5).
 func TestLiveTwin(t *testing.T) {
-	if runtime.GOOS != "windows" {
-		t.Skip("imported roots use Windows separators; the live adapter matches them only on Windows")
-	}
 	env, p := fixtureEnv(t)
 	transcript := func(path, id, cwd string) {
 		t.Helper()

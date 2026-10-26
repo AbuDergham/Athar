@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -30,13 +29,9 @@ func TestApplyInsertStoresEverything(t *testing.T) {
 		t.Errorf("report = %+v", rep)
 	}
 	r := session(t, d, "s1")
-	wantName, wantPath := "TelegramVideos", repo
-	if runtime.GOOS != "windows" { // git roots are probed for drive-letter paths only
-		wantName, wantPath = "cmd", s.Cwd
-	}
 	want := Row{
 		SessionID: r.SessionID, Agent: "claude", NativeID: "s1", Title: "Download videos",
-		ProjectName: wantName, ProjectPath: wantPath, Cwd: s.Cwd, Root: s.Root, Machine: "M1",
+		ProjectName: "TelegramVideos", ProjectPath: repo, Cwd: s.Cwd, Root: s.Root, Machine: "M1",
 		Coverage: model.CoverageFull, Origin: model.OriginLive,
 		StartedAt: s.StartedAt, UpdatedAt: s.UpdatedAt, MessageCount: 4, HitSeq: -1,
 	}

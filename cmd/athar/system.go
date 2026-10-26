@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"os/signal"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 
@@ -32,7 +33,9 @@ type system struct {
 	// progressTTY: stdout is a console, so --sync shows a progress counter.
 	progressTTY bool
 
+	goos          string // runtime.GOOS; tests pick the system they need
 	executable    func() (string, error)
+	homeDir       func() (string, error)
 	getenv        func(string) string
 	tempDir       func() string
 	now           func() time.Time
@@ -55,7 +58,9 @@ func realSystem() *system {
 		stderr:      os.Stderr,
 		console:     isConsole(os.Stdin),
 		progressTTY: isConsole(os.Stdout),
+		goos:        runtime.GOOS,
 		executable:  executablePath,
+		homeDir:     os.UserHomeDir,
 		getenv:      os.Getenv,
 		tempDir:     os.TempDir,
 		now:         time.Now,

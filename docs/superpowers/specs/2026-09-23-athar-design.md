@@ -216,6 +216,7 @@ type Message struct {
 - `athar-data\archive.db` **next to `athar.exe`** (portable: copy the folder, the history comes with it). `--data-dir <path>` overrides.
 - Not writable or under `%TEMP%`: refuse to start (§2.1). No fallback location.
 - Inside a cloud-synced folder (path contains `OneDrive`, `Dropbox`, `Google Drive`, `iCloudDrive`): one-time warning that syncing a live SQLite file can corrupt it.
+- Linux and macOS (plan `2026-10-26-linux-macos.md`): programs usually live in folders the user cannot write to, so the archive is `athar-data` next to the binary only when that folder already exists (a portable copy); otherwise `$XDG_DATA_HOME/athar` (default `~/.local/share/athar`) on Linux and `~/Library/Application Support/Athar` on macOS. `--data-dir` still overrides.
 
 ### 4.2 Schema (sketch)
 
@@ -259,7 +260,7 @@ meta     (key PK, value)   -- schema_version, machine_id, last_sync_at, last_upd
 
 ### 4.6 Machine
 
-- Machine id = Windows `MachineGuid` (read-only from `HKLM\SOFTWARE\Microsoft\Cryptography`), shown with the hostname. Sync reads and marks missing only the current machine's sources.
+- Machine id = Windows `MachineGuid` (read-only from `HKLM\SOFTWARE\Microsoft\Cryptography`), shown with the hostname. On Linux `/etc/machine-id` (then `/var/lib/dbus/machine-id`), on macOS the `IOPlatformUUID` reported by `ioreg`; the hostname when none is available. Sync reads and marks missing only the current machine's sources.
 - A session's `machine` means "last seen live on". `R`/`F`/`!`/`D` appear only when the current machine has a live source for it; otherwise the preview says *"From <hostname> — read only"*.
 - Merging archives from two PCs is not a v1 feature; a portable archive simply keeps what it already holds.
 

@@ -1,6 +1,7 @@
 package imports
 
 import (
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -10,7 +11,10 @@ func TestMapAgent(t *testing.T) {
 	cases := []struct{ path, label, agent, root string }{
 		{`C:\Users\u\.claude\projects\C--x\a.jsonl`, "claude", "claude", ""},
 		{`C:\Users\u\.claude-local\projects\C--x\a.jsonl`, "pi", "claude", `C:\Users\u\.claude-local`},
-		{`C:/Users/u/.claude-work/projects/C--x/a.jsonl`, "", "claude", `C:\Users\u\.claude-work`},
+		{`C:/Users/u/.claude-work/projects/C--x/a.jsonl`, "", "claude", filepath.FromSlash(`C:/Users/u/.claude-work`)},
+		{`/home/u/.claude-work/projects/-home-u-x/a.jsonl`, "", "claude", filepath.FromSlash(`/home/u/.claude-work`)},
+		{`/home/u/.claude/projects/-home-u-x/a.jsonl`, "", "claude", ""},
+		{`/home/u/.config/Code/User/workspaceStorage/h/chatSessions/x.json`, "", "copilot", ""},
 		{`C:\Users\u\.codex\sessions\2025\09\20\rollout-x.jsonl`, "codex", "codex", ""},
 		{`C:\Users\u\.gemini\tmp\proj\chats\session-1.json`, "pi", "gemini", ""},
 		{`C:\Users\u\.gemini\antigravity-cli\conversations\x.db`, "antigravity-cli", "agy", ""},
@@ -161,7 +165,3 @@ func TestPromptTitleAndTrunc(t *testing.T) {
 		}
 	}
 }
-
-// winPath is p with Windows separators: imported Claude roots are always
-// stored that way (mapAgent), whatever OS the test runs on.
-func winPath(p string) string { return strings.ReplaceAll(p, "/", `\`) }

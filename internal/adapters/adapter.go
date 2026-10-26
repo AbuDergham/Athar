@@ -9,6 +9,8 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"runtime"
+	"strings"
 
 	"github.com/AbuDergham/Athar/internal/model"
 )
@@ -20,10 +22,13 @@ import (
 var ErrRetryLater = errors.New("source is being written; read on the next sync")
 
 // Env tells adapters where to look. Tests point it at testdata trees.
+//
+// AppData and LocalAppData are the Windows names; on other systems they hold
+// the folders where the same apps keep the same data (see EnvFor).
 type Env struct {
-	Home         string // %USERPROFILE%
-	AppData      string // %APPDATA%
-	LocalAppData string // %LOCALAPPDATA%
+	Home         string // %USERPROFILE% / $HOME
+	AppData      string // %APPDATA%: per-user app settings (VS Code's User folder lives here)
+	LocalAppData string // %LOCALAPPDATA%: per-user app data
 	Documents    string // the user's Documents folder
 	TempDir      string // private temp dir for SQLite copies (created by sync)
 	Getenv       func(string) string
@@ -32,15 +37,54 @@ type Env struct {
 // CurrentEnv returns the Env of the running user.
 func CurrentEnv(tempDir string) Env {
 	home, _ := os.UserHomeDir()
-	docs := filepath.Join(home, "Documents")
-	return Env{
-		Home:         home,
-		AppData:      os.Getenv("APPDATA"),
-		LocalAppData: os.Getenv("LOCALAPPDATA"),
-		Documents:    docs,
-		TempDir:      tempDir,
-		Getenv:       os.Getenv,
+	env := EnvFor(runtime.GOOS, home, os.Getenv)
+	env.TempDir = tempDir
+	return env
+}
+
+// EnvFor returns the Env of a user whose home folder is home on the system
+// goos (a GOOS value), reading environment variables through getenv:
+//
+//	           AppData                        LocalAppData
+//	windows    %APPDATA%                      %LOCALAPPDATA%
+//	darwin     ~/Library/Application Support  ~/Library/Application Support
+//	other      $XDG_CONFIG_HOME or ~/.config  $XDG_DATA_HOME or ~/.local/share
+//
+// Electron apps (VS Code, Cursor, …) keep their User folder in AppData on
+// every system. XDG variables must be absolute paths; others are ignored, as
+// the XDG specification requires. Paths are built with the separators of the
+// running system.
+func EnvFor(goos, home string, getenv func(string) string) Env {
+	env := Env{Home: home, Getenv: getenv}
+	if home != "" {
+		env.Documents = filepath.Join(home, "Documents")
 	}
+	switch goos {
+	case "windows":
+		env.AppData = getenv("APPDATA")
+		env.LocalAppData = getenv("LOCALAPPDATA")
+	case "darwin":
+		if home != "" {
+			env.AppData = filepath.Join(home, "Library", "Application Support")
+			env.LocalAppData = env.AppData
+		}
+	default:
+		env.AppData = xdgDir(getenv("XDG_CONFIG_HOME"), home, ".config")
+		env.LocalAppData = xdgDir(getenv("XDG_DATA_HOME"), home, ".local", "share")
+	}
+	return env
+}
+
+// xdgDir is value when it is an absolute path, else home joined with def
+// ("" without a home folder).
+func xdgDir(value, home string, def ...string) string {
+	if value != "" && (strings.HasPrefix(value, "/") || filepath.IsAbs(value)) {
+		return value
+	}
+	if home == "" {
+		return ""
+	}
+	return filepath.Join(append([]string{home}, def...)...)
 }
 
 // Source is one unit that sync fingerprints and reads: a file, a database,

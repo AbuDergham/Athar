@@ -38,9 +38,7 @@ func (p *projects) of(cwd, home string) (path, name string) {
 }
 
 func (p *projects) gitRoot(dir string) string {
-	// only drive-letter paths are probed: UNC, \\?\, \??\ and device paths are not
-	vol := filepath.VolumeName(dir)
-	if !filepath.IsAbs(dir) || len(vol) != 2 || vol[1] != ':' || strings.HasPrefix(dir, `\\`) {
+	if !probeable(dir) {
 		return ""
 	}
 	p.mu.Lock()
@@ -64,6 +62,20 @@ func (p *projects) gitRoot(dir string) string {
 	p.root[dir] = root
 	p.mu.Unlock()
 	return root
+}
+
+// probeable reports whether gitRoot may look for .git above dir: absolute
+// drive-letter paths on Windows (UNC, \\?\, \??\ and device paths can stall
+// on the network and are not probed), any absolute path elsewhere.
+func probeable(dir string) bool {
+	if !filepath.IsAbs(dir) {
+		return false
+	}
+	if filepath.Separator != '\\' {
+		return true
+	}
+	vol := filepath.VolumeName(dir)
+	return len(vol) == 2 && vol[1] == ':' && !strings.HasPrefix(dir, `\\`)
 }
 
 // cleanPath is filepath.Clean, except that a bare volume ("D:", which Clean
