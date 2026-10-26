@@ -31,9 +31,10 @@ const probePrefix = ".athar-probe-"
 // resolveDataDir returns the data folder, created when missing.
 //
 // With --data-dir (flagDir != "") that folder is used wherever it is; it only
-// has to be writable. Otherwise the folder is athar-data next to athar.exe,
-// and Athar refuses (spec §2.1, §4.1) when exeDir is under a temporary folder
-// (e.g. athar.exe opened from inside a zip) or when it cannot write there.
+// has to be writable. Otherwise, on Windows, the folder is athar-data next to
+// athar.exe, and Athar refuses (spec §2.1, §4.1) when exeDir is under a
+// temporary folder (e.g. athar.exe opened from inside a zip) or when it cannot
+// write there. On other systems see unixDataDir.
 func resolveDataDir(flagDir, exeDir string, sys *system) (string, error) {
 	if flagDir != "" {
 		dir, err := filepath.Abs(flagDir)
@@ -44,6 +45,9 @@ func resolveDataDir(flagDir, exeDir string, sys *system) (string, error) {
 			return "", fmt.Errorf("Athar cannot use the data folder %s (--data-dir): %w", dir, err)
 		}
 		return dir, nil
+	}
+	if sys.goos != "windows" {
+		return unixDataDir(exeDir, sys)
 	}
 
 	if isTemporary(exeDir, tempRoots(sys)) {
@@ -63,6 +67,53 @@ func resolveDataDir(flagDir, exeDir string, sys *system) (string, error) {
 		return "", &refusal{folder: exeDir, reason: "is not writable", err: err}
 	}
 	return dir, nil
+}
+
+// unixDataDir is the data folder on Linux and macOS (spec §4.1): athar-data
+// next to the binary when that folder exists (a portable copy), else the
+// user's data folder, $XDG_DATA_HOME/athar (~/.local/share/athar) or, on
+// macOS, ~/Library/Application Support/Athar. Programs on these systems
+// usually live in folders the user cannot write to, so the binary's folder
+// is never created into.
+func unixDataDir(exeDir string, sys *system) (string, error) {
+	portable := filepath.Join(exeDir, dataDirName)
+	if fi, err := os.Stat(portable); err == nil && fi.IsDir() {
+		if err := writable(portable); err != nil {
+			return "", fmt.Errorf("Athar cannot use the data folder %s next to athar: %w. "+
+				"Make it writable, remove it to use your user data folder, or run athar with --data-dir <path>", portable, err)
+		}
+		return portable, nil
+	}
+	dir, err := userDataDir(sys)
+	if err != nil {
+		return "", err
+	}
+	if err := makeWritable(dir); err != nil {
+		return "", fmt.Errorf("Athar cannot use the data folder %s: %w. Run athar with --data-dir <path>", dir, err)
+	}
+	return dir, nil
+}
+
+// userDataDir is where Athar keeps its archive for the user on Linux and
+// macOS (not created here).
+func userDataDir(sys *system) (string, error) {
+	if sys.goos != "darwin" {
+		// XDG: only an absolute $XDG_DATA_HOME counts.
+		if x := sys.getenv("XDG_DATA_HOME"); filepath.IsAbs(x) {
+			return filepath.Join(x, "athar"), nil
+		}
+	}
+	home, err := sys.homeDir()
+	if err == nil && home == "" {
+		err = errors.New("no home folder")
+	}
+	if err != nil {
+		return "", fmt.Errorf("Athar cannot find your data folder (%w); run it with --data-dir <path>", err)
+	}
+	if sys.goos == "darwin" {
+		return filepath.Join(home, "Library", "Application Support", "Athar"), nil
+	}
+	return filepath.Join(home, ".local", "share", "athar"), nil
 }
 
 // makeWritable creates dir when missing and checks that files can be created in it.

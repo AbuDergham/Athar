@@ -426,3 +426,23 @@ func TestCaps(t *testing.T) {
 }
 
 func TestRealData(t *testing.T) { adapterstest.RealData(t, New()) }
+
+func TestSamePathKey(t *testing.T) {
+	cases := []struct {
+		a, b string
+		same bool
+	}{
+		{`C:\Work\Proj`, `c:/work/proj/`, true},
+		{`C:\`, `c:/`, true},
+		{`C:\Work\Proj`, `C:\Work\Other`, false},
+		{`\\server\Share\x`, `\\SERVER\share\x\`, true},
+		{"/home/u/Proj", "/home/u/Proj/", true},
+		{"/home/u/Proj", "/home/u/proj", false}, // Unix folders are case-sensitive
+		{"/", "/", true},
+	}
+	for _, c := range cases {
+		if got := samePathKey(c.a) == samePathKey(c.b); got != c.same {
+			t.Errorf("samePathKey(%q) == samePathKey(%q) = %v, want %v", c.a, c.b, got, c.same)
+		}
+	}
+}

@@ -57,6 +57,7 @@ func testSystem(t *testing.T, stdin string) (*system, *syncBuffer) {
 		stdin:      strings.NewReader(stdin),
 		stdout:     out,
 		stderr:     out,
+		goos:       "windows",
 		executable: func() (string, error) { return filepath.Join(exeDir, "athar.exe"), nil },
 		getenv:     func(string) string { return "" },
 		tempDir:    func() string { return `Z:\athar-test-temp` },

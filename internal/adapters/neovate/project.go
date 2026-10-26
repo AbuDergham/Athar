@@ -42,8 +42,8 @@ func encodeProject(cwd string) string {
 
 // matchProject returns the data.json project key whose encoding is enc, or ""
 // when there is none or when several different folders encode to enc. Keys
-// that differ only in letter case, slash direction or a trailing separator
-// name the same Windows folder; the first of them in sort order is returned.
+// that name the same folder (see samePathKey) count once; the first of them
+// in sort order is returned.
 func matchProject(keys []string, enc string) string {
 	var cands []string
 	for _, k := range keys {
@@ -64,13 +64,26 @@ func matchProject(keys []string, enc string) string {
 	return cands[0]
 }
 
-// samePathKey folds the spellings of one Windows path onto one comparison key.
+// samePathKey folds the spellings of one folder onto one comparison key:
+// for a Windows path (drive letter, UNC or backslash) letter case and slash
+// direction do not matter; for any path a trailing separator does not.
 func samePathKey(p string) string {
+	if !windowsPath(p) {
+		for len(p) > 1 && strings.HasSuffix(p, "/") {
+			p = p[:len(p)-1]
+		}
+		return p
+	}
 	p = strings.ToLower(strings.ReplaceAll(p, "/", `\`))
 	for len(p) > 1 && strings.HasSuffix(p, `\`) && !strings.HasSuffix(p, `:\`) {
 		p = p[:len(p)-1]
 	}
 	return p
+}
+
+// windowsPath reports whether p is spelled as a Windows path.
+func windowsPath(p string) bool {
+	return len(p) >= 2 && p[1] == ':' || strings.Contains(p, `\`)
 }
 
 // projectsCache remembers the project keys of one data.json by size and mtime,

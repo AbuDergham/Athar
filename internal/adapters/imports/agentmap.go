@@ -1,6 +1,7 @@
 package imports
 
 import (
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -85,7 +86,8 @@ var labelAgents = map[string]string{
 // mapAgent returns the live agent id and data root for a session whose source
 // file is path and whose tool-assigned label is label. root is "" for the
 // agent's default root; it is set only for Claude roots other than .claude
-// (what the Claude adapter uses as Session.Root).
+// (what the Claude adapter uses as Session.Root), with the separators of the
+// running system so it matches the live adapter's root.
 func mapAgent(path, label string) (agent, root string) {
 	if m := claudeRoot.FindStringSubmatch(path); m != nil {
 		root = m[1]
@@ -93,7 +95,7 @@ func mapAgent(path, label string) (agent, root string) {
 		if strings.EqualFold(base, ".claude") {
 			root = ""
 		}
-		return "claude", strings.ReplaceAll(root, "/", `\`)
+		return "claude", filepath.FromSlash(root)
 	}
 	p := strings.ToLower(strings.ReplaceAll(path, "/", `\`))
 	for _, r := range pathRules {

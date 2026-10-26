@@ -30,6 +30,7 @@ func TestCloudFolder(t *testing.T) {
 // tests never use (the tests themselves run under the real %TEMP%).
 func fakeTempSys() *system {
 	return &system{
+		goos:    "windows",
 		getenv:  func(string) string { return "" },
 		tempDir: func() string { return `Z:\athar-test-temp` },
 	}
@@ -61,7 +62,7 @@ func TestResolveDataDirRefusesTemp(t *testing.T) {
 	if err := os.MkdirAll(exeDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
-	sys := &system{getenv: func(k string) string {
+	sys := &system{goos: "windows", getenv: func(k string) string {
 		if k == "TEMP" {
 			return temp
 		}
@@ -103,7 +104,7 @@ func TestResolveDataDirFlag(t *testing.T) {
 	// --data-dir is the way out: allowed even under %TEMP%, created when missing.
 	temp := t.TempDir()
 	dir := filepath.Join(temp, "data")
-	sys := &system{getenv: func(string) string { return temp }, tempDir: func() string { return temp }}
+	sys := &system{goos: "windows", getenv: func(string) string { return temp }, tempDir: func() string { return temp }}
 	got, err := resolveDataDir(dir, filepath.Join(temp, "exe"), sys)
 	if err != nil {
 		t.Fatalf("resolveDataDir(--data-dir): %v", err)
@@ -145,5 +146,92 @@ func assertNoProbe(t *testing.T, dir string) {
 		if strings.HasPrefix(e.Name(), probePrefix) {
 			t.Errorf("probe file left behind: %s", filepath.Join(dir, e.Name()))
 		}
+	}
+}
+
+// unixSys is a Linux or macOS system whose home folder is home.
+func unixSys(goos, home string, env map[string]string) *system {
+	return &system{
+		goos:    goos,
+		getenv:  func(k string) string { return env[k] },
+		homeDir: func() (string, error) { return home, nil },
+		tempDir: func() string { return "/athar-test-temp" },
+	}
+}
+
+func TestResolveDataDirUnix(t *testing.T) {
+	base := t.TempDir()
+	home := filepath.Join(base, "home")
+	exeDir := filepath.Join(base, "usr", "local", "bin")
+	if err := os.MkdirAll(exeDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	xdg := filepath.Join(base, "xdg-data")
+	cases := []struct {
+		name, goos string
+		env        map[string]string
+		want       string
+	}{
+		{"linux", "linux", nil, filepath.Join(home, ".local", "share", "athar")},
+		{"linux XDG_DATA_HOME", "linux", map[string]string{"XDG_DATA_HOME": xdg}, filepath.Join(xdg, "athar")},
+		{"linux relative XDG_DATA_HOME is ignored", "linux", map[string]string{"XDG_DATA_HOME": "data"}, filepath.Join(home, ".local", "share", "athar")},
+		{"macOS", "darwin", map[string]string{"XDG_DATA_HOME": xdg}, filepath.Join(home, "Library", "Application Support", "Athar")},
+	}
+	for _, c := range cases {
+		got, err := resolveDataDir("", exeDir, unixSys(c.goos, home, c.env))
+		if err != nil || got != c.want {
+			t.Errorf("%s: resolveDataDir = %q, %v; want %q", c.name, got, err, c.want)
+			continue
+		}
+		if fi, err := os.Stat(got); err != nil || !fi.IsDir() {
+			t.Errorf("%s: data dir not created: %v", c.name, err)
+		}
+		assertNoProbe(t, got)
+	}
+	// The binary's folder is never written into.
+	if entries, _ := os.ReadDir(exeDir); len(entries) != 0 {
+		t.Errorf("files created next to the binary: %v", entries)
+	}
+
+	// A portable athar-data next to the binary wins.
+	portable := filepath.Join(exeDir, dataDirName)
+	if err := os.Mkdir(portable, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if got, err := resolveDataDir("", exeDir, unixSys("linux", home, nil)); err != nil || got != portable {
+		t.Errorf("portable: resolveDataDir = %q, %v; want %q", got, err, portable)
+	}
+	// --data-dir wins over both.
+	flag := filepath.Join(base, "flag")
+	if got, err := resolveDataDir(flag, exeDir, unixSys("darwin", home, nil)); err != nil || got != flag {
+		t.Errorf("--data-dir: resolveDataDir = %q, %v; want %q", got, err, flag)
+	}
+}
+
+func TestResolveDataDirUnixErrors(t *testing.T) {
+	base := t.TempDir()
+	exeDir := filepath.Join(base, "bin")
+	if err := os.MkdirAll(exeDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	// No home folder and no XDG_DATA_HOME: an error pointing at --data-dir.
+	sys := unixSys("linux", "", nil)
+	if _, err := resolveDataDir("", exeDir, sys); err == nil || !strings.Contains(err.Error(), "--data-dir") {
+		t.Errorf("no home: err = %v", err)
+	}
+	sys.homeDir = func() (string, error) { return "", errors.New("$HOME is not defined") }
+	if _, err := resolveDataDir("", exeDir, sys); err == nil || !strings.Contains(err.Error(), "$HOME is not defined") {
+		t.Errorf("home error: err = %v", err)
+	}
+	// The user data folder is a file.
+	home := filepath.Join(base, "home")
+	if err := os.MkdirAll(filepath.Join(home, ".local", "share"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(home, ".local", "share", "athar"), []byte("x"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := resolveDataDir("", exeDir, unixSys("linux", home, nil)); err == nil || !strings.Contains(err.Error(), "--data-dir") {
+		t.Errorf("data folder is a file: err = %v", err)
 	}
 }
