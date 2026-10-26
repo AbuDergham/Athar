@@ -216,7 +216,7 @@ func newHarnessWith(t *testing.T, st store, customize func(*App, *services)) *ha
 			h.c.built = append(h.c.built, tg)
 			h.c.skip = append(h.c.skip, skip)
 			h.c.actions = append(h.c.actions, a)
-			cmd := launch.Command{Title: tg.Title, Dir: tg.Cwd, Program: "prog", PowerShell: "prog " + tg.NativeID}
+			cmd := launch.Command{Title: tg.Title, Dir: tg.Cwd, Program: "prog", PowerShell: "prog " + tg.NativeID, Shell: "prog " + tg.NativeID}
 			if caps.Resume == nil && caps.App != nil {
 				cmd.IsApp, cmd.AppName = true, caps.App.Name
 			}

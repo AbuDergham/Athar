@@ -135,10 +135,6 @@ func OpenFolder(path string) error {
 	return startDetached(cmd)
 }
 
-// openableExt lists the file types OpenFile hands to their default app; it
-// never opens executables, scripts or shortcuts.
-var openableExt = map[string]bool{".html": true, ".htm": true, ".txt": true, ".md": true}
-
 // OpenFile opens a file with its default app (used for the reading page).
 // It uses ShellExecute("open"), so no command line is parsed.
 func OpenFile(path string) error {

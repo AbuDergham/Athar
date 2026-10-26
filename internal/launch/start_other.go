@@ -1,11 +1,12 @@
-//go:build !windows
+//go:build !windows && !unix
 
 package launch
 
 import "errors"
 
-// errWindowsOnly is returned by the parts of launch that need Windows.
-var errWindowsOnly = errors.New("launch: only supported on Windows")
+// errWindowsOnly is returned by the parts of launch that need Windows or a
+// Unix system (see start_unix.go).
+var errWindowsOnly = errors.New("launch: not supported on this system")
 
 // Start opens a Windows Terminal tab (wt -w 0 new-tab ...) or, without wt.exe,
 // a new console window; GUI apps are started directly. Windows only.

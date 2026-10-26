@@ -1,4 +1,7 @@
-// Package launch builds and starts resume/open commands on Windows (spec §6).
+// Package launch builds and starts resume/open commands (spec §6). On Linux
+// and macOS (plan 2026-10-26-linux-macos.md, phase 3) the same Command runs
+// in a new terminal through argv (Linux) or an sh line (macOS Terminal), see
+// shell.go and start_unix.go.
 //
 // Build turns a session and its agent's caps into a Command: a validated
 // one-token command line for `cmd /d /s /k` (CmdLine), a copyable PowerShell
@@ -9,7 +12,10 @@
 // Windows Terminal tab, a console window or a GUI app.
 package launch
 
-import "time"
+import (
+	"runtime"
+	"time"
+)
 
 // Action is what the user picked in the action menu.
 type Action int
@@ -40,6 +46,26 @@ type Command struct {
 
 	CmdLine    string // the one-token command for `cmd /d /s /k` (validated)
 	PowerShell string // copyable PowerShell form (§6.4)
+	// Shell is the sh form (Linux, macOS): what the C action copies there and
+	// what macOS Terminal runs. "" when a value cannot be embedded safely.
+	Shell string
+}
+
+// CopyText is the command the C action copies: the PowerShell form on
+// Windows, the sh form elsewhere ("" when there is none).
+func (c Command) CopyText() string {
+	if runtime.GOOS == "windows" {
+		return c.PowerShell
+	}
+	return c.Shell
+}
+
+// CopyFormat names the form CopyText returns, for the action menu.
+func CopyFormat() string {
+	if runtime.GOOS == "windows" {
+		return "PowerShell"
+	}
+	return "sh"
 }
 
 // LiveInfo describes a Claude session that is running now (spec §6.5).
@@ -48,3 +74,7 @@ type LiveInfo struct {
 	Interactive bool
 	StartedAt   time.Time
 }
+
+// openableExt lists the file types OpenFile hands to their default app; it
+// never opens executables, scripts or shortcuts.
+var openableExt = map[string]bool{".html": true, ".htm": true, ".txt": true, ".md": true}

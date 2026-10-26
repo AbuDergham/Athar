@@ -315,6 +315,9 @@ Keystroke to results < 150 ms on the owner's archive; first full sync ≤ 3 minu
 - **Environment:** Athar sets the child's environment and also embeds the variable that selects the agent's data root, clearing it for the default root: `set "CLAUDE_CONFIG_DIR=%USERPROFILE%\.claude-local" && claude --resume <id>` or `set "CLAUDE_CONFIG_DIR=" && claude --resume <id>`. Same for `CODEX_HOME`, `GEMINI_CLI_HOME`, `HERMES_SESSIONS_DIR`, `CONTINUE_GLOBAL_DIR` where relevant.
 - Commands run through `cmd /k` so npm `.cmd` shims resolve via PATHEXT and the tab stays open after the agent exits.
 - After launching, Athar stays open and shows *"Opened in new tab"*; the next sync picks up changes.
+- **Linux** (plan `2026-10-26-linux-macos.md`, phase 3): the terminal Athar runs in when it can tell (`KITTY_WINDOW_ID`, `WEZTERM_PANE`, `KONSOLE_VERSION`, `GNOME_TERMINAL_SCREEN`, `ALACRITTY_WINDOW_ID`), then `$TERMINAL`, then gnome-terminal, konsole, xfce4-terminal, kitty, wezterm, alacritty, foot, x-terminal-emulator, xterm. The terminal gets an argv, never a shell string: `/bin/sh -c <script> athar <Cwd> /usr/bin/env [-u VAR]… [VAR=value]… <program> <args>…`, where `<script>` is the constant `cd -- "$1" && shift && "$@"; exec "${SHELL:-/bin/sh}"` (it keeps the tab open after the agent exits, like `cmd /k`). Every value is a positional parameter, so no value is ever parsed by a shell. A program starting with `-` or containing `=` is refused.
+- **macOS:** `osascript` tells Terminal to `do script` the sh form (§6.4). The sh form is passed as an argument (`item 1 of argv`), never as AppleScript text; inside it every value is single-quoted (`'` → `'\''`), and a value with a control character makes the command unavailable rather than being embedded.
+- GUI apps on Linux and macOS are started directly (argv, own session, no terminal). Folders and the reading page open with `xdg-open` (Linux) or `open` (macOS), always with an absolute path.
 
 ### 6.2 Pre-flight checks
 
@@ -349,6 +352,7 @@ Before launching, with a clear message and an offer to `O` Read instead:
 ### 6.4 Copy command
 
 PowerShell syntax: `Set-Location -LiteralPath '<Cwd>'; $env:NAME='value'; <command>`. Every embedded `'` is doubled (`O''Brien`); a quoted executable path gets the call operator (`& 'C:\…\opencode-cli.exe' --session …`). Tests cover `'`, `$`, backtick, `&` and `;` in paths.
+- On Linux and macOS `C` copies the sh form instead: `cd -- '<cwd>' && unset VAR && export VAR='value' && <program> <args>` (every value single-quoted unless it is a plain word). The clipboard is fed through `pbcopy`, `wl-copy`, `xclip` or `xsel` on standard input.
 
 ### 6.5 Live-session detection (Claude Code)
 

@@ -60,11 +60,13 @@ For each adapter: record the Linux and macOS locations (and their environment ov
 
 ## Phase 3: launching
 
-- [ ] macOS: resume in a new tab of the terminal Athar runs in (`$TERM_PROGRAM`: iTerm2 or Terminal.app through `osascript`), else a new Terminal.app window. `open` for folders, files and apps; `pbcopy` for the clipboard.
-- [ ] Linux: `$TERMINAL`, then gnome-terminal, konsole, kitty, wezterm, alacritty, xterm, each with its "new tab" or "new window" form. `xdg-open` for folders and files; `wl-copy`, then `xclip`, then `xsel` for the clipboard.
-- [ ] `validate.go`: a POSIX `sh` quoting and validation path next to the `cmd.exe`/PowerShell one; the "copy command" action shows the `sh` form. Security review before merge.
-- [ ] "Open in another window" detection: `/proc/<pid>/cmdline` and start time on Linux, `ps -o lstart=` on macOS.
-- [ ] Resume-command candidates: `ProgramCandidates` per OS (e.g. `~/.npm-global/bin`, `/opt/homebrew/bin`), `%VARS%` stay Windows-only.
+- [x] macOS: resume in a new Terminal.app window through `osascript`; the sh line is passed as an argument, never as AppleScript text. `open` for folders and files; `pbcopy` for the clipboard. (iTerm2 tabs: later, after testing on a Mac.)
+- [x] Linux: the terminal Athar runs in, then `$TERMINAL`, then gnome-terminal, konsole, xfce4-terminal, kitty, wezterm, alacritty, foot, x-terminal-emulator, xterm, each with its "new tab" or "new window" form and the command as separate arguments. `xdg-open` for folders and files; `wl-copy`, then `xclip`, then `xsel` for the clipboard.
+- [x] An sh path next to the `cmd.exe`/PowerShell one: on Linux no shell parses any value (constant script, values as positional parameters, variables through `/usr/bin/env`); on macOS and for the copied command every value is single-quoted and control characters are refused. `C` copies the sh form outside Windows. Tests run hostile values (`$(…)`, backticks, quotes, `;`, `*`, `~`) through a real `/bin/sh` and a fake terminal.
+- [ ] Security review before merge.
+- [ ] "Open in another window" detection: needs Claude Code's `procStart` format on Linux and macOS (Phase 2, real machines). Until then no session is reported live there.
+- [ ] Resume-command candidates and app programs per OS: `ProgramCandidates` (e.g. `~/.npm-global/bin`, `/opt/homebrew/bin`) and `App.Program` values such as `Trae.exe`, `LM Studio.exe`, `ZCode.exe` (Phase 2, with each adapter).
+- [ ] Check every terminal form on a real desktop (GNOME, KDE, kitty, wezterm, macOS Terminal).
 
 ## Phase 4: update and release
 

@@ -221,6 +221,7 @@ func TestBuildTerminal(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Build: %v", err)
 			}
+			got.Shell = "" // the sh form has its own test (TestBuildShell)
 			if !reflect.DeepEqual(got, c.want) {
 				t.Errorf("Build mismatch\n got: %#v\nwant: %#v", got, c.want)
 			}
@@ -283,6 +284,7 @@ func TestBuildApp(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			got.Shell = "" // the sh form has its own test (TestBuildShell)
 			if !reflect.DeepEqual(got, c.want) {
 				t.Errorf("Build mismatch\n got: %#v\nwant: %#v", got, c.want)
 			}

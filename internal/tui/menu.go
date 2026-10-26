@@ -1,5 +1,7 @@
 package tui
 
+import "github.com/AbuDergham/Athar/internal/launch"
+
 // menuInput is what decides which action-menu entries are shown (spec §2.3).
 type menuInput struct {
 	cliResume   bool   // a terminal resume command exists (agent caps or athar.toml)
@@ -61,7 +63,7 @@ func menuEntries(in menuInput) ([]menuEntry, string) {
 	}
 	es = append(es, menuEntry{itemRead, "O", "Read the conversation in the browser"})
 	if in.command {
-		es = append(es, menuEntry{itemCopy, "C", "Copy the command (PowerShell)"})
+		es = append(es, menuEntry{itemCopy, "C", "Copy the command (" + launch.CopyFormat() + ")"})
 	}
 	if in.local && in.folder {
 		es = append(es, menuEntry{itemFolder, "D", "Open the project folder"})

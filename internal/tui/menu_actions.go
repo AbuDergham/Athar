@@ -309,13 +309,18 @@ func (u *ui) runCopy() tea.Cmd {
 		u.menu.err = "Cannot build the command: " + err.Error()
 		return nil
 	}
+	text := cmd.CopyText()
+	if text == "" {
+		u.menu.err = "Cannot build the command: it contains characters a shell cannot take safely"
+		return nil
+	}
 	u.menu.busy = "Copying…"
 	cp := u.svc.copy
 	return func() tea.Msg {
-		if err := cp(cmd.PowerShell); err != nil {
+		if err := cp(text); err != nil {
 			return actionMsg{err: err}
 		}
-		return actionMsg{status: "Copied: " + cmd.PowerShell}
+		return actionMsg{status: "Copied: " + text}
 	}
 }
 

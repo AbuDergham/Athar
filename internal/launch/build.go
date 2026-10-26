@@ -129,6 +129,7 @@ func Build(t Target, caps adapters.Caps, action Action, skip bool, override []st
 	}
 	c.CmdLine = cmdLine(program, args, env)
 	c.PowerShell = powerShell(t.Cwd, program, args, env)
+	c.Shell = shellLine(t.Cwd, program, args, env)
 	return c, nil
 }
 
