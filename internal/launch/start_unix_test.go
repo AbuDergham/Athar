@@ -78,10 +78,47 @@ exec "$@"
 }
 
 func TestStartLinuxNoTerminal(t *testing.T) {
-	fakeTools(t, nil)
-	err := Start(Command{Dir: "/", Program: "claude"})
-	if err == nil || !strings.Contains(err.Error(), "no terminal") {
+	bin := fakeTools(t, map[string]string{"claude": "exit 0\n"})
+	err := Start(Command{Dir: bin, Program: "claude"})
+	if err == nil || !strings.Contains(err.Error(), "no supported terminal") {
 		t.Errorf("err = %v", err)
+	}
+	if err := Start(Command{Dir: bin, Program: "missing-agent"}); err == nil || !strings.Contains(err.Error(), "not installed") {
+		t.Errorf("missing program: err = %v", err)
+	}
+}
+
+// TestStartLinuxIgnoresPlantedProgram: a program in the session folder never
+// runs in place of the agent, even with "." or "" on PATH (finding of the
+// phase 3 security review).
+func TestStartLinuxIgnoresPlantedProgram(t *testing.T) {
+	base := t.TempDir()
+	out := filepath.Join(base, "out.txt")
+	session := filepath.Join(base, "session")
+	if err := os.Mkdir(session, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	planted := filepath.Join(session, "agent")
+	if err := os.WriteFile(planted, []byte("#!/bin/sh\necho PLANTED > "+quoteSh(out)+"\n"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	bin := fakeTools(t, map[string]string{
+		"xterm": "while [ \"$#\" -gt 0 ] && [ \"$1\" != \"-e\" ]; do shift; done\nshift\nexec \"$@\"\n",
+		"agent": "echo REAL > " + quoteSh(out) + "\n",
+	})
+	t.Setenv("PATH", ".::"+bin+":node_modules/.bin")
+	t.Setenv("SHELL", "/bin/true")
+	if err := Start(Command{Dir: session, Program: "agent"}); err != nil {
+		t.Fatal(err)
+	}
+	if got := waitFile(t, out); got != "REAL\n" {
+		t.Errorf("ran %q, want the agent on the absolute PATH entry", got)
+	}
+	env := childEnv(nil)
+	for _, kv := range env {
+		if strings.HasPrefix(kv, "PATH=") && kv != "PATH="+bin {
+			t.Errorf("child %s, want only the absolute entries", kv)
+		}
 	}
 }
 

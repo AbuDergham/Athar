@@ -15,20 +15,28 @@ import (
 	"time"
 )
 
-// Start opens c in a new terminal; GUI apps are started directly. On macOS a
-// Terminal window runs c.Shell; elsewhere a terminal emulator runs
+// Start opens c in a new terminal; GUI apps are started directly. The
+// program is resolved to an absolute path first, from the absolute PATH
+// entries only, so nothing in the session folder runs in its place. On macOS
+// a Terminal window runs macLine(c); elsewhere a terminal emulator runs
 // posixArgv(c), so no shell parses any value (see shell.go). Start never
 // waits for the program.
 func Start(c Command) error {
+	prog, err := absProgram(c.Program)
+	if err != nil {
+		return err
+	}
+	c.Program = prog
 	if c.IsApp {
 		return startApp(c)
 	}
 	var argv []string
 	if runtime.GOOS == "darwin" {
-		if c.Shell == "" {
-			return fmt.Errorf("launch: the command cannot be written for Terminal: %w", ErrUnsafe)
+		line, err := macLine(c)
+		if err != nil {
+			return err
 		}
-		argv = macTerminalArgv(c.Shell)
+		argv = macTerminalArgv(line)
 	} else {
 		a, err := terminalArgv(c, getenv, lookPath)
 		if err != nil {
@@ -40,25 +48,71 @@ func Start(c Command) error {
 	if fi, err := os.Stat(c.Dir); err == nil && fi.IsDir() {
 		cmd.Dir = c.Dir
 	}
-	cmd.Env = mergeEnv(os.Environ(), c.Env)
+	cmd.Env = childEnv(c.Env)
 	return startDetached(cmd)
 }
 
-// startApp starts a GUI program on its folder without a terminal.
+// startApp starts a GUI program (c.Program is absolute) on its folder
+// without a terminal.
 func startApp(c Command) error {
-	path, err := lookPath(c.Program)
-	if err != nil {
-		if !programExists(c.Program) {
-			return fmt.Errorf("`%s` is not installed or not on PATH", programName(c.Program))
-		}
-		path = c.Program
-	}
-	cmd := exec.Command(path, c.Args...)
+	cmd := exec.Command(c.Program, c.Args...)
 	if fi, err := os.Stat(c.Dir); err == nil && fi.IsDir() {
 		cmd.Dir = c.Dir
 	}
-	cmd.Env = mergeEnv(os.Environ(), c.Env)
+	cmd.Env = childEnv(c.Env)
 	return startDetached(cmd)
+}
+
+// absProgram returns the absolute path of an executable program: p itself
+// when absolute, else the first match in an absolute PATH entry. Relative
+// entries ("", ".", "node_modules/.bin") are skipped: the new terminal starts
+// in the session folder, where a planted program would otherwise win.
+func absProgram(p string) (string, error) {
+	notFound := fmt.Errorf("`%s` is not installed or not on PATH", programName(p))
+	if p == "" {
+		return "", notFound
+	}
+	if strings.Contains(p, "/") {
+		if filepath.IsAbs(p) && isExecutable(p) {
+			return p, nil
+		}
+		return "", notFound
+	}
+	for _, dir := range absPathList(getenv("PATH")) {
+		if cand := filepath.Join(dir, p); isExecutable(cand) {
+			return cand, nil
+		}
+	}
+	return "", notFound
+}
+
+func isExecutable(p string) bool {
+	fi, err := os.Stat(p)
+	return err == nil && fi.Mode().IsRegular() && fi.Mode().Perm()&0o111 != 0
+}
+
+// absPathList is the absolute entries of a PATH value, in order.
+func absPathList(path string) []string {
+	var out []string
+	for _, dir := range filepath.SplitList(path) {
+		if filepath.IsAbs(dir) {
+			out = append(out, dir)
+		}
+	}
+	return out
+}
+
+// childEnv is Athar's environment with the command's variables applied and
+// PATH reduced to its absolute entries (the Unix side of what
+// NoDefaultCurrentDirectoryInExePath does on Windows).
+func childEnv(set map[string]string) []string {
+	env := mergeEnv(os.Environ(), set)
+	for i, kv := range env {
+		if v, ok := strings.CutPrefix(kv, "PATH="); ok {
+			env[i] = "PATH=" + strings.Join(absPathList(v), string(filepath.ListSeparator))
+		}
+	}
+	return env
 }
 
 // startDetached starts cmd in its own session (it survives Athar and does not

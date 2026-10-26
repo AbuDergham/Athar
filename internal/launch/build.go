@@ -134,12 +134,14 @@ func Build(t Target, caps adapters.Caps, action Action, skip bool, override []st
 }
 
 // substitute replaces {id} and {cwd} in args and validates every result.
-// {id} must pass the id whitelist. {cwd} becomes the folder when it passes the
-// path whitelist, "." otherwise (the folder is still the working directory),
+// {id} must pass the id whitelist. {cwd} becomes the folder when it is an
+// absolute path that passes the path whitelist, "." otherwise (the folder is
+// still the working directory),
 // and an argument containing {cwd} is dropped when the session has no folder.
 func substitute(in []string, t Target) ([]string, error) {
 	cwdArg := t.Cwd
-	if t.Cwd != "" && !cmdSafe(t.Cwd) {
+	if t.Cwd != "" && (!cmdSafe(t.Cwd) || !absolutePath(t.Cwd)) {
+		// A relative value could be read as an option ("--user-data-dir=…").
 		cwdArg = "."
 	}
 	out := make([]string, 0, len(in))
@@ -162,6 +164,19 @@ func substitute(in []string, t Target) ([]string, error) {
 		out = append(out, a)
 	}
 	return out, nil
+}
+
+// absolutePath reports whether p is an absolute path on any system: "/…",
+// "C:\…", "C:/…" or "\\server\…". Such a value never starts with '-'.
+func absolutePath(p string) bool {
+	switch {
+	case strings.HasPrefix(p, "/"), strings.HasPrefix(p, `\\`):
+		return true
+	case len(p) >= 3 && p[1] == ':' && (p[2] == '\\' || p[2] == '/'):
+		c := p[0] | 0x20
+		return c >= 'a' && c <= 'z'
+	}
+	return false
 }
 
 // resolveProgram returns name when it is found on PATH, else the first existing
